@@ -1,7 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
+import { router } from "expo-router";
 
 import { useAuthContext } from "../context/AuthProvider";
+
+// components
+import CustomButton from "../components/CustomButton";
 
 const App = () => {
   const { login, logout, auth, isLoggedIn, isLoading } = useAuthContext();
@@ -19,7 +23,12 @@ const App = () => {
   return (
     <View style={styles.container}>
       <Text>Hey there! welcome to Box Brain</Text>
-      <Text>Please log in to continue</Text>
+      <Text>Please sign in to continue</Text>
+      <CustomButton 
+        title="Sign In"
+        handlePress={() => router.push("/sign-in")}
+        containerStyles="w-full mt-7"
+      />
       <StatusBar style="auto" />
     </View>
   );
