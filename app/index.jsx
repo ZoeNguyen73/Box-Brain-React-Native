@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import { router } from "expo-router";
+import { router, Redirect } from "expo-router";
 
 import { useAuthContext } from "../context/AuthProvider";
 
@@ -8,16 +8,10 @@ import { useAuthContext } from "../context/AuthProvider";
 import CustomButton from "../components/CustomButton";
 
 const App = () => {
-  const { login, logout, auth, isLoggedIn, isLoading } = useAuthContext();
+  const { auth, isLoggedIn, isLoading } = useAuthContext();
 
   if (!isLoading && isLoggedIn) {
-    return (
-      <View>
-        <Text>User is Logged In</Text>
-        <Text>{auth.username}</Text>
-        <StatusBar style="auto" />
-      </View>
-    )
+    return <Redirect href="/home" />
   }
 
   return (
