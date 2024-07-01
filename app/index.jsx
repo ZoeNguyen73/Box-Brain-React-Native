@@ -5,10 +5,10 @@ import { router, Redirect } from "expo-router";
 import { useAuthContext } from "../context/AuthProvider";
 
 // components
-import CustomButton from "../components/CustomButton";
+import CustomButton from "../components/CustomButton/CustomButton";
 
 const App = () => {
-  const { auth, isLoggedIn, isLoading } = useAuthContext();
+  const { isLoggedIn, isLoading } = useAuthContext();
 
   if (!isLoading && isLoggedIn) {
     return <Redirect href="/home" />

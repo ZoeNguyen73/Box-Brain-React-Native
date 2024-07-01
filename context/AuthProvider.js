@@ -15,15 +15,15 @@ export const AuthProvider = ({ children }) => {
     accessToken: "",
   });
 
-  const login = async (username, hash) => {
+  const signIn = async ({username, hash}) => {
     setIsLoading(true);
 
     try {
       const response = await axios.post(
         "/auth/login",
-        { username, hash }
+        { username, hash },
       );
-
+      
       const { accessToken, refreshToken } = response.data;
 
       await AsyncStorage.setItem("username", username);
@@ -39,7 +39,20 @@ export const AuthProvider = ({ children }) => {
         accessToken: "",
       });
       setIsLoggedIn(false);
-      console.log(`log in error: ${error.message}`);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error('Error Response:', error.response.data);
+        console.error('Error Status:', error.response.status);
+        console.error('Error Headers:', error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('Error Request:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error Message:', error.message);
+      }
+      console.error('Error Config:', error.config);
       throw new Error(error);
 
     } finally {
@@ -47,7 +60,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = async () => {
+  const signOut = async () => {
     setIsLoading(true);
 
     try {
@@ -116,7 +129,7 @@ export const AuthProvider = ({ children }) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ login, logout, auth, isLoggedIn, isLoading }}>
+    <AuthContext.Provider value={{ signIn, signOut, auth, isLoggedIn, isLoading }}>
       {children}
     </AuthContext.Provider>
   )
