@@ -9,12 +9,17 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/noto-sans-mono": "^0.2.3",
+    "@expo-google-fonts/open-sans": "^0.2.3",
+    "@expo-google-fonts/playfair-display": "^0.2.3",
     "@react-native-async-storage/async-storage": "^1.23.1",
     "axios": "^1.7.2",
     "expo": "~51.0.16",
     "expo-constants": "~16.0.2",
+    "expo-font": "^12.0.7",
     "expo-linking": "~6.3.1",
     "expo-router": "~3.5.17",
+    "expo-splash-screen": "^0.27.5",
     "expo-status-bar": "~1.12.1",
     "nativewind": "^2.0.11",
     "react": "18.2.0",

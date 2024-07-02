@@ -71,9 +71,44 @@ module.exports = {
           sapphire: "#74c7ec",
           mauve: "#cba6f7",
         },
-      }
+      },
+      fontFamily: {
+        // sansLight: ["OpenSans-Light", "sans-serif"],
+        // sansRegular: ["OpenSans-Regular", "sans-serif"],
+        // sansMedium: ["OpenSans-Medium", "sans-serif"],
+        // sansSemiBold: ["OpenSans-SemiBold", "sans-serif"],
+        // sansBold: ["OpenSans-Bold", "sans-serif"],
+        // sansItalic: ["OpenSans-Italic", "sans-serif"],
+        // sansLightItalic: ["OpenSans-LightItalic", "sans-serif"],
+        // serifRegular: ["PlayfairDisplay-Regular", "serif"],
+        // serifMedium: ["PlayfairDisplay-Medium", "serif"],
+        // serifBold: ["PlayfairDisplay-Bold", "serif"],
+        // serifSemiBold: ["PlayfairDisplay-SemiBold", "serif"],
+        // serifBlack: ["PlayfairDisplay-Black", "serif"],
+        // serifItalic: ["PlayfairDisplay-Italic", "serif"],
+        sans: ["Open Sans", "system-ui", "sans-serif"],
+        serif: ["Playfair Display", "serif"],
+        mono: ["Noto Sans Mono", "mono"],
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    // function({ addBase, theme }) {
+    //   addBase({
+    //     "body": {
+    //       fontFamily: theme('fontFamily.sans'),
+    //     },
+    //     ".font-sans": {
+    //       fontFamily: theme('fontFamily.sans'),
+    //     },
+    //     ".font-serif": {
+    //       fontFamily: theme('fontFamily.serif'),
+    //     },
+    //     ".font-mono": {
+    //       fontFamily: theme('fontFamily.mono'),
+    //     },
+    //   })
+    // }
+  ],
 }
 
