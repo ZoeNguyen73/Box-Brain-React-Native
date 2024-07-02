@@ -42,7 +42,12 @@ const App = () => {
         handlePress={() => router.push("/sign-in")}
         containerStyles="w-full mt-7"
       />
-      <Link href="/settings" className="text-blue-500">Go to settings</Link>
+      <Link 
+        href="/settings" 
+        className="text-blue-500 links dark:dark-links"
+      >
+        Go to settings
+      </Link>
 
       <StatusBar style="auto" />
     </SafeAreaView>
