@@ -36,7 +36,7 @@ module.exports = {
       colors: {
         light: {
           background: "#eff1f5",
-          secondBackground: "#dce0e8",
+          "second-background": "#dce0e8",
           text: "#4c4f69",
           primary: "#fe6408",
           secondary: "#6c6f85",
@@ -48,7 +48,7 @@ module.exports = {
           warning: "#df8e1d",
           error: "#d20f39",
           generic: "#1e66f5",
-          selectionBackground: "#7c7f93",
+          "selection-background": "#7c7f93",
           red: "#d20f39",
           green: "#40a02b",
           yellow: "#df8e1d",
@@ -64,7 +64,7 @@ module.exports = {
         },
         dark: {
           background: "#1e1e2e",
-          secondBackground: "#161a21",
+          "second-background": "#161a21",
           text: "#c6d0ed",
           primary: "#fab387",
           secondary: "#a6adc8",
@@ -76,7 +76,7 @@ module.exports = {
           warning: "#f9e2af",
           error: "#f38ba8",
           generic: "#89b4fa",
-          selectionBackground: "#9399b2",
+          "selection-background": "#9399b2",
           red: "#f38ba8",
           green: "#a6e3a1",
           yellow: "#f9e2af",
@@ -95,4 +95,3 @@ module.exports = {
   },
   plugins: [],
 }
-
