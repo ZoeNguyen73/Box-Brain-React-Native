@@ -24,7 +24,8 @@ const Home = () => {
   }
 
   return (
-    <View>
+    <SafeAreaView classname="bg-light-background dark:bg-dark-background h-full">
+      <View>
       <Text>User is Logged In</Text>
       <Text>{auth.username}</Text>
       <StatusBar style="auto" />
@@ -33,6 +34,8 @@ const Home = () => {
         handlePress={submit}
       />
     </View>
+    </SafeAreaView>
+    
   )
 };
 

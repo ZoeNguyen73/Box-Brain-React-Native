@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useAuthContext } from "../context/AuthProvider";
 import { useThemeContext } from "../context/ThemeProvider";
+import tailwindConfig from "../tailwind.config";
 
 // components
 import CustomButton from "../components/CustomButton/CustomButton";
@@ -12,7 +13,10 @@ import { useEffect } from "react";
 
 const App = () => {
   const { isLoggedIn, isLoading } = useAuthContext();
-  const { theme, toggleTheme } = useThemeContext();
+  const { theme } = useThemeContext();
+
+  const lightBackgroundColor = tailwindConfig.theme.extend.colors.light.background;
+  const darkBackgroundColor = tailwindConfig.theme.extend.colors.dark.background;
 
   if (!isLoading && isLoggedIn) {
     return <Redirect href="/home" />
@@ -49,7 +53,18 @@ const App = () => {
         </Text>
         
       </Link>
-      <StatusBar style="auto" />
+      <Link 
+        href="/register"
+      >
+        <Text className="text-light-links dark:text-dark-links">
+          Go to register
+        </Text>
+      </Link>
+
+      <StatusBar 
+        backgroundColor={`${ theme === "dark" ? darkBackgroundColor : lightBackgroundColor }`} 
+        style={`${ theme === "dark" ? "light" : "dark"}`}
+      />
     </SafeAreaView>
   );
 }

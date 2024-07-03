@@ -19,17 +19,16 @@ const CustomButton = ({ title, handlePress, containerStyles, iconName }) => {
     >
       <View className="justify-center items-center flex-row gap-2">
         <Text
-          className="text-white dark:text-light-text font-mono-bold uppercase text-lg"
+          className="text-white dark:text-light-text font-mono-bold uppercase text-xl tracking-wider"
         >
           {title}
         </Text>
         <FontAwesome5
-          name="brain" size={16} 
+          name={iconName} size={16} 
           color={`${theme === "dark" ? lightTextColor : "white"}`} 
         />
       </View>
       
-
     </TouchableOpacity>
   )
 }
