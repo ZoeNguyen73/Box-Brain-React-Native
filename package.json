@@ -2,6 +2,11 @@
   "name": "box-brain-rn",
   "version": "1.0.0",
   "main": "expo-router/entry",
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ]
+  },
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -31,6 +36,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "prettier": "^3.3.2",
+    "prettier-plugin-tailwindcss": "^0.6.5",
     "tailwindcss": "^3.3.2"
   },
   "private": true

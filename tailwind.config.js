@@ -13,6 +13,25 @@ module.exports = {
       "xl": "1280px",
       "2xl": "1536px",
     },
+    fontFamily: {
+      sans: ["OpenSans_400Regular", "system-ui", "sans-serif"],
+      "sans-light": ["OpenSans_300Light", "system-ui", "sans-serif"],
+      "sans-semibold": ["OpenSans_600SemiBold", "system-ui", "sans-serif"],
+      "sans-bold": ["OpenSans_700Bold", "system-ui", "sans-serif"],
+      "sans-italic": ["OpenSans_400Regular_Italic", "system-ui", "sans-serif"],
+      "sans-light-italic": ["OpenSans_300Light_Italic", "system-ui", "sans-serif"],
+      "sans-semibold-italic": ["OpenSans_600SemiBold_Italic", "system-ui", "sans-serif"],
+      "sans-bold-italic": ["OpenSans_700Bold_Italic", "system-ui", "sans-serif"],
+      serif: ["PlayfairDisplay_400Regular", "serif"],
+      "serif-semibold": ["PlayfairDisplay_600SemiBold", "serif"],
+      "serif-bold": ["PlayfairDisplay_700Bold", "serif"],
+      "serif-black": ["PlayfairDisplay_900Black", "serif"],
+      mono: ["NotoSansMono_400Regular", "mono"],
+      "mono-light": ["NotoSansMono_300Light", "mono"],
+      "mono-semibold": ["NotoSansMono_600SemiBold", "mono"],
+      "mono-bold": ["NotoSansMono_700Bold", "mono"],
+      "mono-black": ["NotoSansMono_900Black", "mono"],
+    },
     extend: {
       colors: {
         light: {
@@ -72,43 +91,8 @@ module.exports = {
           mauve: "#cba6f7",
         },
       },
-      fontFamily: {
-        // sansLight: ["OpenSans-Light", "sans-serif"],
-        // sansRegular: ["OpenSans-Regular", "sans-serif"],
-        // sansMedium: ["OpenSans-Medium", "sans-serif"],
-        // sansSemiBold: ["OpenSans-SemiBold", "sans-serif"],
-        // sansBold: ["OpenSans-Bold", "sans-serif"],
-        // sansItalic: ["OpenSans-Italic", "sans-serif"],
-        // sansLightItalic: ["OpenSans-LightItalic", "sans-serif"],
-        // serifRegular: ["PlayfairDisplay-Regular", "serif"],
-        // serifMedium: ["PlayfairDisplay-Medium", "serif"],
-        // serifBold: ["PlayfairDisplay-Bold", "serif"],
-        // serifSemiBold: ["PlayfairDisplay-SemiBold", "serif"],
-        // serifBlack: ["PlayfairDisplay-Black", "serif"],
-        // serifItalic: ["PlayfairDisplay-Italic", "serif"],
-        sans: ["Open Sans", "system-ui", "sans-serif"],
-        serif: ["Playfair Display", "serif"],
-        mono: ["Noto Sans Mono", "mono"],
-      },
     },
   },
-  plugins: [
-    // function({ addBase, theme }) {
-    //   addBase({
-    //     "body": {
-    //       fontFamily: theme('fontFamily.sans'),
-    //     },
-    //     ".font-sans": {
-    //       fontFamily: theme('fontFamily.sans'),
-    //     },
-    //     ".font-serif": {
-    //       fontFamily: theme('fontFamily.serif'),
-    //     },
-    //     ".font-mono": {
-    //       fontFamily: theme('fontFamily.mono'),
-    //     },
-    //   })
-    // }
-  ],
+  plugins: [],
 }
 
