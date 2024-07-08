@@ -24,7 +24,7 @@ const Register = () => {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [formErrors, setFormErrors] = useState({});
 
   const register = async () => {
     setIsSubmitting(true);
@@ -39,15 +39,16 @@ const Register = () => {
       console.log("response: " + JSON.stringify(response.data));
 
     } catch (error) {
-      GlobalErrorHandler(error);
+      GlobalErrorHandler(error, handleFormError);
     } finally {
       setIsSubmitting(false);
     }
   };
 
 
-  const handleError = ( errorMessage, input ) => {
-    setErrors(prev => ({...prev, [input]: errorMessage}));
+  const handleFormError = ( errorMessage, input ) => {
+    console.log("error message: " + errorMessage + ", field: " + input);
+    setFormErrors(prev => ({...prev, [input]: errorMessage}));
   };
 
   const validate = async () => {
@@ -57,27 +58,27 @@ const Register = () => {
     const { username, email, password, confirm_password } = form;
 
     if (!email || email.indexOf("@") < 0) {
-      handleError("Please input a valid email", "email");
+      handleFormError("Please input a valid email", "email");
       isValid = false;
     }
 
     if ( !username ) {
-      handleError("Please input an username", "username");
+      handleFormError("Please input an username", "username");
       isValid = false;
     }
 
     if ( !password ) {
-      handleError("Please input your password", "password");
+      handleFormError("Please input your password", "password");
       isValid = false;
     }
 
     if ( !confirm_password ) {
-      handleError("Please confirm your password", "confirm_password");
+      handleFormError("Please confirm your password", "confirm_password");
       isValid = false;
     }
 
     if ( password && confirm_password && password !== confirm_password ) {
-      handleError("The confirm password does not match password", "confirm_password");
+      handleFormError("The confirm password does not match password", "confirm_password");
       isValid = false;
     }
 
@@ -119,12 +120,12 @@ const Register = () => {
             title="Username"
             value={form.username}
             handleChangeText={(e) => {
-              handleError(null, "username");
+              handleFormError(null, "username");
               setForm({ ...form, username: e });
             }}
             otherStyles="mt-10"
             placeholder="give yourself a unique username"
-            error={errors.username}
+            error={formErrors.username}
           />
 
           <FormField 
@@ -132,34 +133,34 @@ const Register = () => {
             value={form.email}
             keyboardType="email-address"
             handleChangeText={(e) => {
-              handleError(null, "email");
+              handleFormError(null, "email");
               setForm({ ...form, email: e });
             }}
             otherStyles="mt-4"
             placeholder="john.tan@email.com"
-            error={errors.email}
+            error={formErrors.email}
           />
 
           <FormField 
             title="Password"
             value={form.password}
             handleChangeText={(e) => {
-              handleError(null, "password");
+              handleFormError(null, "password");
               setForm({ ...form, password: e });
             }}
             otherStyles="mt-4"
-            error={errors.password}
+            error={formErrors.password}
           />
 
           <FormField 
             title="Confirm Password"
             value={form.confirm_password}
             handleChangeText={(e) => {
-              handleError(null, "confirm_password");
+              handleFormError(null, "confirm_password");
               setForm({ ...form, confirm_password: e });
             }}
             otherStyles="mt-4"
-            error={errors.confirm_password}
+            error={formErrors.confirm_password}
           />
 
           <CustomButton 
