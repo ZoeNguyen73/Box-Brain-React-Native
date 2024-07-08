@@ -13,11 +13,27 @@ import {
   OpenSans_700Bold_Italic
 } from "@expo-google-fonts/open-sans";
 import { 
+  Poppins_300Light,
+  Poppins_400Regular, 
+  Poppins_600SemiBold, 
+  Poppins_700Bold,
+  Poppins_300Light_Italic,
+  Poppins_400Regular_Italic,
+  Poppins_600SemiBold_Italic,
+  Poppins_700Bold_Italic
+} from "@expo-google-fonts/poppins";
+import { 
   PlayfairDisplay_400Regular, 
   PlayfairDisplay_600SemiBold, 
   PlayfairDisplay_700Bold,
   PlayfairDisplay_900Black 
 } from "@expo-google-fonts/playfair-display";
+import { 
+  Fraunces_400Regular, 
+  Fraunces_600SemiBold, 
+  Fraunces_700Bold,
+  Fraunces_900Black 
+} from "@expo-google-fonts/fraunces";
 import { 
   NotoSansMono_300Light,
   NotoSansMono_400Regular, 
@@ -49,7 +65,19 @@ const RootLayout = () => {
     NotoSansMono_400Regular, 
     NotoSansMono_600SemiBold, 
     NotoSansMono_700Bold,
-    NotoSansMono_900Black 
+    NotoSansMono_900Black,
+    Poppins_300Light,
+    Poppins_400Regular, 
+    Poppins_600SemiBold, 
+    Poppins_700Bold,
+    Poppins_300Light_Italic,
+    Poppins_400Regular_Italic,
+    Poppins_600SemiBold_Italic,
+    Poppins_700Bold_Italic,
+    Fraunces_400Regular, 
+    Fraunces_600SemiBold, 
+    Fraunces_700Bold,
+    Fraunces_900Black  
   });
 
   useEffect(() => {

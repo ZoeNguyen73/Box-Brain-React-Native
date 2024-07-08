@@ -31,12 +31,12 @@ const App = () => {
       `}
     >
       <View>
-        <Text className="text-light-text dark:text-dark-text font-serif-black text-2xl">
+        <Text className="text-light-text dark:text-dark-text font-mono-black text-2xl">
           Welcome to Box Brain!
         </Text>
       </View>
       
-      <Text className="text-light-text dark:text-dark-text">
+      <Text className="font-sans text-light-text dark:text-dark-text">
         Please sign in to continue
       </Text>
       <CustomButton 
@@ -48,13 +48,14 @@ const App = () => {
       <Link 
         href="/settings"
       >
-        <Text className="text-light-links dark:text-dark-links">
+        <Text className="font-serif text-light-links dark:text-dark-links">
           Go to settings
         </Text>
         
       </Link>
       <Link 
         href="/register"
+        className="mt-10"
       >
         <Text className="text-light-links dark:text-dark-links">
           Go to register

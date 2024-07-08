@@ -14,9 +14,11 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/fraunces": "^0.2.3",
     "@expo-google-fonts/noto-sans-mono": "^0.2.3",
     "@expo-google-fonts/open-sans": "^0.2.3",
     "@expo-google-fonts/playfair-display": "^0.2.3",
+    "@expo-google-fonts/poppins": "^0.2.3",
     "@react-native-async-storage/async-storage": "^1.23.1",
     "axios": "^1.7.2",
     "expo": "~51.0.16",
