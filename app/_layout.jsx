@@ -44,6 +44,7 @@ import {
 
 import { AuthProvider } from "../context/AuthProvider";
 import ThemeProvider from "../context/ThemeProvider";
+import ErrorBoundaryProvider from "../components/ErrorBoundary/ErrorBoundaryProvider";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -91,15 +92,16 @@ const RootLayout = () => {
   }
 
   return (
-    <AuthProvider>
-      <ThemeProvider>
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        </Stack>
-      </ThemeProvider>
-    </AuthProvider>
-    
+    <ErrorBoundaryProvider>
+      <AuthProvider>
+        <ThemeProvider>
+          <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+          </Stack>
+        </ThemeProvider>
+      </AuthProvider>
+    </ErrorBoundaryProvider> 
   )
 };
 

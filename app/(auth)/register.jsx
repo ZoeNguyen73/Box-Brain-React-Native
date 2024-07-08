@@ -9,6 +9,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import tailwindConfig from "../../tailwind.config";
 import { useThemeContext } from "../../context/ThemeProvider";
 import axios from "../../api/axios";
+import GlobalErrorHandler from "../../utils/GlobalErrorHandler";
 
 const Register = () => {
   const { theme } = useThemeContext();
@@ -26,16 +27,7 @@ const Register = () => {
   const [errors, setErrors] = useState({});
 
   const register = async () => {
-    // if (form.username === "" || form.email === "" || form.password === "" || form.confirm_password === "") {
-    //   Alert.alert("Error", "Please fill in all the required fields");
-    // };
-
-    // if (form.password !== form.confirm_password) {
-    //   Alert.alert("Error", "Confirm Password does not match Password field");
-    // };
-
     setIsSubmitting(true);
-    console.log("register triggered...")
 
     try {
       const { username, email, password } = form;
@@ -44,32 +36,15 @@ const Register = () => {
         { username, email, hash: password}
       );
 
-      console.log("response: " + response.data);
+      console.log("response: " + JSON.stringify(response.data));
 
     } catch (error) {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        const errorMessage = error.response.data.message;
-        const errorDetails = error.response.data.details;
-        console.log("error message: " + errorMessage);
-        console.log("error details: " + errorDetails);
-        Alert.alert(errorMessage, errorDetails);
-
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.log("error request: " + error.request);
-        Alert.alert("No response from server.");
-        
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.log("Error", error.message);
-        Alert.alert("Error", error.message);
-      }
+      GlobalErrorHandler(error);
     } finally {
       setIsSubmitting(false);
     }
   };
+
 
   const handleError = ( errorMessage, input ) => {
     setErrors(prev => ({...prev, [input]: errorMessage}));
@@ -82,7 +57,6 @@ const Register = () => {
     const { username, email, password, confirm_password } = form;
 
     if (!email || email.indexOf("@") < 0) {
-      console.log("email checking...");
       handleError("Please input a valid email", "email");
       isValid = false;
     }
