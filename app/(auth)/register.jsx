@@ -10,6 +10,7 @@ import tailwindConfig from "../../tailwind.config";
 import { useThemeContext } from "../../context/ThemeProvider";
 import axios from "../../api/axios";
 import GlobalErrorHandler from "../../utils/GlobalErrorHandler";
+import MessageBox from "../../components/MessageBox";
 
 const Register = () => {
   const { theme } = useThemeContext();
@@ -25,6 +26,8 @@ const Register = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState({});
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [activationToken, setActivationToken] = useState("");
 
   const register = async () => {
     setIsSubmitting(true);
@@ -35,6 +38,8 @@ const Register = () => {
         "/auth/register",
         { username, email, hash: password}
       );
+      setActivationToken(response.data.activateToken);
+      setShowSuccessMessage(true);
 
       console.log("response: " + JSON.stringify(response.data));
 
@@ -45,9 +50,7 @@ const Register = () => {
     }
   };
 
-
   const handleFormError = ( errorMessage, input ) => {
-    console.log("error message: " + errorMessage + ", field: " + input);
     setFormErrors(prev => ({...prev, [input]: errorMessage}));
   };
 
@@ -115,6 +118,26 @@ const Register = () => {
               Get started for free with your email
             </Text>
           </View>
+
+          { showSuccessMessage && (
+            // <MessageBox 
+            //   content="Please check your inbox for activation email"
+            //   type="success"
+            //   containerStyles="mt-5"
+            // />
+            <View>
+              <MessageBox 
+                content="Account created successfully, pending activation"
+                type="success"
+                containerStyles="mt-5"
+              />
+              <CustomButton 
+                title="Continue to activate your account"
+                handlePress={() => router.push(`/activate/${activateToken}`)}
+              />
+            </View>
+            
+          )}
           
           <FormField 
             title="Username"

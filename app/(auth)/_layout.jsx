@@ -23,6 +23,10 @@ const AuthLayout = () => {
           name="register"
           options={{ headerShown: false }}
         />
+        <Stack.Screen 
+          name="activate/[activateToken]"
+          options={{ headerShown: false }}
+        />
 
       </Stack>
 

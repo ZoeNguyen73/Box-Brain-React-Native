@@ -56,7 +56,7 @@ module.exports = {
           links: "#1e66f5",
           grey1: "#9ca0b0",
           grey2: "#5c5f77",
-          success: "#40a02b",
+          "success": "#40a02b",
           warning: "#df8e1d",
           error: "#d20f39",
           generic: "#1e66f5",
