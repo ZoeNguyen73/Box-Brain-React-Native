@@ -13,23 +13,22 @@ const CustomButton = ({ title, handlePress, containerStyles, iconName }) => {
     <TouchableOpacity
       onPress={handlePress}
       activeOpacity={0.7}
-      className={`bg-light-yellow dark:bg-dark-yellow rounded-xl min-h-[62px] 
+      className={`bg-light-yellow dark:bg-dark-yellow rounded-xl min-h-[45px] 
         justify-center items-center px-6 py-4 w-fit
         ${containerStyles}`}
     >
       <View className="justify-center items-center flex-row gap-2">
         <Text
-          className="text-white dark:text-light-text font-mono-bold uppercase text-lg"
+          className="text-white dark:text-light-text font-mono-bold uppercase text-xl tracking-wider"
         >
           {title}
         </Text>
         <FontAwesome5
-          name="brain" size={16} 
+          name={iconName} size={16} 
           color={`${theme === "dark" ? lightTextColor : "white"}`} 
         />
       </View>
       
-
     </TouchableOpacity>
   )
 }

@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useAuthContext } from "../context/AuthProvider";
 import { useThemeContext } from "../context/ThemeProvider";
+import tailwindConfig from "../tailwind.config";
 
 // components
 import CustomButton from "../components/CustomButton/CustomButton";
@@ -12,11 +13,14 @@ import { useEffect } from "react";
 
 const App = () => {
   const { isLoggedIn, isLoading } = useAuthContext();
-  const { theme, toggleTheme } = useThemeContext();
+  const { theme } = useThemeContext();
 
-  if (!isLoading && isLoggedIn) {
-    return <Redirect href="/home" />
-  }
+  const lightBackgroundColor = tailwindConfig.theme.extend.colors.light.background;
+  const darkBackgroundColor = tailwindConfig.theme.extend.colors.dark.background;
+
+  // if (!isLoading && isLoggedIn) {
+  //   return <Redirect href="/home" />
+  // }
 
   return (
     <SafeAreaView 
@@ -27,12 +31,12 @@ const App = () => {
       `}
     >
       <View>
-        <Text className="text-light-text dark:text-dark-text font-serif-black text-2xl">
+        <Text className="text-light-text dark:text-dark-text font-mono-black text-2xl">
           Welcome to Box Brain!
         </Text>
       </View>
       
-      <Text className="text-light-text dark:text-dark-text">
+      <Text className="font-sans text-light-text dark:text-dark-text">
         Please sign in to continue
       </Text>
       <CustomButton 
@@ -44,12 +48,24 @@ const App = () => {
       <Link 
         href="/settings"
       >
-        <Text className="text-light-links dark:text-dark-links">
+        <Text className="font-serif text-light-links dark:text-dark-links">
           Go to settings
         </Text>
         
       </Link>
-      <StatusBar style="auto" />
+      <Link 
+        href="/register"
+        className="mt-10"
+      >
+        <Text className="text-light-links dark:text-dark-links">
+          Go to register
+        </Text>
+      </Link>
+
+      <StatusBar 
+        backgroundColor={`${ theme === "dark" ? darkBackgroundColor : lightBackgroundColor }`} 
+        style={`${ theme === "dark" ? "light" : "dark"}`}
+      />
     </SafeAreaView>
   );
 }
