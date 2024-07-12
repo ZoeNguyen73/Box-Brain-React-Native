@@ -9,44 +9,18 @@ import GlobalErrorHandler from "../../../utils/GlobalErrorHandler";
 import CustomButton from "../../../components/CustomButton/CustomButton";
 import MessageBox from "../../../components/MessageBox";
 import { useAuthContext } from "../../../context/AuthProvider";
+import { updateAvatar } from "../../../utils/AvatarService";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
-import { avatars } from "../../../constants";
-import tailwindConfig from "../../../tailwind.config";
-
-const Avatar = ({ avatarName, selectedAvatar, setSelectedAvatar }) => {
-  const lightWarning = tailwindConfig.theme.extend.colors.light.warning;
-  const opacity = avatarName === selectedAvatar ? 1 : 0.6;
-  const borderColor = avatarName === selectedAvatar ? lightWarning : "transparent";
-
-  return (
-    <TouchableOpacity
-      onPress={() => setSelectedAvatar(avatarName)}
-      className="p-2"
-    >
-      <Image 
-        source={avatars[avatarName]}
-        alt={avatarName}
-        opacity={opacity}
-        borderWidth={5}
-        borderRadius={40}
-        borderColor={borderColor}
-        className="w-[80] h-[80]"
-        resizeMode="cover"
-      />
-    </TouchableOpacity>
-  )  
-};
+import AvatarList from "../../../components/Avatar/AvatarList";
 
 const Activate = () => {
   const { activateToken } = useLocalSearchParams();
   const { setAuth, setIsLoggedIn } = useAuthContext();
   const [showSuccessMessage, setshowSuccessMessage] = useState(false);
   const [showAvatarChangeMessage, setShowAvatarChangeMessage] = useState(false);
-  const [username, setUsername] = useState("");
   const [selectedAvatar, setSelectedAvatar] = useState("");
-
-  
+  const [username, setUsername] = useState("");
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
@@ -58,10 +32,11 @@ const Activate = () => {
         await AsyncStorage.setItem("username", user.username);
         await AsyncStorage.setItem("accessToken", accessToken);
         await AsyncStorage.setItem("refreshToken", refreshToken);
+        await AsyncStorage.setItem("avatar", user.avatar);
 
         setSelectedAvatar(user.avatar);
-        setAuth({ username: user.username, accessToken });
         setUsername(user.username);
+        setAuth({ username: user.username, accessToken, avatar: user.avatar });
         setIsLoggedIn(true);
         setshowSuccessMessage(true);
       } catch (error) {
@@ -75,17 +50,13 @@ const Activate = () => {
 
   const updateUserAvatar = async () => {
     try {
-      await axiosPrivate.put(
-        `/users/${username}`,
-        { avatar: selectedAvatar }
-      )
+      await updateAvatar(axiosPrivate, username, selectedAvatar, setAuth);
       setShowAvatarChangeMessage(true);
       setTimeout( () => router.push("/home"), 2000);
     } catch (error) {
       GlobalErrorHandler(error);
     }
   }
-  
 
   return (
     <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
@@ -126,17 +97,11 @@ const Activate = () => {
                 )}
               </View>
 
-              <View className="flex flex-row flex-wrap justify-between items-center px-5 my-5">
-                {Object.keys(avatars).map((avatar) => (
-                  <Avatar 
-                    key={avatar}
-                    avatarName={avatar} 
-                    selectedAvatar={selectedAvatar} 
-                    setSelectedAvatar={setSelectedAvatar}
-
-                  />
-                ))}
-              </View>
+              <AvatarList 
+                containerStyles="px-5 mt-5"
+                selectedAvatar={selectedAvatar}
+                setSelectedAvatar={setSelectedAvatar}
+              />
 
               <CustomButton 
                 title="Confirm Avatar"

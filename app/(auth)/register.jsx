@@ -38,11 +38,8 @@ const Register = () => {
         "/auth/register",
         { username, email, hash: password}
       );
-      console.log("activateToken: " + JSON.stringify(response.data.activateToken));
       setActivationToken(response.data.activateToken);
       setShowSuccessMessage(true);
-
-      console.log("response: " + JSON.stringify(response.data));
 
     } catch (error) {
       GlobalErrorHandler(error, handleFormError);
@@ -121,11 +118,6 @@ const Register = () => {
           </View>
 
           { showSuccessMessage && (
-            // <MessageBox 
-            //   content="Please check your inbox for activation email"
-            //   type="success"
-            //   containerStyles="mt-5"
-            // />
             <View>
               <MessageBox 
                 content="Account created, pending activation"
