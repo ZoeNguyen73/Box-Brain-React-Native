@@ -1,4 +1,4 @@
-import { View, Text, Alert, ScrollView } from "react-native";
+import { View, Alert, ScrollView } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Redirect, router } from "expo-router";

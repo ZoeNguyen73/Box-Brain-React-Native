@@ -6,7 +6,7 @@ import tailwindConfig from "../../tailwind.config";
 
 const Avatar = ({ avatarName, selectedAvatar, setSelectedAvatar }) => {
   const lightWarning = tailwindConfig.theme.extend.colors.light.warning;
-  const opacity = avatarName === selectedAvatar ? 1 : 0.6;
+  const opacity = avatarName === selectedAvatar ? 1 : 0.3;
   const borderColor = avatarName === selectedAvatar ? lightWarning : "transparent";
 
   return (
