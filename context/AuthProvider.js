@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     username: "",
     accessToken: "",
+    avatar: "",
   });
 
   const signIn = async ({username, hash}) => {
@@ -25,19 +26,21 @@ export const AuthProvider = ({ children }) => {
         { username, hash },
       );
       
-      const { accessToken, refreshToken } = response.data;
+      const { accessToken, refreshToken, avatar } = response.data;
 
       await AsyncStorage.setItem("username", username);
       await AsyncStorage.setItem("accessToken", accessToken);
       await AsyncStorage.setItem("refreshToken", refreshToken);
+      await AsyncStorage.setItem("avatar", avatar);
 
-      setAuth({ username, accessToken });
+      setAuth({ username, accessToken, avatar });
       setIsLoggedIn(true);
 
     } catch (error) {
       setAuth({
         username: "",
         accessToken: "",
+        avatar:"",
       });
       setIsLoggedIn(false);
       GlobalErrorHandler(error);
@@ -60,10 +63,12 @@ export const AuthProvider = ({ children }) => {
       await AsyncStorage.removeItem("username");
       await AsyncStorage.removeItem("accessToken");
       await AsyncStorage.removeItem("refreshToken");
+      await AsyncStorage.removeItem("avatar");
 
       setAuth({
         username: "",
         accessToken: "",
+        avatar: "",
       });
       setIsLoggedIn(false);
 
@@ -82,11 +87,13 @@ export const AuthProvider = ({ children }) => {
       const currentUsername = await AsyncStorage.getItem("username");
       const currentAccessToken = await AsyncStorage.getItem("accessToken");
       const currentRefreshToken = await AsyncStorage.getItem("refreshToken");
+      const currentAvatar = await AsyncStorage.getItem("avatar");
 
-      if (!currentUsername || !currentAccessToken || !currentRefreshToken) {
+      if (!currentUsername || !currentAccessToken || !currentRefreshToken || !currentAvatar) {
         setAuth({
           username: "",
           accessToken: "",
+          avatar: "",
         });
         setIsLoading(false);
         setIsLoggedIn(false);
@@ -96,14 +103,14 @@ export const AuthProvider = ({ children }) => {
       setAuth({
         username: currentUsername,
         accessToken: currentAccessToken,
+        avatar: currentAvatar,
       });
 
       setIsLoggedIn(true);
 
     } catch (error) {
-      console.log(`get current user error: ${error.message}`);
       setIsLoggedIn(false);
-      throw new Error(error);
+      GlobalErrorHandler(error);
 
     } finally {
       setIsLoading(false);
