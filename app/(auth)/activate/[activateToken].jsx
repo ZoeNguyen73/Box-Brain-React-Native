@@ -11,32 +11,8 @@ import MessageBox from "../../../components/MessageBox";
 import { useAuthContext } from "../../../context/AuthProvider";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
-import { avatars } from "../../../constants";
-import tailwindConfig from "../../../tailwind.config";
+import AvatarList from "../../../components/Avatar/AvatarList";
 
-const Avatar = ({ avatarName, selectedAvatar, setSelectedAvatar }) => {
-  const lightWarning = tailwindConfig.theme.extend.colors.light.warning;
-  const opacity = avatarName === selectedAvatar ? 1 : 0.6;
-  const borderColor = avatarName === selectedAvatar ? lightWarning : "transparent";
-
-  return (
-    <TouchableOpacity
-      onPress={() => setSelectedAvatar(avatarName)}
-      className="p-2"
-    >
-      <Image 
-        source={avatars[avatarName]}
-        alt={avatarName}
-        opacity={opacity}
-        borderWidth={5}
-        borderRadius={40}
-        borderColor={borderColor}
-        className="w-[80] h-[80]"
-        resizeMode="cover"
-      />
-    </TouchableOpacity>
-  )  
-};
 
 const Activate = () => {
   const { activateToken } = useLocalSearchParams();
@@ -45,7 +21,6 @@ const Activate = () => {
   const [showAvatarChangeMessage, setShowAvatarChangeMessage] = useState(false);
   const [username, setUsername] = useState("");
   const [selectedAvatar, setSelectedAvatar] = useState("");
-
   
   const axiosPrivate = useAxiosPrivate();
 
@@ -85,7 +60,6 @@ const Activate = () => {
       GlobalErrorHandler(error);
     }
   }
-  
 
   return (
     <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
@@ -126,17 +100,11 @@ const Activate = () => {
                 )}
               </View>
 
-              <View className="flex flex-row flex-wrap justify-between items-center px-5 my-5">
-                {Object.keys(avatars).map((avatar) => (
-                  <Avatar 
-                    key={avatar}
-                    avatarName={avatar} 
-                    selectedAvatar={selectedAvatar} 
-                    setSelectedAvatar={setSelectedAvatar}
-
-                  />
-                ))}
-              </View>
+              <AvatarList 
+                containerStyles="px-5 mt-5"
+                selectedAvatar={selectedAvatar}
+                setSelectedAvatar={setSelectedAvatar}
+              />
 
               <CustomButton 
                 title="Confirm Avatar"
