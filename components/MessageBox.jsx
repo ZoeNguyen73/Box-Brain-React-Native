@@ -1,10 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-import { useThemeContext } from "../context/ThemeProvider";
-
 const MessageBox = ({content, type, containerStyles}) => {
-  const { theme } = useThemeContext();
   let backgroundColor = "";
   let textColor = "";
 

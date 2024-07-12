@@ -38,6 +38,7 @@ const Register = () => {
         "/auth/register",
         { username, email, hash: password}
       );
+      console.log("activateToken: " + JSON.stringify(response.data.activateToken));
       setActivationToken(response.data.activateToken);
       setShowSuccessMessage(true);
 
@@ -127,83 +128,91 @@ const Register = () => {
             // />
             <View>
               <MessageBox 
-                content="Account created successfully, pending activation"
+                content="Account created, pending activation"
                 type="success"
                 containerStyles="mt-5"
               />
               <CustomButton 
-                title="Continue to activate your account"
-                handlePress={() => router.push(`/activate/${activateToken}`)}
+                title="Activate"
+                containerStyles="mt-5"
+                handlePress={() => router.push(`/activate/${activationToken}`)}
               />
             </View>
             
           )}
+
+          { !showSuccessMessage && (
+            <>
+              <FormField 
+              title="Username"
+              value={form.username}
+              handleChangeText={(e) => {
+                handleFormError(null, "username");
+                setForm({ ...form, username: e });
+              }}
+              otherStyles="mt-10"
+              placeholder="give yourself a unique username"
+              error={formErrors.username}
+            />
+
+            <FormField 
+              title="Email"
+              value={form.email}
+              keyboardType="email-address"
+              handleChangeText={(e) => {
+                handleFormError(null, "email");
+                setForm({ ...form, email: e });
+              }}
+              otherStyles="mt-4"
+              placeholder="john.tan@email.com"
+              error={formErrors.email}
+            />
+
+            <FormField 
+              title="Password"
+              value={form.password}
+              handleChangeText={(e) => {
+                handleFormError(null, "password");
+                setForm({ ...form, password: e });
+              }}
+              otherStyles="mt-4"
+              error={formErrors.password}
+            />
+
+            <FormField 
+              title="Confirm Password"
+              value={form.confirm_password}
+              handleChangeText={(e) => {
+                handleFormError(null, "confirm_password");
+                setForm({ ...form, confirm_password: e });
+              }}
+              otherStyles="mt-4"
+              error={formErrors.confirm_password}
+            />
+
+            <CustomButton 
+              title="Register"
+              handlePress={validate}
+              containerStyles="mt-12"
+              isLoading={isSubmitting}
+            />
+
+            <View className="justify-center gap-2 pt-5 flex-row">
+              <Text className="text-sm text-light-text dark:text-dark-text font-sans">
+                Already have an account?
+              </Text>
+              <Link
+                href="/sign-in"
+                className="font-sans-bold text-light-links dark:text-dark-links"
+              > 
+                Sign In
+              </Link>
+            </View>
+            </>
+
+          )}
           
-          <FormField 
-            title="Username"
-            value={form.username}
-            handleChangeText={(e) => {
-              handleFormError(null, "username");
-              setForm({ ...form, username: e });
-            }}
-            otherStyles="mt-10"
-            placeholder="give yourself a unique username"
-            error={formErrors.username}
-          />
-
-          <FormField 
-            title="Email"
-            value={form.email}
-            keyboardType="email-address"
-            handleChangeText={(e) => {
-              handleFormError(null, "email");
-              setForm({ ...form, email: e });
-            }}
-            otherStyles="mt-4"
-            placeholder="john.tan@email.com"
-            error={formErrors.email}
-          />
-
-          <FormField 
-            title="Password"
-            value={form.password}
-            handleChangeText={(e) => {
-              handleFormError(null, "password");
-              setForm({ ...form, password: e });
-            }}
-            otherStyles="mt-4"
-            error={formErrors.password}
-          />
-
-          <FormField 
-            title="Confirm Password"
-            value={form.confirm_password}
-            handleChangeText={(e) => {
-              handleFormError(null, "confirm_password");
-              setForm({ ...form, confirm_password: e });
-            }}
-            otherStyles="mt-4"
-            error={formErrors.confirm_password}
-          />
-
-          <CustomButton 
-            title="Register"
-            handlePress={validate}
-            containerStyles="mt-12"
-            isLoading={isSubmitting}
-          />
-
-          <View className="justify-center gap-2 pt-5 flex-row">
-            <Text className="text-sm text-light-text dark:text-dark-text font-sans">
-              Already have an account?
-            </Text>
-            <Link
-              href="/sign-in"
-              className="font-sans-bold text-light-links dark:text-dark-links"
-            > 
-              Sign In
-            </Link>
-          </View>
+          
 
         </View>
       </ScrollView>

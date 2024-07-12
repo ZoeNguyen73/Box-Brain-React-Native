@@ -18,9 +18,9 @@ const App = () => {
   const lightBackgroundColor = tailwindConfig.theme.extend.colors.light.background;
   const darkBackgroundColor = tailwindConfig.theme.extend.colors.dark.background;
 
-  if (!isLoading && isLoggedIn) {
-    return <Redirect href="/home" />
-  }
+  // if (!isLoading && isLoggedIn) {
+  //   return <Redirect href="/home" />
+  // }
 
   return (
     <SafeAreaView 

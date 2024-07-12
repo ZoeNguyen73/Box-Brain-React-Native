@@ -13,7 +13,7 @@ const CustomButton = ({ title, handlePress, containerStyles, iconName }) => {
     <TouchableOpacity
       onPress={handlePress}
       activeOpacity={0.7}
-      className={`bg-light-yellow dark:bg-dark-yellow rounded-xl min-h-[62px] 
+      className={`bg-light-yellow dark:bg-dark-yellow rounded-xl min-h-[45px] 
         justify-center items-center px-6 py-4 w-fit
         ${containerStyles}`}
     >

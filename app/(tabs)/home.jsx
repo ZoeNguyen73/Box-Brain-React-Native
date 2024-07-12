@@ -2,6 +2,7 @@ import { View, Text, Alert } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { Redirect, router } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useAuthContext } from "../../context/AuthProvider";
 
@@ -26,13 +27,13 @@ const Home = () => {
   return (
     <SafeAreaView classname="bg-light-background dark:bg-dark-background h-full">
       <View>
-      <Text>User is Logged In</Text>
-      <Text>{auth.username}</Text>
-      <StatusBar style="auto" />
-      <CustomButton 
-        title="Sign Out"
-        handlePress={submit}
-      />
+        <Text>User is Logged In</Text>
+        <Text>{auth.username}</Text>
+        <StatusBar style="auto" />
+        <CustomButton 
+          title="Sign Out"
+          handlePress={submit}
+        />
     </View>
     </SafeAreaView>
     

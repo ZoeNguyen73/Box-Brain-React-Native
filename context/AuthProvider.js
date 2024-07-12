@@ -2,6 +2,7 @@ import { createContext, useState, useEffect, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import axios from "../api/axios";
+import GlobalErrorHandler from "../utils/GlobalErrorHandler";
 
 const AuthContext = createContext({});
 
@@ -39,21 +40,7 @@ export const AuthProvider = ({ children }) => {
         accessToken: "",
       });
       setIsLoggedIn(false);
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.error('Error Response:', error.response.data);
-        console.error('Error Status:', error.response.status);
-        console.error('Error Headers:', error.response.headers);
-      } else if (error.request) {
-        // The request was made but no response was received
-        console.error('Error Request:', error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error('Error Message:', error.message);
-      }
-      console.error('Error Config:', error.config);
-      throw new Error(error);
+      GlobalErrorHandler(error);
 
     } finally {
       setIsLoading(false);
@@ -81,8 +68,7 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(false);
 
     } catch (error) {
-      console.log(`log out error: ${error.message}`);
-      throw new Error(error);
+      GlobalErrorHandler(error);
 
     } finally {
       setIsLoading(false);
@@ -129,7 +115,7 @@ export const AuthProvider = ({ children }) => {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ signIn, signOut, auth, isLoggedIn, isLoading }}>
+    <AuthContext.Provider value={{ signIn, signOut, setAuth, auth, isLoggedIn, setIsLoggedIn, isLoading }}>
       {children}
     </AuthContext.Provider>
   )
