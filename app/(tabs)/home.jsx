@@ -34,6 +34,10 @@ const Home = () => {
           title="Sign Out"
           handlePress={submit}
         />
+        <CustomButton 
+          title="Back to index"
+          handlePress={() => router.push("/")}
+        />
     </View>
     </SafeAreaView>
     
