@@ -13,7 +13,7 @@ const FallBack = ({ error, resetErrorBoundary }) => {
       </Text>
     <TouchableOpacity
       className="mt-5"
-      onPress={() =>{router.push("/")}}
+      onPress={() =>{router.replace("/")}}
     >
       <Text className="font-mono-bold text-light-red">
         Back to Home

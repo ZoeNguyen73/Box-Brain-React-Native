@@ -93,7 +93,7 @@ const Register = () => {
     <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
       <ScrollView>
         <View
-          className="w-full justify-center  px-8 my-6"
+          className="w-full justify-center px-8 my-6"
         >
           <View className="flex-row gap-2 inline-block items-end mt-10">
             <Text 
@@ -136,70 +136,70 @@ const Register = () => {
           { !showSuccessMessage && (
             <>
               <FormField 
-              title="Username"
-              value={form.username}
-              handleChangeText={(e) => {
-                handleFormError(null, "username");
-                setForm({ ...form, username: e });
-              }}
-              otherStyles="mt-10"
-              placeholder="give yourself a unique username"
-              error={formErrors.username}
-            />
+                title="Username"
+                value={form.username}
+                handleChangeText={(e) => {
+                  handleFormError(null, "username");
+                  setForm({ ...form, username: e });
+                }}
+                otherStyles="mt-10"
+                placeholder="give yourself a unique username"
+                error={formErrors.username}
+              />
 
-            <FormField 
-              title="Email"
-              value={form.email}
-              keyboardType="email-address"
-              handleChangeText={(e) => {
-                handleFormError(null, "email");
-                setForm({ ...form, email: e });
-              }}
-              otherStyles="mt-4"
-              placeholder="john.tan@email.com"
-              error={formErrors.email}
-            />
+              <FormField 
+                title="Email"
+                value={form.email}
+                keyboardType="email-address"
+                handleChangeText={(e) => {
+                  handleFormError(null, "email");
+                  setForm({ ...form, email: e });
+                }}
+                otherStyles="mt-4"
+                placeholder="john.tan@email.com"
+                error={formErrors.email}
+              />
 
-            <FormField 
-              title="Password"
-              value={form.password}
-              handleChangeText={(e) => {
-                handleFormError(null, "password");
-                setForm({ ...form, password: e });
-              }}
-              otherStyles="mt-4"
-              error={formErrors.password}
-            />
+              <FormField 
+                title="Password"
+                value={form.password}
+                handleChangeText={(e) => {
+                  handleFormError(null, "password");
+                  setForm({ ...form, password: e });
+                }}
+                otherStyles="mt-4"
+                error={formErrors.password}
+              />
 
-            <FormField 
-              title="Confirm Password"
-              value={form.confirm_password}
-              handleChangeText={(e) => {
-                handleFormError(null, "confirm_password");
-                setForm({ ...form, confirm_password: e });
-              }}
-              otherStyles="mt-4"
-              error={formErrors.confirm_password}
-            />
+              <FormField 
+                title="Confirm Password"
+                value={form.confirm_password}
+                handleChangeText={(e) => {
+                  handleFormError(null, "confirm_password");
+                  setForm({ ...form, confirm_password: e });
+                }}
+                otherStyles="mt-4"
+                error={formErrors.confirm_password}
+              />
 
-            <CustomButton 
-              title="Register"
-              handlePress={validate}
-              containerStyles="mt-12"
-              isLoading={isSubmitting}
-            />
+              <CustomButton 
+                title="Register"
+                handlePress={validate}
+                containerStyles="mt-12"
+                isLoading={isSubmitting}
+              />
 
-            <View className="justify-center gap-2 pt-5 flex-row">
-              <Text className="text-sm text-light-text dark:text-dark-text font-sans">
-                Already have an account?
-              </Text>
-              <Link
-                href="/sign-in"
-                className="font-sans-bold text-light-links dark:text-dark-links"
-              > 
-                Sign In
-              </Link>
-            </View>
+              <View className="justify-center gap-2 pt-5 flex-row">
+                <Text className="text-sm text-light-text dark:text-dark-text font-sans">
+                  Already have an account?
+                </Text>
+                <Link
+                  href="/sign-in"
+                  className="font-sans-bold text-light-links dark:text-dark-links"
+                > 
+                  Sign In
+                </Link>
+              </View>
             </>
 
           )}
