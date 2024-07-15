@@ -52,7 +52,7 @@ const SignIn = () => {
       setShowSuccessMessage(true);
       router.replace("/home");
     } catch (error) {
-      GlobalErrorHandler(error);
+      GlobalErrorHandler(error, handleFormError);
     } finally {
       setIsSubmitting(false);
     }

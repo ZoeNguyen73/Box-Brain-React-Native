@@ -5,7 +5,7 @@ const GlobalErrorHandler = (error, handleFormError) => {
     const errorMessage = error.response.data.message || "An error occurred";
     const errorDetails = error.response.data.details || "Please try again.";
 
-    if (handleFormError && error.response.status === 400) {
+    if (handleFormError && (error.response.status === 400 || error.response.status === 401)) {
       if (errorDetails.includes("username")) {
         handleFormError(errorDetails, "username");
       } else if (errorDetails.includes("email")) {
@@ -21,7 +21,7 @@ const GlobalErrorHandler = (error, handleFormError) => {
     }
     
   } else if (error.request) {
-    console.log(`error.request: ` + error.request);
+    console.log("error.request: " + error.request);
     Alert.alert("No response from server", "Please check your internet connection and try again.");
   } else {
     console.log("other error");
