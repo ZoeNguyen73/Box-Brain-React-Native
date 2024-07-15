@@ -25,20 +25,15 @@ const TabIcon = ({ color, icon, name, focused }) => {
 }
 
 const TabsLayout = () => {
-  const theme = useThemeContext();
+  const { theme } = useThemeContext();
 
-  let backgroundColor = "";
-  let borderTopColor = "";
+  const backgroundColor = theme === "dark" 
+    ? tailwindConfig.theme.extend.colors.dark.surface
+    : tailwindConfig.theme.extend.colors.dark.background;
+  const borderTopColor = tailwindConfig.theme.extend.colors.dark.grey1;
   const borderTopWidth = theme === "dark" ? 1 : 0;
   const activeTintColor = tailwindConfig.theme.extend.colors.dark.yellow;
   const inactiveTintColor = tailwindConfig.theme.extend.colors.dark.grey1;
-
-  if (theme === "dark") {
-    backgroundColor = tailwindConfig.theme.extend.colors.dark.surface;
-    borderTopColor = tailwindConfig.theme.extend.colors.dark.text;
-  } else {
-    backgroundColor = tailwindConfig.theme.extend.colors.dark.background;
-  }
   
   return (
     <>

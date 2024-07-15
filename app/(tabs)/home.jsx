@@ -5,12 +5,12 @@ import { Redirect, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useAuthContext } from "../../context/AuthProvider";
+import { useThemeContext } from "../../context/ThemeProvider";
 
 import CustomButton from "../../components/CustomButton/CustomButton";
 
 const Home = () => {
   const { signOut, auth, isLoggedIn, isLoading } = useAuthContext();
-
   if (!isLoading && !isLoggedIn) {
     return <Redirect href="/" />
   }
@@ -25,7 +25,7 @@ const Home = () => {
   }
 
   return (
-    <SafeAreaView classname="bg-light-background dark:bg-dark-background h-full">
+    <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
       <View>
         <Text>User is Logged In</Text>
         <Text>{auth.username}</Text>
