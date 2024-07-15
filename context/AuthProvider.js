@@ -20,34 +20,22 @@ export const AuthProvider = ({ children }) => {
   const signIn = async ({username, hash}) => {
     setIsLoading(true);
 
-    try {
-      const response = await axios.post(
-        "/auth/login",
-        { username, hash },
-      );
-      
-      const { accessToken, refreshToken, avatar } = response.data;
+    const response = await axios.post(
+      "/auth/login",
+      { username, hash },
+    );
 
-      await AsyncStorage.setItem("username", username);
-      await AsyncStorage.setItem("accessToken", accessToken);
-      await AsyncStorage.setItem("refreshToken", refreshToken);
-      await AsyncStorage.setItem("avatar", avatar);
+    const { accessToken, refreshToken, avatar } = response.data;
 
-      setAuth({ username, accessToken, avatar });
-      setIsLoggedIn(true);
+    await AsyncStorage.setItem("username", username);
+    await AsyncStorage.setItem("accessToken", accessToken);
+    await AsyncStorage.setItem("refreshToken", refreshToken);
+    await AsyncStorage.setItem("avatar", avatar);
 
-    } catch (error) {
-      setAuth({
-        username: "",
-        accessToken: "",
-        avatar:"",
-      });
-      setIsLoggedIn(false);
-      GlobalErrorHandler(error);
+    setAuth({ username, accessToken, avatar });
+    setIsLoggedIn(true);
 
-    } finally {
-      setIsLoading(false);
-    }
+    setIsLoading(false);
   };
 
   const signOut = async () => {
