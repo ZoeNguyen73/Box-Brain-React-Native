@@ -36,6 +36,7 @@ const Home = () => {
         />
         <CustomButton 
           title="Back to index"
+          variant="secondary"
           handlePress={() => router.push("/")}
         />
     </View>

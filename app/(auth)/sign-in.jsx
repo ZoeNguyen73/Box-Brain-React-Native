@@ -102,6 +102,7 @@ const SignIn = () => {
             />
             <CustomButton 
               title="Log Out"
+              variant="secondary"
               handlePress={logOut}
               containerStyles="mt-12"
             />
