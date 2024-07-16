@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Keyboard } from "react-native";
+import { View, Text, ScrollView, Keyboard, Image } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, Link } from "expo-router";
@@ -8,6 +8,7 @@ import CustomButton from "../../components/CustomButton/CustomButton";
 import FormField from "../../components/CustomForm/FormField";
 import GlobalErrorHandler from "../../utils/GlobalErrorHandler";
 import Avatar from "../../components/Avatar/Avatar";
+import { avatars } from "../../constants";
 
 const SignIn = () => {
   const { auth, signIn, isLoggedIn, isLoading, signOut } = useAuthContext();
@@ -70,44 +71,46 @@ const SignIn = () => {
   if (!isLoading && isLoggedIn && auth.username) {
     return (
       <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
-        <View className="w-full justify-center px-8 my-6 min-h-[85vh]">
+        <ScrollView>
+          <View className="w-full justify-center px-8 my-6 min-h-[85vh]">
+            <View className="flex-column justify-center items-center gap-2">
+              <Text 
+                className="font-mono-bold text-2xl text-light-yellow 
+                dark:text-dark-yellow tracking-wider mb-5"
+              >
+                Welcome back{"\n"}
+                to Box Brain 
+              </Text>
 
-          <View className="flex-column justify-center items-center gap-2">
-            <Text 
-              className="font-mono-bold text-2xl text-light-yellow 
-              dark:text-dark-yellow tracking-wider mb-5"
-            >
-              Welcome back{"\n"}
-              to Box Brain 
-            </Text>
-
-            <View className="justify-center items-center">
-              { auth.avatar && (
+              <View className="justify-center items-center w-full">
                 <Avatar 
                   avatarName={auth.avatar}
-                  dimensionInPx={100}
+                  size="large"
                 />
-              )}
-              <Text className="font-mono-bold tracking-wider text-light-teal dark:text-dark-teal text-3xl mt-2">
-                {auth.username}
-              </Text> 
+
+                <Text className="font-mono-bold tracking-wider text-light-teal dark:text-dark-teal text-3xl mt-2">
+                  {auth.username}
+                </Text> 
+              </View>
+            </View>
+
+            <View className="justify-center flex-column">
+              <CustomButton 
+                title="Continue to Home"
+                handlePress={() => router.push("/home")}
+                containerStyles="mt-12"
+              />
+              <CustomButton 
+                title="Log Out"
+                variant="secondary"
+                handlePress={logOut}
+                containerStyles="mt-12"
+              />
             </View>
           </View>
 
-          <View className="justify-center flex-column">
-            <CustomButton 
-              title="Continue to Home"
-              handlePress={() => router.push("/home")}
-              containerStyles="mt-12"
-            />
-            <CustomButton 
-              title="Log Out"
-              variant="secondary"
-              handlePress={logOut}
-              containerStyles="mt-12"
-            />
-          </View>
-        </View>
+        </ScrollView>
+        
       </SafeAreaView>
     )
   }
@@ -116,9 +119,9 @@ const SignIn = () => {
     <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
       <ScrollView>
         <View 
-          className="flex-column w-full justify-center items-center px-8 my-6 min-h-[85vh] border"
+          className="flex-column w-full justify-center items-center px-8 my-6 min-h-[85vh]"
         >
-          <View className="flex-column gap-5 justify-center items-center border w-full">
+          <View className="flex-column gap-5 justify-center items-center w-full">
             <View className="flex-row">
               <Text 
                 className="font-mono-bold text-xl text-light-yellow 
