@@ -73,6 +73,7 @@ module.exports = {
           rosewater: "#dc8a78",
           sapphire: "#209fb5",
           mauve: "#8839ef",
+          "button-green": "#01ca84",
         },
         dark: {
           background: "#1e1e2e",

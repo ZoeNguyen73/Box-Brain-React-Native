@@ -23,13 +23,13 @@ const CustomButton = ({ title, handlePress, containerStyles, iconName, isDisable
     <TouchableOpacity
       onPress={handlePress}
       activeOpacity={0.7}
-      className={`${backgroundColor} rounded-xl min-h-[45px] 
-        justify-center items-center px-6 py-4 w-fit
+      className={`${backgroundColor} rounded-full min-h-[45px] min-w-[200px] 
+        justify-center items-center px-6 py-4
         ${containerStyles}`}
     >
       <View className="justify-center items-center flex-row gap-2">
         <Text
-          className={`${textColor} font-mono-bold uppercase text-xl tracking-wider`}
+          className={`${textColor} font-sans-semibold text-xl tracking-wider`}
         >
           {title}
         </Text>

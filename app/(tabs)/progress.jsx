@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const records = () => {
+const progress = () => {
   return (
     <View>
       <Text>records</Text>
@@ -9,4 +9,4 @@ const records = () => {
   )
 }
 
-export default records
+export default progress

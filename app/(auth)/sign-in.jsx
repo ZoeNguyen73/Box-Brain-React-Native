@@ -115,13 +115,39 @@ const SignIn = () => {
   return (
     <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
       <ScrollView>
-        <View className="w-full justify-center px-8 my-6 min-h-[85vh]">
-          <Text 
-            className="font-mono-bold text-4xl text-light-yellow 
-            dark:text-dark-yellow tracking-wider"
-          >
-            Sign In
-          </Text>
+        <View 
+          className="flex-column w-full justify-center items-center px-8 my-6 min-h-[85vh] border"
+        >
+          <View className="flex-column gap-5 justify-center items-center border w-full">
+            <View className="flex-row">
+              <Text 
+                className="font-mono-bold text-xl text-light-yellow 
+                dark:text-dark-yellow tracking-wider mr-2"
+              >
+                Hey
+              </Text>
+              <Text 
+                className="font-mono-bold text-xl text-light-teal
+                dark:text-dark-teal tracking-wider"
+              >
+                Brainiac
+              </Text>
+              <Text 
+                className="font-mono-bold text-xl text-light-yellow 
+                dark:text-dark-yellow tracking-wider"
+              >
+                ,
+              </Text>
+            </View>
+            
+            <Text 
+              className="font-mono-bold text-4xl text-light-yellow 
+              dark:text-dark-yellow tracking-wider"
+            >
+              Hello again!
+            </Text>
+          </View>
+          
 
           <FormField 
             title="Username"
@@ -147,17 +173,17 @@ const SignIn = () => {
           <CustomButton 
             title="Sign In"
             handlePress={validate}
-            containerStyles="mt-7"
+            containerStyles="mt-12"
             isLoading={isSubmitting}
           />
 
-          <View className="justify-center gap-2 pt-5 flex-row">
+          <View className="justify-center gap-2 pt-5 flex-row mt-5">
             <Text className="text-sm text-light-text dark:text-dark-text font-sans">
               Don't have an account?
             </Text>
             <Link
               href="/register"
-              className="font-sans-bold text-light-links dark:text-dark-links"
+              className="text-sm font-sans-bold text-light-text dark:text-dark-text underline"
             > 
               Register for free
             </Link>
