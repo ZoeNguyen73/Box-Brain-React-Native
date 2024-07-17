@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { 
   OpenSans_300Light,
   OpenSans_400Regular, 
@@ -99,6 +99,7 @@ const RootLayout = () => {
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="review" options={{ headerShown: false }} />
           </Stack>
         </ThemeProvider>
       </AuthProvider>
