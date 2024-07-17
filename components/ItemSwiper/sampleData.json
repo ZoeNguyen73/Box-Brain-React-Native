@@ -1,0 +1,485 @@
+[
+  {
+    "_id": "664d9ffd0bb400e1d1017e10",
+    "user_id": "664ae51aa00fb7630ef3d662",
+    "box_id": {
+      "_id": "664b0753d5daf8a24ca50855",
+      "stack_id": {
+        "_id": "664b0753d5daf8a24ca50852",
+        "name": "User 1 Stack A",
+        "is_private": false,
+        "is_default": true,
+        "slug": "user-1-stack-a"
+      },
+      "name": "Default",
+      "lapse_days": 0,
+      "is_default": true
+    },
+    "keyword": "blithesome",
+    "definition": "carefree and happy and lighthearted",
+    "is_active": false,
+    "is_completed": true,
+    "tags": [
+      {
+        "tag_id": {
+          "_id": "664d9ab76abf3a5444ffe62c",
+          "name": "English"
+        },
+        "_id": "66504351b72c683b3e5ae01a"
+      },
+      {
+        "tag_id": {
+          "_id": "664d9ac36abf3a5444ffe631",
+          "name": "adjective"
+        },
+        "_id": "665047656793dc54abc766c8"
+      }
+    ],
+    "properties": [
+      {
+        "property_id": {
+          "_id": "664d990a82905481d1abbb90",
+          "name": "example 1"
+        },
+        "content": "the ploughman is a blithesome laddd",
+        "_id": "664d9ffd0bb400e1d1017e13"
+      },
+      {
+        "property_id": {
+          "_id": "664dfff892b8a9316470a1f8",
+          "name": "difficulty"
+        },
+        "content": "high",
+        "_id": "665047656793dc54abc766c9"
+      }
+    ],
+    "createdAt": "2024-05-22T07:34:21.041Z",
+    "updatedAt": "2024-05-24T07:53:09.303Z",
+    "__v": 0
+  },
+  {
+    "_id": "665050d35de570c8d99277b2",
+    "user_id": "664ae51aa00fb7630ef3d662",
+    "box_id": null,
+    "keyword": "capricious",
+    "definition": "determined by chance or impulse rather than by necessity",
+    "is_active": false,
+    "is_completed": false,
+    "tags": [],
+    "properties": [],
+    "createdAt": "2024-05-24T08:33:23.028Z",
+    "updatedAt": "2024-05-24T08:33:23.028Z",
+    "__v": 0
+  },
+  {
+    "_id": "6654316cc6f8f860a0875b53",
+    "user_id": "664ae51aa00fb7630ef3d662",
+    "box_id": {
+      "_id": "664b0753d5daf8a24ca50855",
+      "stack_id": {
+        "_id": "664b0753d5daf8a24ca50852",
+        "name": "User 1 Stack A",
+        "is_private": false,
+        "is_default": true,
+        "slug": "user-1-stack-a"
+      },
+      "name": "Default",
+      "lapse_days": 0,
+      "is_default": true
+    },
+    "keyword": "nadir",
+    "definition": "the lowest or most unsuccessful point in a situation",
+    "is_active": false,
+    "is_completed": false,
+    "properties": [
+      {
+        "property_id": {
+          "_id": "664d990a82905481d1abbb90",
+          "name": "example 1"
+        },
+        "content": "asking that question was the nadir of my career",
+        "_id": "6654316cc6f8f860a0875b55"
+      }
+    ],
+    "tags": [],
+    "createdAt": "2024-05-27T07:08:28.465Z",
+    "updatedAt": "2024-05-27T07:12:31.187Z",
+    "__v": 0
+  },
+  {
+    "_id": "6678f00931ebeb9db1c9d5d1",
+    "user_id": "664ae51aa00fb7630ef3d662",
+    "box_id": {
+      "_id": "666aae45c6358d76c862c7ec",
+      "stack_id": {
+        "_id": "666aae45c6358d76c862c7e9",
+        "name": "5 Days Stack",
+        "is_private": true,
+        "is_default": false,
+        "slug": "5-days-stack"
+      },
+      "name": "Default Box",
+      "lapse_days": 0,
+      "is_default": true
+    },
+    "keyword": "bilious",
+    "definition": "Of or pertaining to something containing or consisting of bile.",
+    "is_active": false,
+    "is_completed": false,
+    "tags": [
+      {
+        "tag_id": {
+          "_id": "664d9ab76abf3a5444ffe62c",
+          "name": "English"
+        },
+        "_id": "6678f00931ebeb9db1c9d5d2"
+      }
+    ],
+    "properties": [],
+    "createdAt": "2024-06-24T04:03:21.261Z",
+    "updatedAt": "2024-06-24T04:03:21.261Z",
+    "__v": 0
+  },
+  {
+    "_id": "6678f00931ebeb9db1c9d5d6",
+    "user_id": "664ae51aa00fb7630ef3d662",
+    "box_id": {
+      "_id": "666aae45c6358d76c862c7ec",
+      "stack_id": {
+        "_id": "666aae45c6358d76c862c7e9",
+        "name": "5 Days Stack",
+        "is_private": true,
+        "is_default": false,
+        "slug": "5-days-stack"
+      },
+      "name": "Default Box",
+      "lapse_days": 0,
+      "is_default": true
+    },
+    "keyword": "gaiety",
+    "definition": "The state of being happy or merry.",
+    "is_active": false,
+    "is_completed": false,
+    "tags": [
+      {
+        "tag_id": {
+          "_id": "664d9ab76abf3a5444ffe62c",
+          "name": "English"
+        },
+        "_id": "6678f00931ebeb9db1c9d5d7"
+      }
+    ],
+    "properties": [
+      {
+        "property_id": {
+          "_id": "664d990a82905481d1abbb90",
+          "name": "example 1"
+        },
+        "content": "The decorations added greatly to the gaiety of the room.",
+        "_id": "6678f00931ebeb9db1c9d5d8"
+      }
+    ],
+    "createdAt": "2024-06-24T04:03:21.358Z",
+    "updatedAt": "2024-06-24T04:03:21.358Z",
+    "__v": 0
+  },
+  {
+    "_id": "6678f00931ebeb9db1c9d5da",
+    "user_id": "664ae51aa00fb7630ef3d662",
+    "box_id": {
+      "_id": "666aae45c6358d76c862c7ec",
+      "stack_id": {
+        "_id": "666aae45c6358d76c862c7e9",
+        "name": "5 Days Stack",
+        "is_private": true,
+        "is_default": false,
+        "slug": "5-days-stack"
+      },
+      "name": "Default Box",
+      "lapse_days": 0,
+      "is_default": true
+    },
+    "keyword": "astir",
+    "definition": "In motion; characterized by motion.",
+    "is_active": false,
+    "is_completed": false,
+    "tags": [
+      {
+        "tag_id": {
+          "_id": "664d9ab76abf3a5444ffe62c",
+          "name": "English"
+        },
+        "_id": "6678f00931ebeb9db1c9d5db"
+      }
+    ],
+    "properties": [],
+    "createdAt": "2024-06-24T04:03:21.370Z",
+    "updatedAt": "2024-06-24T04:03:21.370Z",
+    "__v": 0
+  },
+  {
+    "_id": "6678f00931ebeb9db1c9d5dd",
+    "user_id": "664ae51aa00fb7630ef3d662",
+    "box_id": {
+      "_id": "666aae45c6358d76c862c7ec",
+      "stack_id": {
+        "_id": "666aae45c6358d76c862c7e9",
+        "name": "5 Days Stack",
+        "is_private": true,
+        "is_default": false,
+        "slug": "5-days-stack"
+      },
+      "name": "Default Box",
+      "lapse_days": 0,
+      "is_default": true
+    },
+    "keyword": "torpid",
+    "definition": "(Oxford University slang) An inferior racing boat, or one who rows in such a boat.",
+    "is_active": false,
+    "is_completed": false,
+    "tags": [
+      {
+        "tag_id": {
+          "_id": "664d9ab76abf3a5444ffe62c",
+          "name": "English"
+        },
+        "_id": "6678f00931ebeb9db1c9d5de"
+      }
+    ],
+    "properties": [],
+    "createdAt": "2024-06-24T04:03:21.382Z",
+    "updatedAt": "2024-06-24T04:03:21.382Z",
+    "__v": 0
+  },
+  {
+    "_id": "6678f00931ebeb9db1c9d5e0",
+    "user_id": "664ae51aa00fb7630ef3d662",
+    "box_id": {
+      "_id": "666aae45c6358d76c862c7ec",
+      "stack_id": {
+        "_id": "666aae45c6358d76c862c7e9",
+        "name": "5 Days Stack",
+        "is_private": true,
+        "is_default": false,
+        "slug": "5-days-stack"
+      },
+      "name": "Default Box",
+      "lapse_days": 0,
+      "is_default": true
+    },
+    "keyword": "insipid",
+    "definition": "Unappetizingly flavorless.",
+    "is_active": false,
+    "is_completed": false,
+    "tags": [
+      {
+        "tag_id": {
+          "_id": "664d9ab76abf3a5444ffe62c",
+          "name": "English"
+        },
+        "_id": "6678f00931ebeb9db1c9d5e1"
+      }
+    ],
+    "properties": [
+      {
+        "property_id": {
+          "_id": "664d990a82905481d1abbb90",
+          "name": "example 1"
+        },
+        "content": "The diners were disappointed with the plain, insipid soup they were served.",
+        "_id": "6678f00931ebeb9db1c9d5e2"
+      }
+    ],
+    "createdAt": "2024-06-24T04:03:21.394Z",
+    "updatedAt": "2024-06-24T04:03:21.394Z",
+    "__v": 0
+  },
+  {
+    "_id": "6678f00931ebeb9db1c9d5e4",
+    "user_id": "664ae51aa00fb7630ef3d662",
+    "box_id": {
+      "_id": "666aae45c6358d76c862c7ec",
+      "stack_id": {
+        "_id": "666aae45c6358d76c862c7e9",
+        "name": "5 Days Stack",
+        "is_private": true,
+        "is_default": false,
+        "slug": "5-days-stack"
+      },
+      "name": "Default Box",
+      "lapse_days": 0,
+      "is_default": true
+    },
+    "keyword": "ingratiate",
+    "definition": "To bring oneself into favour with someone by flattering or trying to please him or her.",
+    "is_active": false,
+    "is_completed": false,
+    "tags": [
+      {
+        "tag_id": {
+          "_id": "664d9ab76abf3a5444ffe62c",
+          "name": "English"
+        },
+        "_id": "6678f00931ebeb9db1c9d5e5"
+      }
+    ],
+    "properties": [],
+    "createdAt": "2024-06-24T04:03:21.408Z",
+    "updatedAt": "2024-06-24T04:03:21.408Z",
+    "__v": 0
+  },
+  {
+    "_id": "6678f00931ebeb9db1c9d5e7",
+    "user_id": "664ae51aa00fb7630ef3d662",
+    "box_id": {
+      "_id": "666aae45c6358d76c862c7ec",
+      "stack_id": {
+        "_id": "666aae45c6358d76c862c7e9",
+        "name": "5 Days Stack",
+        "is_private": true,
+        "is_default": false,
+        "slug": "5-days-stack"
+      },
+      "name": "Default Box",
+      "lapse_days": 0,
+      "is_default": true
+    },
+    "keyword": "repine",
+    "definition": "To fail; to wane.",
+    "is_active": false,
+    "is_completed": false,
+    "tags": [
+      {
+        "tag_id": {
+          "_id": "664d9ab76abf3a5444ffe62c",
+          "name": "English"
+        },
+        "_id": "6678f00931ebeb9db1c9d5e8"
+      }
+    ],
+    "properties": [],
+    "createdAt": "2024-06-24T04:03:21.418Z",
+    "updatedAt": "2024-06-24T04:03:21.418Z",
+    "__v": 0
+  },
+  {
+    "_id": "6678f00931ebeb9db1c9d5ea",
+    "user_id": "664ae51aa00fb7630ef3d662",
+    "box_id": {
+      "_id": "666aae45c6358d76c862c7ec",
+      "stack_id": {
+        "_id": "666aae45c6358d76c862c7e9",
+        "name": "5 Days Stack",
+        "is_private": true,
+        "is_default": false,
+        "slug": "5-days-stack"
+      },
+      "name": "Default Box",
+      "lapse_days": 0,
+      "is_default": true
+    },
+    "keyword": "plaintive",
+    "definition": "Sounding sorrowful, mournful or melancholic.",
+    "is_active": false,
+    "is_completed": false,
+    "tags": [
+      {
+        "tag_id": {
+          "_id": "664d9ab76abf3a5444ffe62c",
+          "name": "English"
+        },
+        "_id": "6678f00931ebeb9db1c9d5eb"
+      }
+    ],
+    "properties": [
+      {
+        "property_id": {
+          "_id": "664d990a82905481d1abbb90",
+          "name": "example 1"
+        },
+        "content": "a typically plaintive song from Radiohead",
+        "_id": "6678f00931ebeb9db1c9d5ec"
+      }
+    ],
+    "createdAt": "2024-06-24T04:03:21.430Z",
+    "updatedAt": "2024-06-24T04:03:21.430Z",
+    "__v": 0
+  },
+  {
+    "_id": "6678f00931ebeb9db1c9d5ee",
+    "user_id": "664ae51aa00fb7630ef3d662",
+    "box_id": {
+      "_id": "666aae45c6358d76c862c7ec",
+      "stack_id": {
+        "_id": "666aae45c6358d76c862c7e9",
+        "name": "5 Days Stack",
+        "is_private": true,
+        "is_default": false,
+        "slug": "5-days-stack"
+      },
+      "name": "Default Box",
+      "lapse_days": 0,
+      "is_default": true
+    },
+    "keyword": "efface",
+    "definition": "To erase (as anything impressed or inscribed upon a surface); to render illegible or indiscernible.",
+    "is_active": false,
+    "is_completed": false,
+    "tags": [
+      {
+        "tag_id": {
+          "_id": "664d9ab76abf3a5444ffe62c",
+          "name": "English"
+        },
+        "_id": "6678f00931ebeb9db1c9d5ef"
+      }
+    ],
+    "properties": [
+      {
+        "property_id": {
+          "_id": "664d990a82905481d1abbb90",
+          "name": "example 1"
+        },
+        "content": "Do not efface what I've written on the chalkboard.",
+        "_id": "6678f00931ebeb9db1c9d5f0"
+      }
+    ],
+    "createdAt": "2024-06-24T04:03:21.442Z",
+    "updatedAt": "2024-06-24T04:03:21.442Z",
+    "__v": 0
+  },
+  {
+    "_id": "6678f00931ebeb9db1c9d5f2",
+    "user_id": "664ae51aa00fb7630ef3d662",
+    "box_id": {
+      "_id": "666aae45c6358d76c862c7ec",
+      "stack_id": {
+        "_id": "666aae45c6358d76c862c7e9",
+        "name": "5 Days Stack",
+        "is_private": true,
+        "is_default": false,
+        "slug": "5-days-stack"
+      },
+      "name": "Default Box",
+      "lapse_days": 0,
+      "is_default": true
+    },
+    "keyword": "genteel",
+    "definition": "Affectedly proper or refined; somewhat prudish refinement; excessively polite.",
+    "is_active": false,
+    "is_completed": false,
+    "tags": [
+      {
+        "tag_id": {
+          "_id": "664d9ab76abf3a5444ffe62c",
+          "name": "English"
+        },
+        "_id": "6678f00931ebeb9db1c9d5f3"
+      }
+    ],
+    "properties": [],
+    "createdAt": "2024-06-24T04:03:21.453Z",
+    "updatedAt": "2024-06-24T04:03:21.453Z",
+    "__v": 0
+  }
+]
