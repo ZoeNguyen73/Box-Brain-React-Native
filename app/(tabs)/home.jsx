@@ -28,15 +28,6 @@ const Home = () => {
     return <Redirect href="/" />
   }
 
-  const submit = async () => {
-    try {
-      await signOut();
-      router.replace("/");
-    } catch (error) {
-      GlobalErrorHandler(error);
-    }
-  }
-
   return (
     <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
       <ScrollView>
@@ -80,20 +71,6 @@ const Home = () => {
 
           <QuickReview />
 
-          {/* <View>
-            <Text>User is Logged In</Text>
-            <Text>{auth.username}</Text>
-            <StatusBar style="auto" />
-            <CustomButton 
-              title="Sign Out"
-              handlePress={submit}
-            />
-            <CustomButton 
-              title="Back to index"
-              variant="secondary"
-              handlePress={() => router.push("/")}
-            />
-          </View> */}
         </View>
         
       </ScrollView> 
