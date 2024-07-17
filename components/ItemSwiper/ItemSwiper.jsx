@@ -1,43 +1,11 @@
-import { View, ScrollView, Text, ImageBackground } from "react-native";
+import { View, Text } from "react-native";
 import React, {useState, useEffect} from "react";
 import Swiper from "react-native-deck-swiper";
 
 import sampleData from "./sampleData.json";
 import ColorPairings from "./ColorPairings";
-import { gradients } from "../../constants";
+import ItemCard from "../ItemCard/ItemCard";
 
-const ItemCard = ({ item }) => {
-  const { keyword, definition, borderColor, textColor } = item;
-
-  return (
-    <ScrollView className="h-[95%]">
-      <View 
-        className={`h-[70vh] border-8 ${borderColor} rounded-3xl overflow-hidden`}
-      >
-        <ImageBackground 
-          source={gradients.gradientYellowBlue}
-          resizeMode="cover"
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            padding: 20,
-            overflow: "hidden"
-          }}
-        >
-          <View className="p-8">
-            <Text className={`font-mono-bold text-3xl ${textColor}`}>
-              {keyword}
-            </Text>
-            <Text className="font-sans text-light-text mt-5">
-              {definition}
-            </Text>
-          </View>
-          
-        </ImageBackground>
-      </View>
-    </ScrollView>
-  )
-}
 
 const ItemSwiper = () => {
   const [items, setItems] = useState([]);
@@ -55,7 +23,6 @@ const ItemSwiper = () => {
         textColor: ColorPairings[colorIndex].textColor,
       };
     });
-    console.log(updatedItems);
     setItems(updatedItems);
   }, []);
 
