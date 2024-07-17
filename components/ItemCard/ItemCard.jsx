@@ -1,4 +1,6 @@
 import { View, ScrollView, Text, ImageBackground } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+
 import { gradients } from "../../constants";
 import TagChip from "./TagChip";
 import PropertyDisplay from "./PropertyDisplay";
@@ -11,7 +13,7 @@ const ItemCard = ({ item }) => {
       <View 
         className={`h-[70vh] border-8 ${borderColor} rounded-3xl overflow-hidden`}
       >
-        <ImageBackground 
+        {/* <ImageBackground 
           source={gradients.gradientYellowBlue}
           resizeMode="cover"
           style={{
@@ -20,6 +22,16 @@ const ItemCard = ({ item }) => {
             padding: 20,
             overflow: "hidden"
           }}
+        > */}
+        <LinearGradient
+          colors={["#db5375", "#b3ffb3"]}
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            padding: 20,
+          }}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
         >
           <View className="flex-column justify-left">
             <Text className={`font-mono-bold text-4xl ${textColor}`}>
@@ -30,7 +42,7 @@ const ItemCard = ({ item }) => {
               { tags.map((tag) => {
                 return (
                   <TagChip
-                    key={tag.tag_id._id} 
+                    key={tag._id} 
                     text={tag.tag_id.name}
                     color={tag.tag_id.colour_name}
                   />
@@ -45,7 +57,8 @@ const ItemCard = ({ item }) => {
             <View className="flex-column mt-5">
               { properties.map((property) => {
                 return (
-                  <PropertyDisplay 
+                  <PropertyDisplay
+                    key={property._id} 
                     name={property.property_id.name}
                     content={property.content}
                   />
@@ -54,8 +67,8 @@ const ItemCard = ({ item }) => {
 
             </View>
           </View>
-          
-        </ImageBackground>
+        </LinearGradient>  
+        {/* </ImageBackground> */}
       </View>
     </ScrollView>
   )
