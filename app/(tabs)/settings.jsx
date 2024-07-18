@@ -1,6 +1,6 @@
 import { View, Text, Switch } from "react-native";
 import React from "react";
-import { router } from "expo-router";
+import { router, Redirect } from "expo-router";
 
 import { useThemeContext } from "../../context/ThemeProvider";
 import { SafeAreaView } from "react-native-safe-area-context";

@@ -13,6 +13,7 @@ import { updateAvatar } from "../../../utils/AvatarService";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 import AvatarList from "../../../components/Avatar/AvatarList";
+import LoadingSpinner from "../../../components/LoadingSpinner";
 
 const Activate = () => {
   const { activateToken } = useLocalSearchParams();
@@ -21,6 +22,7 @@ const Activate = () => {
   const [showAvatarChangeMessage, setShowAvatarChangeMessage] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState("");
   const [username, setUsername] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
@@ -49,72 +51,79 @@ const Activate = () => {
   }, [])
 
   const updateUserAvatar = async () => {
+    setIsSubmitting(true);
     try {
       await updateAvatar(axiosPrivate, username, selectedAvatar, setAuth);
       setShowAvatarChangeMessage(true);
       setTimeout( () => router.push("/home"), 2000);
     } catch (error) {
       GlobalErrorHandler(error);
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
   return (
-    <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
-      <ScrollView>
-        <View className="w-full justify-center px-8 my-6">
+    <>
+      <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
+        <ScrollView>
+          <View className="w-full justify-center px-8 my-6">
 
-          {!showSuccessMessage && (
-            <Text className="font-mono-bold text-xl text-light-yellow dark:text-dark-yellow tracking-wider">
-              Account activation in process...
-            </Text>
-          )}
+            {!showSuccessMessage && (
+              <Text className="font-mono-bold text-xl text-light-yellow dark:text-dark-yellow tracking-wider">
+                Account activation in process...
+              </Text>
+            )}
 
-          {showSuccessMessage && (
-            <View className="justify-center items-center">
-              <View className="flex mb-4 justify-center items-center py-2 rounded-lg">
-                <Text className="font-mono-bold text-base text-light-success dark:text-dark-success tracking-wider mb-2 leading-none">
-                  Account activated successfully
-                </Text>
-                <Text className="font-mono-bold text-xs text-light-text dark:text-dark-text tracking-wider mb-2 leading-3">
-                  One last step before we get started
-                </Text>
+            {showSuccessMessage && (
+              <View className="justify-center items-center">
+                <View className="flex mb-4 justify-center items-center py-2 rounded-lg">
+                  <Text className="font-mono-bold text-base text-light-success dark:text-dark-success tracking-wider mb-2 leading-none">
+                    Account activated successfully
+                  </Text>
+                  <Text className="font-mono-bold text-xs text-light-text dark:text-dark-text tracking-wider mb-2 leading-3">
+                    One last step before we get started
+                  </Text>
+                </View>
+                
+                <View className="justify-center items-center">
+                  <Text className="font-mono-bold text-3xl text-light-yellow dark:text-dark-yellow tracking-wider">
+                    Choose your avatar
+                  </Text>
+                  <Text className="font-sans-light text-light-grey1 dark:text-dark-text text-sm">
+                    You can change your avatar later in settings
+                  </Text>
+
+                  { showAvatarChangeMessage && (
+                    <MessageBox 
+                      content="Avatar updated. Redirecting to Home..."
+                      type="success"
+                      constainerStyles="mt-2"
+                    />
+                  )}
+                </View>
+
+                <AvatarList 
+                  containerStyles="px-5 mt-5"
+                  selectedAvatar={selectedAvatar}
+                  setSelectedAvatar={setSelectedAvatar}
+                />
+
+                <CustomButton 
+                  title="Confirm Avatar"
+                  containerStyles="mt-2"
+                  handlePress={()=> updateUserAvatar()}
+                />
+
               </View>
               
-              <View className="justify-center items-center">
-                <Text className="font-mono-bold text-3xl text-light-yellow dark:text-dark-yellow tracking-wider">
-                  Choose your avatar
-                </Text>
-                <Text className="font-sans-light text-light-grey1 dark:text-dark-text text-sm">
-                  You can change your avatar later in settings
-                </Text>
+            )}
+          </View>
+        </ScrollView>
+      </SafeAreaView>
 
-                { showAvatarChangeMessage && (
-                  <MessageBox 
-                    content="Avatar updated. Redirecting to Home..."
-                    type="success"
-                    constainerStyles="mt-2"
-                  />
-                )}
-              </View>
-
-              <AvatarList 
-                containerStyles="px-5 mt-5"
-                selectedAvatar={selectedAvatar}
-                setSelectedAvatar={setSelectedAvatar}
-              />
-
-              <CustomButton 
-                title="Confirm Avatar"
-                containerStyles="mt-2"
-                handlePress={()=> updateUserAvatar()}
-              />
-
-            </View>
-            
-          )}
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+      {isSubmitting && (<LoadingSpinner />)}
+    </>  
   )
 }
 

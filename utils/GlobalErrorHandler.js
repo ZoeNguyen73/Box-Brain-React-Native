@@ -25,6 +25,7 @@ const GlobalErrorHandler = (error, handleFormError) => {
     Alert.alert("No response from server", "Please check your internet connection and try again.");
   } else {
     console.log("other error");
+    console.log("error: " + JSON.stringify(error));
     Alert.alert("Error", error.message);
   }
 };
