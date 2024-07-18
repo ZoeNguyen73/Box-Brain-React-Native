@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Button } from "react-native";
-import React, { useRef, useEffect } from "react";
+import { View, StyleSheet } from "react-native";
+import React from "react";
 import LottieView from "lottie-react-native";
 
 const LoadingSpinner = () => {

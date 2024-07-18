@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Alert, Keyboard } from "react-native";
+import { View, Text, ScrollView, Keyboard } from "react-native";
 import React from "react";
 import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -11,11 +11,16 @@ import { useThemeContext } from "../../context/ThemeProvider";
 import axios from "../../api/axios";
 import GlobalErrorHandler from "../../utils/GlobalErrorHandler";
 import MessageBox from "../../components/MessageBox";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { useAuthContext } from "../../context/AuthProvider";
+import Avatar from "../../components/Avatar/Avatar";
 
 const Register = () => {
   const { theme } = useThemeContext();
   const lightYellow = tailwindConfig.theme.extend.colors.light.yellow;
   const darkYellow = tailwindConfig.theme.extend.colors.dark.yellow;
+
+  const { auth, signOut, isLoggedIn, isLoading } = useAuthContext(); 
 
   const [form, setForm] = useState({
     username: "",
@@ -89,126 +94,184 @@ const Register = () => {
 
   };
 
-  return (
-    <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
-      <ScrollView>
-        <View
-          className="w-full justify-center px-8 my-6"
-        >
-          <View className="flex-row gap-2 inline-block items-end mt-10">
-            <Text 
-              className="font-mono-bold text-4xl text-light-yellow 
-              dark:text-dark-yellow tracking-wider"
-            >
-              Sign Up to{"\n"}
-              Box Brain
-            </Text>
-            <View className="pb-2">
-              <FontAwesome5
-                name="brain" size={30} 
-                color={`${theme === "dark" ? darkYellow : lightYellow}`} 
-              />
-            </View>
-          </View>
+  const logOut = async () => {
+    try {
+      await signOut();
+      router.replace("/");
+    } catch (error) {
+      GlobalErrorHandler(error);
+    }
+  }
 
-          <View className="mt-2">
-            <Text className="font-sans-light text-lg text-light-grey1 dark:text-dark-grey2">
-              Get started for free with your email
-            </Text>
-          </View>
+  if (!isLoading && isLoggedIn && auth.username) {
+    return (
+      <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
+        <ScrollView>
+          <View className="w-full justify-center px-8 my-6 min-h-[85vh]">
+            <View className="flex-column justify-center items-center gap-2">
+              <Text 
+                className="font-mono-bold text-2xl text-light-yellow 
+                dark:text-dark-yellow tracking-wider mb-5"
+              >
+                You are currently logged in as 
+              </Text>
 
-          { showSuccessMessage && (
-            <View>
-              <MessageBox 
-                content="Account created, pending activation"
-                type="success"
-                containerStyles="mt-5"
-              />
-              <CustomButton 
-                title="Activate"
-                containerStyles="mt-5"
-                handlePress={() => router.push(`/activate/${activationToken}`)}
-              />
-            </View>
-            
-          )}
+              <View className="justify-center items-center w-full">
+                <Avatar 
+                  avatarName={auth.avatar}
+                  size="large"
+                />
 
-          { !showSuccessMessage && (
-            <>
-              <FormField 
-                title="Username"
-                value={form.username}
-                handleChangeText={(e) => {
-                  handleFormError(null, "username");
-                  setForm({ ...form, username: e });
-                }}
-                otherStyles="mt-10"
-                placeholder="give yourself a unique username"
-                error={formErrors.username}
-              />
-
-              <FormField 
-                title="Email"
-                value={form.email}
-                keyboardType="email-address"
-                handleChangeText={(e) => {
-                  handleFormError(null, "email");
-                  setForm({ ...form, email: e });
-                }}
-                otherStyles="mt-4"
-                placeholder="john.tan@email.com"
-                error={formErrors.email}
-              />
-
-              <FormField 
-                title="Password"
-                value={form.password}
-                handleChangeText={(e) => {
-                  handleFormError(null, "password");
-                  setForm({ ...form, password: e });
-                }}
-                otherStyles="mt-4"
-                error={formErrors.password}
-              />
-
-              <FormField 
-                title="Confirm Password"
-                value={form.confirm_password}
-                handleChangeText={(e) => {
-                  handleFormError(null, "confirm_password");
-                  setForm({ ...form, confirm_password: e });
-                }}
-                otherStyles="mt-4"
-                error={formErrors.confirm_password}
-              />
-
-              <CustomButton 
-                title="Register"
-                handlePress={validate}
-                containerStyles="mt-12"
-                isLoading={isSubmitting}
-              />
-
-              <View className="justify-center gap-2 pt-5 flex-row">
-                <Text className="text-sm text-light-text dark:text-dark-text font-sans">
-                  Already have an account?
-                </Text>
-                <Link
-                  href="/sign-in"
-                  className="font-sans-bold text-light-links dark:text-dark-links"
-                > 
-                  Sign In
-                </Link>
+                <Text className="font-mono-bold tracking-wider text-light-teal dark:text-dark-teal text-3xl mt-2">
+                  {auth.username}
+                </Text> 
               </View>
-            </>
+            </View>
 
-          )}
-          
-          
+            <View className="justify-center flex-column">
+              <CustomButton 
+                title="Continue to Home"
+                handlePress={() => router.push("/home")}
+                containerStyles="mt-12"
+              />
+              <CustomButton 
+                title="Log Out"
+                variant="secondary"
+                handlePress={logOut}
+                containerStyles="mt-12"
+              />
+            </View>
+          </View>
+        
+        </ScrollView>
+        
+      </SafeAreaView>
+    )
+  }
 
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+  return (
+    <>
+      <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
+        <ScrollView>
+          <View
+            className="w-full justify-center px-8 my-6"
+          >
+            <View className="flex-row gap-2 inline-block items-end mt-10">
+              <Text 
+                className="font-mono-bold text-4xl text-light-yellow 
+                dark:text-dark-yellow tracking-wider"
+              >
+                Sign Up to{"\n"}
+                Box Brain
+              </Text>
+              <View className="pb-2">
+                <FontAwesome5
+                  name="brain" size={30} 
+                  color={`${theme === "dark" ? darkYellow : lightYellow}`} 
+                />
+              </View>
+            </View>
+
+            <View className="mt-2">
+              <Text className="font-sans-light text-lg text-light-grey1 dark:text-dark-grey2">
+                Get started for free with your email
+              </Text>
+            </View>
+
+            { showSuccessMessage && (
+              <View>
+                <MessageBox 
+                  content="Account created, pending activation"
+                  type="success"
+                  containerStyles="mt-5"
+                />
+                <CustomButton 
+                  title="Activate"
+                  containerStyles="mt-5"
+                  handlePress={() => router.push(`/activate/${activationToken}`)}
+                />
+              </View>
+              
+            )}
+
+            { !showSuccessMessage && (
+              <>
+                <FormField 
+                  title="Username"
+                  value={form.username}
+                  handleChangeText={(e) => {
+                    handleFormError(null, "username");
+                    setForm({ ...form, username: e });
+                  }}
+                  otherStyles="mt-10"
+                  placeholder="give yourself a unique username"
+                  error={formErrors.username}
+                />
+
+                <FormField 
+                  title="Email"
+                  value={form.email}
+                  keyboardType="email-address"
+                  handleChangeText={(e) => {
+                    handleFormError(null, "email");
+                    setForm({ ...form, email: e });
+                  }}
+                  otherStyles="mt-4"
+                  placeholder="john.tan@email.com"
+                  error={formErrors.email}
+                />
+
+                <FormField 
+                  title="Password"
+                  value={form.password}
+                  handleChangeText={(e) => {
+                    handleFormError(null, "password");
+                    setForm({ ...form, password: e });
+                  }}
+                  otherStyles="mt-4"
+                  error={formErrors.password}
+                />
+
+                <FormField 
+                  title="Confirm Password"
+                  value={form.confirm_password}
+                  handleChangeText={(e) => {
+                    handleFormError(null, "confirm_password");
+                    setForm({ ...form, confirm_password: e });
+                  }}
+                  otherStyles="mt-4"
+                  error={formErrors.confirm_password}
+                />
+
+                <CustomButton 
+                  title="Register"
+                  handlePress={validate}
+                  containerStyles="mt-12"
+                  isLoading={isSubmitting}
+                />
+
+                <View className="justify-center gap-2 pt-5 flex-row">
+                  <Text className="text-sm text-light-text dark:text-dark-text font-sans">
+                    Already have an account?
+                  </Text>
+                  <Link
+                    href="/sign-in"
+                    className="font-sans-bold text-light-links dark:text-dark-links"
+                  > 
+                    Sign In
+                  </Link>
+                </View>
+              </>
+
+            )}
+            
+            
+
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+      { isSubmitting && (<LoadingSpinner />) }
+    </>
   )
 }
 
