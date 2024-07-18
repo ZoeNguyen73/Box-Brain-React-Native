@@ -1,28 +1,33 @@
-import { View, ScrollView, Text, ImageBackground } from "react-native";
-import { gradients } from "../../constants";
+import { View, ScrollView, Text } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+
 import TagChip from "./TagChip";
 import PropertyDisplay from "./PropertyDisplay";
 
 const ItemCard = ({ item }) => {
-  const { keyword, definition, borderColor, textColor, tags, properties } = item;
+  const { keyword, definition, color1, color2, accentColor, tags, properties } = item;
 
   return (
     <ScrollView className="h-[95%]">
       <View 
-        className={`h-[70vh] border-8 ${borderColor} rounded-3xl overflow-hidden`}
+        className={`h-[70vh] border-8 rounded-3xl overflow-hidden`}
+        style={{ borderColor: accentColor }}
       >
-        <ImageBackground 
-          source={gradients.gradientYellowBlue}
-          resizeMode="cover"
+        <LinearGradient
+          colors={[color1, color2]}
           style={{
             flex: 1,
             justifyContent: "center",
             padding: 20,
-            overflow: "hidden"
           }}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
         >
           <View className="flex-column justify-left">
-            <Text className={`font-mono-bold text-4xl ${textColor}`}>
+            <Text 
+              className="font-mono-bold text-4xl"
+              style={{ color: accentColor }}
+            >
               {keyword}
             </Text>
 
@@ -30,7 +35,7 @@ const ItemCard = ({ item }) => {
               { tags.map((tag) => {
                 return (
                   <TagChip
-                    key={tag.tag_id._id} 
+                    key={tag._id} 
                     text={tag.tag_id.name}
                     color={tag.tag_id.colour_name}
                   />
@@ -45,7 +50,8 @@ const ItemCard = ({ item }) => {
             <View className="flex-column mt-5">
               { properties.map((property) => {
                 return (
-                  <PropertyDisplay 
+                  <PropertyDisplay
+                    key={property._id} 
                     name={property.property_id.name}
                     content={property.content}
                   />
@@ -54,8 +60,7 @@ const ItemCard = ({ item }) => {
 
             </View>
           </View>
-          
-        </ImageBackground>
+        </LinearGradient>  
       </View>
     </ScrollView>
   )
