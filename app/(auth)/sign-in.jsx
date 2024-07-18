@@ -8,7 +8,7 @@ import CustomButton from "../../components/CustomButton/CustomButton";
 import FormField from "../../components/CustomForm/FormField";
 import GlobalErrorHandler from "../../utils/GlobalErrorHandler";
 import Avatar from "../../components/Avatar/Avatar";
-import { avatars } from "../../constants";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const SignIn = () => {
   const { auth, signIn, isLoggedIn, isLoading, signOut } = useAuthContext();
@@ -108,7 +108,7 @@ const SignIn = () => {
               />
             </View>
           </View>
-
+        
         </ScrollView>
         
       </SafeAreaView>
@@ -116,84 +116,90 @@ const SignIn = () => {
   }
 
   return (
-    <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
-      <ScrollView>
-        <View 
-          className="flex-column w-full justify-center items-center px-8 my-6 min-h-[85vh]"
-        >
-          <View className="flex-column gap-5 justify-center items-center w-full">
-            <View className="flex-row">
+    <>
+      <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
+        <ScrollView>
+          <View 
+            className="flex-column w-full justify-center items-center px-8 my-6 min-h-[85vh]"
+          >
+            <View className="flex-column gap-5 justify-center items-center w-full">
+              <View className="flex-row">
+                <Text 
+                  className="font-mono-bold text-xl text-light-yellow 
+                  dark:text-dark-yellow tracking-wider mr-2"
+                >
+                  Hey
+                </Text>
+                <Text 
+                  className="font-mono-bold text-xl text-light-teal
+                  dark:text-dark-teal tracking-wider"
+                >
+                  Brainiac
+                </Text>
+                <Text 
+                  className="font-mono-bold text-xl text-light-yellow 
+                  dark:text-dark-yellow tracking-wider"
+                >
+                  ,
+                </Text>
+              </View>
+              
               <Text 
-                className="font-mono-bold text-xl text-light-yellow 
-                dark:text-dark-yellow tracking-wider mr-2"
-              >
-                Hey
-              </Text>
-              <Text 
-                className="font-mono-bold text-xl text-light-teal
-                dark:text-dark-teal tracking-wider"
-              >
-                Brainiac
-              </Text>
-              <Text 
-                className="font-mono-bold text-xl text-light-yellow 
+                className="font-mono-bold text-4xl text-light-yellow 
                 dark:text-dark-yellow tracking-wider"
               >
-                ,
+                Hello again!
               </Text>
             </View>
-            
-            <Text 
-              className="font-mono-bold text-4xl text-light-yellow 
-              dark:text-dark-yellow tracking-wider"
-            >
-              Hello again!
-            </Text>
+
+            <FormField 
+              title="Username"
+              value={form.username}
+              handleChangeText={(e) => {
+                handleFormError(null, "username");
+                setForm({ ...form, username: e });
+              }}
+              otherStyles="mt-10"
+              error={formErrors.username}
+            />
+            <FormField 
+              title="Password"
+              value={form.password}
+              handleChangeText={(e) => {
+                handleFormError(null, "password");
+                setForm({ ...form, password: e });
+              }}
+              otherStyles="mt-4"
+              error={formErrors.password}
+            />
+
+            <CustomButton 
+              title="Sign In"
+              handlePress={validate}
+              containerStyles="mt-12"
+              isLoading={isSubmitting}
+            />
+
+            <View className="justify-center gap-2 pt-5 flex-row mt-5">
+              <Text className="text-sm text-light-text dark:text-dark-text font-sans">
+                Don't have an account?
+              </Text>
+              <Link
+                href="/register"
+                className="text-sm font-sans-bold text-light-text dark:text-dark-text underline"
+              > 
+                Register for free
+              </Link>
+            </View>
           </View>
           
-
-          <FormField 
-            title="Username"
-            value={form.username}
-            handleChangeText={(e) => {
-              handleFormError(null, "username");
-              setForm({ ...form, username: e });
-            }}
-            otherStyles="mt-10"
-            error={formErrors.username}
-          />
-          <FormField 
-            title="Password"
-            value={form.password}
-            handleChangeText={(e) => {
-              handleFormError(null, "password");
-              setForm({ ...form, password: e });
-            }}
-            otherStyles="mt-4"
-            error={formErrors.password}
-          />
-
-          <CustomButton 
-            title="Sign In"
-            handlePress={validate}
-            containerStyles="mt-12"
-            isLoading={isSubmitting}
-          />
-
-          <View className="justify-center gap-2 pt-5 flex-row mt-5">
-            <Text className="text-sm text-light-text dark:text-dark-text font-sans">
-              Don't have an account?
-            </Text>
-            <Link
-              href="/register"
-              className="text-sm font-sans-bold text-light-text dark:text-dark-text underline"
-            > 
-              Register for free
-            </Link>
-          </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+        </ScrollView>
+      </SafeAreaView>
+      { isSubmitting && (
+        <LoadingSpinner />
+      )}
+      
+    </>
   )
 }
 
