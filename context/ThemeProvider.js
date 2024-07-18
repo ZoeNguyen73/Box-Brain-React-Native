@@ -1,26 +1,42 @@
 import { Appearance } from "react-native";
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { useColorScheme } from "nativewind";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ThemeContext = createContext();
 
 export const useThemeContext = () => useContext(ThemeContext);
 
 const ThemeProvider = ({ children }) => {
-  // const systemColorScheme = useColorScheme();
-  const { colorScheme, toggleColorScheme } = useColorScheme();
-  const [ theme, setTheme ] = useState("light");
+  const { colorScheme, toggleColorScheme, setColorScheme } = useColorScheme();
+  const [ theme, setTheme ] = useState(null);
 
   useEffect(() => {
-    const subscription = Appearance.addChangeListener(({ colorScheme }) => {
-      setTheme(colorScheme);
-    });
+    const getCurrentPreferredTheme = async () => {
+      let currentSelectedTheme = await AsyncStorage.getItem("theme");
+      
+      if (!currentSelectedTheme) {
+        const colorScheme = Appearance.getColorScheme();
+        if (colorScheme === "dark") {
+          currentSelectedTheme = "dark";
+        } else {
+          currentSelectedTheme = "light";
+        }
+        await AsyncStorage.setItem("theme", currentSelectedTheme);
+      }
 
-    return () => subscription.remove();
+      setTheme(currentSelectedTheme);
+      setColorScheme(currentSelectedTheme);
+    };
+    
+    getCurrentPreferredTheme();
+    
   }, []);
 
-  const toggleTheme = () => {
-    setTheme((prevTheme) => prevTheme === "light" ? "dark" : "light");
+  const toggleTheme = async () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    await AsyncStorage.setItem("theme", newTheme);
     toggleColorScheme();
   };
 

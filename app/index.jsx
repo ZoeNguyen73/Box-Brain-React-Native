@@ -9,7 +9,6 @@ import tailwindConfig from "../tailwind.config";
 
 // components
 import CustomButton from "../components/CustomButton/CustomButton";
-import { useEffect } from "react";
 
 const App = () => {
   const { isLoggedIn, isLoading } = useAuthContext();
@@ -18,9 +17,15 @@ const App = () => {
   const lightBackgroundColor = tailwindConfig.theme.extend.colors.light.background;
   const darkBackgroundColor = tailwindConfig.theme.extend.colors.dark.background;
 
-  // if (!isLoading && isLoggedIn) {
-  //   return <Redirect href="/home" />
-  // }
+  if (theme === null) {
+    return (
+      <Text>Loading...</Text>
+    )
+  }
+
+  if (!isLoading && isLoggedIn) {
+    return <Redirect href="/home" />
+  };
 
   return (
     <SafeAreaView 
