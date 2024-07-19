@@ -111,14 +111,14 @@ const TabsLayout = () => {
           }}
         />
         <Tabs.Screen 
-          name="more"
+          name="profile"
           options={{
-            title: "More",
+            title: "Profile",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon 
-                name="More"
-                icon="bars"
+                name="Profile"
+                icon="user-alt"
                 color={color}
                 focused={focused}
               />
