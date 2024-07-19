@@ -1,6 +1,7 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
 import tailwindConfig from "../../tailwind.config";
@@ -26,6 +27,9 @@ const TabIcon = ({ color, icon, name, focused }) => {
 
 const TabsLayout = () => {
   const { theme } = useThemeContext();
+
+  const lightBackgroundColor = tailwindConfig.theme.extend.colors.light.background;
+  const darkBackgroundColor = tailwindConfig.theme.extend.colors.dark.background;
 
   const backgroundColor = theme === "dark" 
     ? tailwindConfig.theme.extend.colors.dark.surface
@@ -126,6 +130,10 @@ const TabsLayout = () => {
           }}
         />
       </Tabs>
+      <StatusBar 
+        backgroundColor={`${ theme === "dark" ? darkBackgroundColor : lightBackgroundColor }`} 
+        style={`${ theme === "dark" ? "light" : "dark"}`}
+      />
     </>
   )
 }
