@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import React from "react";
 import { Redirect} from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -19,7 +19,9 @@ const Home = () => {
   }
 
   return (
-    <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
+    <SafeAreaView 
+      className="bg-light-background dark:bg-dark-background h-full"
+    >
 
       <ProfileWelcomeHeader 
         containerStyles="px-5 pt-5"
