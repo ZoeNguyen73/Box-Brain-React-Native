@@ -11,7 +11,7 @@ export const updateAvatar = async (axiosPrivate, username, newAvatar, setAuth) =
     setAuth(prev => {
       return {...prev, avatar: newAvatar}
     });
-    return await response.json();
+    return response.data;
   } catch (error) {
     GlobalErrorHandler(error);
   }
