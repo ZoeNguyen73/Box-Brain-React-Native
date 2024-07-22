@@ -1,0 +1,47 @@
+{
+  "count": 3,
+  "stacks": [
+    {
+      "_id": "664b0753d5daf8a24ca50852",
+      "user_id": {
+        "_id": "664ae51aa00fb7630ef3d662",
+        "username": "TestUser1"
+      },
+      "name": "User 1 Stack A",
+      "is_private": false,
+      "is_default": true,
+      "slug": "user-1-stack-a",
+      "__v": 0,
+      "box_count": 4,
+      "item_count": 3
+    },
+    {
+      "_id": "664c51fcaaab6403eb68c0e9",
+      "user_id": {
+        "_id": "664ae51aa00fb7630ef3d662",
+        "username": "TestUser1"
+      },
+      "name": "User 1 Stack B",
+      "is_private": true,
+      "is_default": false,
+      "slug": "user-1-stack-b",
+      "__v": 0,
+      "box_count": 0,
+      "item_count": 0
+    },
+    {
+      "_id": "666aae45c6358d76c862c7e9",
+      "user_id": {
+        "_id": "664ae51aa00fb7630ef3d662",
+        "username": "TestUser1"
+      },
+      "name": "5 Days Stack",
+      "is_private": true,
+      "is_default": false,
+      "slug": "5-days-stack",
+      "__v": 0,
+      "box_count": 6,
+      "item_count": 10
+    }
+  ]
+}

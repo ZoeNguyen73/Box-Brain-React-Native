@@ -8,7 +8,9 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import GlobalErrorHandler from "../../utils/GlobalErrorHandler";
 
 import ProfileWelcomeHeader from "../../components/ProfileWelcomeHeader";
-import StackList from "../../components/StackList";
+import StackList from "../../components/StackList/StackList";
+
+import sampleData from "../../components/StackList/sampleData.json";
 
 const Profile = () => {
   const { auth, isLoggedIn, isLoading } = useAuthContext();
@@ -18,22 +20,23 @@ const Profile = () => {
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
-    const getStacks = async () => {
-      setPending(true);
+    // const getStacks = async () => {
+    //   setPending(true);
 
-      try {
-        const response = await axiosPrivate.get(
-          `/users/${auth.username}/stacks`
-        )
-        setStacks(response.data.stacks);
-      } catch (error) {
-        GlobalErrorHandler(error);
-      } finally {
-        setPending(false);
-      }
-    };
+    //   try {
+    //     const response = await axiosPrivate.get(
+    //       `/users/${auth.username}/stacks`
+    //     )
+    //     setStacks(response.data.stacks);
+    //   } catch (error) {
+    //     GlobalErrorHandler(error);
+    //   } finally {
+    //     setPending(false);
+    //   }
+    // };
 
-    getStacks();
+    // getStacks();
+    setStacks(sampleData.stacks);
   }, []);
 
   if (!isLoading && !isLoggedIn) {
@@ -56,7 +59,7 @@ const Profile = () => {
         { (!pending && stacks.length >0) && (
           <View className="flex-column w-full px-5">
             <View>
-              <Text className="font-mono-bold text-light-yellow dark:text-dark-yellow text-3xl">
+              <Text className="font-mono-bold text-light-yellow dark:text-dark-yellow text-3xl mb-5">
                 Your stacks
               </Text>
               <StackList 
