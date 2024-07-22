@@ -7,13 +7,14 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import GradientColors from "../ItemSwiper/GradientColors";
 import GenerateColorOptions from "../ItemSwiper/ColorOptions";
 import StatusChip from "../StatusChip";
+import ProgressBar from "../ProgressBar";
 
 const zoomIn = {
   0: {
-    scale: 0.9
+    scale: 0.85
   },
   1: {
-    scale: 1.1
+    scale: 1
   },
 };
 
@@ -22,7 +23,7 @@ const zoomOut = {
     scale: 1
   },
   1: {
-    scale: 0.9
+    scale: 0.85
   },
 };
 
@@ -30,13 +31,13 @@ const StackCard = ({ activeStackId, stack, lastStackId }) => {
   const { name, color1, color2, accentColor, is_private, box_count, item_count } = stack;
   return (
     <Animatable.View
-      className={`ml-3 ${ lastStackId === stack._id ? "mr-3" : ""}`}
+      className={`${ lastStackId === stack._id ? "mr-2" : ""}`}
       animation={activeStackId === stack._id ? zoomIn : zoomOut}
       duration={500}
     >
       <View
         className="border border-4 rounded-3xl overflow-hidden 
-        h-[200px] w-[150px] my-3"
+        h-[330px] w-[170px] my-1"
         style={{ borderColor: accentColor }}
       >
 
@@ -44,17 +45,18 @@ const StackCard = ({ activeStackId, stack, lastStackId }) => {
           colors={[color1, color2]}
           style={{
             flex: 1,
-            // justifyContent: "center",
-            padding: 10,
+            padding: 15,
           }}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
         >
           <View className="flex-column">
-            <View className="flex-row justify-between items-center mb-2">
+            <View className="flex-row justify-between items-center">
               <StatusChip 
                 text="In Progress"
-                color="yellow"        
+                backgroundColor="dark-primary"
+                fontColor="dark-surface"
+                size="small"       
               />
               {is_private && (
                 <FontAwesome5 name="lock" size={16} color="grey" />
@@ -62,23 +64,64 @@ const StackCard = ({ activeStackId, stack, lastStackId }) => {
             </View>
             
             <Text 
-              className="font-mono-bold text-xl leading-5 mt-1"
+              className="font-mono-bold text-2xl mt-1"
               style={{ color: accentColor }}
             >
               {name}
             </Text>
             
             <View className="mt-1">
-              <Text>
-                {box_count} boxes
-              </Text>
-              <Text>
-                {item_count} items
-              </Text>
+              <View className="flex-row gap-1">
+                <Text className="font-sans-semibold text-light-mauve">
+                  {box_count}
+                </Text>
+                <Text className="font-sans text-light-text">
+                  boxes
+                </Text>
+              </View>
+              
+              <View className="flex-row gap-1">
+                <Text className="font-sans-semibold text-light-mauve">
+                  {item_count}
+                </Text>
+                <Text className="font-sans text-light-text">
+                  items
+                </Text>
+              </View>
             </View>
 
+            <ProgressBar 
+              amount="50%"
+            />
+
           </View>
-          
+
+          <TouchableOpacity
+            className="border border-light-yellow border-2 bg-light-yellow rounded-full justify-center items-center
+            px-3 py-2 mb-2"
+          >
+            <View className="justify-center items-center">
+              <Text
+                className="font-sans-semibold tracking-wider"
+              >
+                Add Items
+              </Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            className="border border-light-text border-2 rounded-full justify-center items-center
+            px-3 py-2"
+          >
+            <View className="justify-center items-center">
+              <Text
+                className="font-sans-semibold tracking-wider text-light-text"
+              >
+                View Details
+              </Text>
+            </View>
+          </TouchableOpacity>
+
         </LinearGradient>
 
       </View>
