@@ -4,7 +4,7 @@ import TagChip from "./TagChip";
 import PropertyDisplay from "./PropertyDisplay";
 
 const ItemCard = ({ item }) => {
-  const { keyword, definition, backgroundColor, textColor, tags, properties } = item;
+  const { keyword, definition, backgroundColor, textColor, subtextColor, tags, properties } = item;
 
   return (
     <ScrollView className="h-[95%]">
@@ -44,6 +44,7 @@ const ItemCard = ({ item }) => {
                     key={property._id} 
                     name={property.property_id.name}
                     content={property.content}
+                    textColor={subtextColor}
                   />
                 )
               })}

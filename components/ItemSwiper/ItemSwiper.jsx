@@ -21,6 +21,7 @@ const ItemSwiper = () => {
         ...item,
         backgroundColor: colorSet.background,
         textColor: colorSet.text,
+        subtextColor: colorSet.subtext
       };
     });
     setItems(updatedItems);
