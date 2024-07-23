@@ -31,7 +31,7 @@ const FormField = ({ title, value, placeholder, handleChangeText, otherStyles, i
           className="flex-1 font-sans-light text-light-text dark:text-dark-text"
           value={value}
           placeholder={placeholder}
-          placeholderTextColor={`${ theme === "dark" ? darkTextColor : lightTextColor}`}
+          placeholderTextColor={`${ theme === "dark" ? "#6c7086" : lightTextColor}`}
           inputMode={inputMode}
           onChangeText={handleChangeText}
           secureTextEntry={(title === "Password" || title === "Confirm Password") && !showPassword}

@@ -51,7 +51,7 @@ module.exports = {
           "selection-background": "#7c7f93",
           red: "#d20f39",
           green: "#40a02b",
-          yellow: "#df8e1d",
+          yellow: "#FFBD12",
           blue: "#1e66f5",
           pink: "#e273c5",
           teal: "#179299",

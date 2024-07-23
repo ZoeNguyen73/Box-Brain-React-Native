@@ -12,8 +12,8 @@ const CustomButton = ({ title, handlePress, containerStyles, iconName, isDisable
   let textColor = "";
 
   if (!variant || variant === "primary") {
-    backgroundColor = "bg-light-yellow dark:bg-dark-yellow ";
-    textColor = "text-white dark:text-light-text";
+    backgroundColor = "bg-light-yellow ";
+    textColor = "text-dark-background";
   } else if (variant === "secondary") {
     backgroundColor = "border border 2 border-light-yellow dark:border-dark-yellow ";
     textColor = "text-light-yellow dark:text-dark-yellow";
