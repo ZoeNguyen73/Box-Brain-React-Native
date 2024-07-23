@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Keyboard, Image, Dimensions } from "react-native";
+import { View, Text, ScrollView, Keyboard, Image, Dimensions, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, Link } from "expo-router";
@@ -129,82 +129,85 @@ const SignIn = () => {
   return (
     <>
       <SafeAreaView className="bg-light-mauve items-center h-full">
-        <View 
-          className="flex-column w-full justify-between items-center h-full"
-        >
-
-          <View className="h-[35vh] w-full justify-center items-center flex">
-            <View 
-              className="bg-light-yellow rounded-full justify-center items-center"
-              style={{ width: circleDiameter, height: circleDiameter }}
-            >
-              <Image 
-                source={illustrations.openDoodlesDancing}
-                resizeMode="contain"
-                style={{ position: "absolute", height: circleDiameter * 1.2, top: circleDiameter * 0.2 }}
-              />
-            </View>
-          </View>
-
-          <View
-            className="w-full h-[60vh] bg-light-background dark:bg-dark-background rounded-3xl justify-center items-center 
-            rounded-b-none border border-t-8 border-black"
+        <ScrollView className="w-full" contentContainerStyle={styles.scrollView}>
+          <View 
+            className="flex-column w-full h-full justify-between items-center"
           >
+
+            <View className="h-[35vh] w-full justify-center items-center flex">
+              <View 
+                className="bg-light-yellow rounded-full justify-center items-center"
+                style={{ width: circleDiameter, height: circleDiameter }}
+              >
+                <Image 
+                  source={illustrations.openDoodlesDancing}
+                  resizeMode="contain"
+                  style={{ position: "absolute", height: circleDiameter * 1.2, top: circleDiameter * 0.2 }}
+                />
+              </View>
+            </View>
+
             <View
-              className="w-[85%] py-5 px-5"
+              className="w-full h-[60vh] bg-light-background dark:bg-dark-background rounded-3xl justify-center items-center 
+              rounded-b-none border border-t-8 border-black"
             >
-              <View className="flex-row gap-2 items-center">
-                <Text className="text-light-text dark:text-dark-text font-serif-bold text-4xl tracking-wider">
-                  Welcome Back!
-                </Text>
-                <Feather name="smile" size={32} color={iconColor} />
+              <View
+                className="w-[85%] py-5 px-5"
+              >
+                <View className="flex-row gap-2 items-center">
+                  <Text className="text-light-text dark:text-dark-text font-serif-bold text-4xl tracking-wider">
+                    Welcome Back!
+                  </Text>
+                  <Feather name="smile" size={32} color={iconColor} />
+                </View>
+                
+
+                <FormField 
+                  title="Username"
+                  value={form.username}
+                  handleChangeText={(e) => {
+                    handleFormError(null, "username");
+                    setForm({ ...form, username: e });
+                  }}
+                  otherStyles="mt-10"
+                  error={formErrors.username}
+                />
+                <FormField 
+                  title="Password"
+                  value={form.password}
+                  handleChangeText={(e) => {
+                    handleFormError(null, "password");
+                    setForm({ ...form, password: e });
+                  }}
+                  otherStyles="mt-4"
+                  error={formErrors.password}
+                />
+
+                <CustomButton 
+                  title="Sign In"
+                  handlePress={validate}
+                  containerStyles="mt-12"
+                  isLoading={isSubmitting}
+                />
+
+                <View className="justify-center gap-2 pt-5 flex-row mt-1 mb-5">
+                  <Text className="text-sm text-light-text dark:text-dark-text font-sans">
+                    Don't have an account?
+                  </Text>
+                  <Link
+                    href="/register"
+                    className="text-sm font-sans-bold text-light-links dark:text-dark-links"
+                  > 
+                    Register for free
+                  </Link>
+                </View>
               </View>
               
-
-              <FormField 
-                title="Username"
-                value={form.username}
-                handleChangeText={(e) => {
-                  handleFormError(null, "username");
-                  setForm({ ...form, username: e });
-                }}
-                otherStyles="mt-10"
-                error={formErrors.username}
-              />
-              <FormField 
-                title="Password"
-                value={form.password}
-                handleChangeText={(e) => {
-                  handleFormError(null, "password");
-                  setForm({ ...form, password: e });
-                }}
-                otherStyles="mt-4"
-                error={formErrors.password}
-              />
-
-              <CustomButton 
-                title="Sign In"
-                handlePress={validate}
-                containerStyles="mt-12"
-                isLoading={isSubmitting}
-              />
-
-              <View className="justify-center gap-2 pt-5 flex-row mt-1 mb-5">
-                <Text className="text-sm text-light-text dark:text-dark-text font-sans">
-                  Don't have an account?
-                </Text>
-                <Link
-                  href="/register"
-                  className="text-sm font-sans-bold text-light-links dark:text-dark-links"
-                > 
-                  Register for free
-                </Link>
-              </View>
             </View>
             
           </View>
-          
-        </View>
+        </ScrollView>
+        
       </SafeAreaView>
       { isSubmitting && (
         <LoadingSpinner />
@@ -212,6 +215,13 @@ const SignIn = () => {
       
     </>
   )
-}
+};
+
+const styles = StyleSheet.create({
+  scrollView: {
+    flexGrow: 1,
+    justifyContent: "space-between",
+  },
+});
 
 export default SignIn;
