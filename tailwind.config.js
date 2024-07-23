@@ -72,6 +72,11 @@ module.exports = {
           "card-yellow-100": "#FFF4CC",
           "card-blue-100": "#E9E7FC",
           "card-green-100": "#D6FCF7",
+          "card-yellow-800": "#FFD465",
+          "card-pink-800": "#FFC7DE",
+          "card-blue-800": "#8094FF",
+          "card-green-800": "#61E4C5",
+          "card-red-800": "#FF9692",
         },
         dark: {
           background: "#1e1e2e",
