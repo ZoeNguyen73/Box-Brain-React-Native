@@ -1,17 +1,28 @@
-import { View, Text, ScrollView, Keyboard, Image } from "react-native";
+import { View, Text, ScrollView, Keyboard, Image, Dimensions, StyleSheet } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router, Link } from "expo-router";
+import Feather from '@expo/vector-icons/Feather';
 
 import { useAuthContext } from "../../context/AuthProvider";
+import { useThemeContext } from "../../context/ThemeProvider";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import FormField from "../../components/CustomForm/FormField";
 import GlobalErrorHandler from "../../utils/GlobalErrorHandler";
 import Avatar from "../../components/Avatar/Avatar";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import tailwindConfig from "../../tailwind.config";
+import { illustrations } from "../../constants";
 
 const SignIn = () => {
   const { auth, signIn, isLoggedIn, isLoading, signOut } = useAuthContext();
+  const { theme } = useThemeContext();
+  const { width } = Dimensions.get("window");
+  const circleDiameter = width * 0.5;
+
+  const iconColor = theme === "dark"
+    ? tailwindConfig.theme.extend.colors.dark.text
+    : lightTextColor = tailwindConfig.theme.extend.colors.light.text
 
   const [form, setForm] = useState({
     username: "",
@@ -117,83 +128,86 @@ const SignIn = () => {
 
   return (
     <>
-      <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
-        <ScrollView>
+      <SafeAreaView className="bg-light-mauve items-center h-full">
+        <ScrollView className="w-full" contentContainerStyle={styles.scrollView}>
           <View 
-            className="flex-column w-full justify-center items-center px-8 my-6 min-h-[85vh]"
+            className="flex-column w-full h-full justify-between items-center"
           >
-            <View className="flex-column gap-5 justify-center items-center w-full">
-              <View className="flex-row">
-                <Text 
-                  className="font-mono-bold text-xl text-light-yellow 
-                  dark:text-dark-yellow tracking-wider mr-2"
-                >
-                  Hey
-                </Text>
-                <Text 
-                  className="font-mono-bold text-xl text-light-teal
-                  dark:text-dark-teal tracking-wider"
-                >
-                  Brainiac
-                </Text>
-                <Text 
-                  className="font-mono-bold text-xl text-light-yellow 
-                  dark:text-dark-yellow tracking-wider"
-                >
-                  ,
-                </Text>
+
+            <View className="h-[35vh] w-full justify-center items-center flex">
+              <View 
+                className="bg-light-yellow rounded-full justify-center items-center"
+                style={{ width: circleDiameter, height: circleDiameter }}
+              >
+                <Image 
+                  source={illustrations.openDoodlesDancing}
+                  resizeMode="contain"
+                  style={{ position: "absolute", height: circleDiameter * 1.2, top: circleDiameter * 0.2 }}
+                />
+              </View>
+            </View>
+
+            <View
+              className="w-full h-[60vh] bg-light-background dark:bg-dark-background rounded-3xl justify-center items-center 
+              rounded-b-none border border-t-8 border-black"
+            >
+              <View
+                className="w-[85%] py-5 px-5"
+              >
+                <View className="flex-row gap-2 items-center">
+                  <Text className="text-light-text dark:text-dark-text font-serif-bold text-4xl tracking-wider">
+                    Welcome Back!
+                  </Text>
+                  <Feather name="smile" size={32} color={iconColor} />
+                </View>
+                
+
+                <FormField 
+                  title="Username"
+                  value={form.username}
+                  handleChangeText={(e) => {
+                    handleFormError(null, "username");
+                    setForm({ ...form, username: e });
+                  }}
+                  otherStyles="mt-10"
+                  error={formErrors.username}
+                />
+                <FormField 
+                  title="Password"
+                  value={form.password}
+                  handleChangeText={(e) => {
+                    handleFormError(null, "password");
+                    setForm({ ...form, password: e });
+                  }}
+                  otherStyles="mt-4"
+                  error={formErrors.password}
+                />
+
+                <CustomButton 
+                  title="Sign In"
+                  handlePress={validate}
+                  containerStyles="mt-12"
+                  isLoading={isSubmitting}
+                />
+
+                <View className="justify-center gap-2 pt-5 flex-row mt-1 mb-5">
+                  <Text className="text-sm text-light-text dark:text-dark-text font-sans">
+                    Don't have an account?
+                  </Text>
+                  <Link
+                    href="/register"
+                    className="text-sm font-sans-bold text-light-links dark:text-dark-links"
+                  > 
+                    Register for free
+                  </Link>
+                </View>
               </View>
               
-              <Text 
-                className="font-mono-bold text-4xl text-light-yellow 
-                dark:text-dark-yellow tracking-wider"
-              >
-                Hello again!
-              </Text>
             </View>
-
-            <FormField 
-              title="Username"
-              value={form.username}
-              handleChangeText={(e) => {
-                handleFormError(null, "username");
-                setForm({ ...form, username: e });
-              }}
-              otherStyles="mt-10"
-              error={formErrors.username}
-            />
-            <FormField 
-              title="Password"
-              value={form.password}
-              handleChangeText={(e) => {
-                handleFormError(null, "password");
-                setForm({ ...form, password: e });
-              }}
-              otherStyles="mt-4"
-              error={formErrors.password}
-            />
-
-            <CustomButton 
-              title="Sign In"
-              handlePress={validate}
-              containerStyles="mt-12"
-              isLoading={isSubmitting}
-            />
-
-            <View className="justify-center gap-2 pt-5 flex-row mt-5">
-              <Text className="text-sm text-light-text dark:text-dark-text font-sans">
-                Don't have an account?
-              </Text>
-              <Link
-                href="/register"
-                className="text-sm font-sans-bold text-light-text dark:text-dark-text underline"
-              > 
-                Register for free
-              </Link>
-            </View>
+            
           </View>
-          
         </ScrollView>
+        
       </SafeAreaView>
       { isSubmitting && (
         <LoadingSpinner />
@@ -201,6 +215,13 @@ const SignIn = () => {
       
     </>
   )
-}
+};
+
+const styles = StyleSheet.create({
+  scrollView: {
+    flexGrow: 1,
+    justifyContent: "space-between",
+  },
+});
 
 export default SignIn;

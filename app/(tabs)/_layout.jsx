@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import Feather from '@expo/vector-icons/Feather';
 
 import tailwindConfig from "../../tailwind.config";
 import { useThemeContext } from "../../context/ThemeProvider";
@@ -10,13 +10,13 @@ import { useThemeContext } from "../../context/ThemeProvider";
 const TabIcon = ({ color, icon, name, focused }) => {
   return (
     <View className="items-center justify-center gap-2">
-      <FontAwesome5
+      <Feather
          name={icon}
          size={24}
          color={color}
       />
       <Text
-        className={`${focused ? "font-sans-semibold" : "font-sans"} text-sx}`}
+        className={`${focused ? "font-sans-semibold" : "font-sans"} text-xs`}
         style={{ color: color }}
       >
         {name}
@@ -48,8 +48,6 @@ const TabsLayout = () => {
           tabBarInactiveTintColor: inactiveTintColor,
           tabBarStyle: {
             backgroundColor: backgroundColor,
-            borderTopWidth: borderTopWidth,
-            borderTopColor: borderTopColor,
             height: 84,
           }
         }}
@@ -77,7 +75,7 @@ const TabsLayout = () => {
             tabBarIcon: ({ color, focused }) => (
               <TabIcon 
                 name="Progress"
-                icon="trophy"
+                icon="bar-chart"
                 color={color}
                 focused={focused}
               />
@@ -92,7 +90,7 @@ const TabsLayout = () => {
             tabBarIcon: ({ color, focused }) => (
               <TabIcon 
                 name="Add Item"
-                icon="plus-square"
+                icon="plus-circle"
                 color={color}
                 focused={focused}
               />
@@ -107,7 +105,7 @@ const TabsLayout = () => {
             tabBarIcon: ({ color, focused }) => (
               <TabIcon 
                 name="Settings"
-                icon="cog"
+                icon="settings"
                 color={color}
                 focused={focused}
               />
@@ -122,7 +120,7 @@ const TabsLayout = () => {
             tabBarIcon: ({ color, focused }) => (
               <TabIcon 
                 name="Profile"
-                icon="user-alt"
+                icon="smile"
                 color={color}
                 focused={focused}
               />

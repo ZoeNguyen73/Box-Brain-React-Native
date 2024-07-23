@@ -19,6 +19,8 @@ const Register = () => {
   const { theme } = useThemeContext();
   const lightYellow = tailwindConfig.theme.extend.colors.light.yellow;
   const darkYellow = tailwindConfig.theme.extend.colors.dark.yellow;
+  const lightMauve = tailwindConfig.theme.extend.colors.light.mauve;
+  const darkMauve = tailwindConfig.theme.extend.colors.dark.mauve;
 
   const { auth, signOut, isLoggedIn, isLoading } = useAuthContext(); 
 
@@ -158,22 +160,22 @@ const Register = () => {
           >
             <View className="flex-row gap-2 inline-block items-end mt-10">
               <Text 
-                className="font-mono-bold text-4xl text-light-yellow 
-                dark:text-dark-yellow tracking-wider"
+                className="font-serif-bold text-5xl text-light-mauve
+                dark:text-dark-mauve tracking-wider"
               >
                 Sign Up to{"\n"}
                 Box Brain
               </Text>
               <View className="pb-2">
                 <FontAwesome5
-                  name="brain" size={30} 
-                  color={`${theme === "dark" ? darkYellow : lightYellow}`} 
+                  name="brain" size={35} 
+                  color={`${theme === "dark" ? darkMauve : lightMauve}`} 
                 />
               </View>
             </View>
 
             <View className="mt-2">
-              <Text className="font-sans-light text-lg text-light-grey1 dark:text-dark-grey2">
+              <Text className="font-sans-light text-lg text-light-grey1 dark:text-dark-grey2 tracking-wide">
                 Get started for free with your email
               </Text>
             </View>
@@ -251,12 +253,12 @@ const Register = () => {
                 />
 
                 <View className="justify-center gap-2 pt-5 flex-row">
-                  <Text className="text-sm text-light-text dark:text-dark-text font-sans">
+                  <Text className="text-sm text-light-text dark:text-dark-text font-sans tracking-wide">
                     Already have an account?
                   </Text>
                   <Link
                     href="/sign-in"
-                    className="font-sans-bold text-light-links dark:text-dark-links"
+                    className="font-sans-bold text-light-links dark:text-dark-links tracking-wide"
                   > 
                     Sign In
                   </Link>
