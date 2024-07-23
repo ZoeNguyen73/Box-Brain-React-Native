@@ -1,32 +1,22 @@
 import { View, ScrollView, Text } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 
 import TagChip from "./TagChip";
 import PropertyDisplay from "./PropertyDisplay";
 
 const ItemCard = ({ item }) => {
-  const { keyword, definition, color1, color2, accentColor, tags, properties } = item;
+  const { keyword, definition, backgroundColor, textColor, subtextColor, tags, properties } = item;
 
   return (
     <ScrollView className="h-[95%]">
       <View 
-        className={`h-[70vh] border-8 rounded-3xl overflow-hidden`}
-        style={{ borderColor: accentColor }}
+        className="h-[70vh] border border-4 rounded-3xl overflow-hidden border-dark-background dark:border-dark-primary"
       >
-        <LinearGradient
-          colors={[color1, color2]}
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            padding: 20,
-          }}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
+        <View
+          className={`${backgroundColor} justify-center p-5 flex-1`}
         >
           <View className="flex-column justify-left">
             <Text 
-              className="font-mono-bold text-4xl"
-              style={{ color: accentColor }}
+              className={`${textColor} font-serif-bold text-5xl tracking-wider`}
             >
               {keyword}
             </Text>
@@ -43,7 +33,7 @@ const ItemCard = ({ item }) => {
               })}
             </View>
 
-            <Text className="font-sans-semibold text-xl text-light-text mt-5 tracking-wide">
+            <Text className={`${textColor} font-sans-semibold text-xl mt-5 tracking-wide`}>
               {definition}
             </Text>
 
@@ -54,13 +44,14 @@ const ItemCard = ({ item }) => {
                     key={property._id} 
                     name={property.property_id.name}
                     content={property.content}
+                    textColor={subtextColor}
                   />
                 )
               })}
 
             </View>
           </View>
-        </LinearGradient>  
+        </View>
       </View>
     </ScrollView>
   )

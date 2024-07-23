@@ -61,7 +61,7 @@ const App = () => {
           Welcome to
         </Text>
         <Text 
-          className="text-white font-serif-bold text-5xl tracking-wider"
+          className="text-light-off-white font-serif-bold text-5xl tracking-wider"
         >
           Box Brain
         </Text>

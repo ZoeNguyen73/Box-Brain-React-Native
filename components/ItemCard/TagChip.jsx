@@ -1,16 +1,17 @@
 import { View, Text } from "react-native";
 import React from "react";
+import tailwindConfig from "../../tailwind.config";
 
 const TagChip = ({ text, color }) => {
-  const bgColor = color ? `bg-light-${color}` : "bg-transparent";
-  const borderSettings = color ? "" : "border border-dark-surface";
-  const textColor = color ? "text-dark-text" : "text-dark-surface";
+  const bgColorName = "card-" + color + "-800";
+  const bgColorCode = tailwindConfig.theme.extend.colors.light[bgColorName];
 
   return (
     <View
-      className={`${bgColor} rounded-2xl py-1 px-2 mr-2 ${borderSettings}`}
+      className="rounded-2xl py-1 px-2 mr-2 border border-dark-surface"
+      style={{ backgroundColor: bgColorCode }}
     >
-      <Text className={`font-sans-light text-xs ${textColor}`}>
+      <Text className="font-sans-light text-xs text-black">
         {text}
       </Text>
     </View>
