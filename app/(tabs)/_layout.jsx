@@ -2,7 +2,6 @@ import { View, Text } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Feather from '@expo/vector-icons/Feather';
 
 import tailwindConfig from "../../tailwind.config";

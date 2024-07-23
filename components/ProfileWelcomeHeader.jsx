@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import React from "react";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import Feather from '@expo/vector-icons/Feather';
 
 import { useAuthContext } from "../context/AuthProvider";
 import { useThemeContext } from "../context/ThemeProvider";
@@ -25,14 +25,13 @@ const ProfileWelcomeHeader = ({ containerStyles }) => {
           />
 
           <View className="flex-column grow">
-            <View className="flex-row gap-1">
-              <Text className="font-sans text-light-text dark:text-dark-text">
-                Welcome
+            <View className="flex-row gap-1 items-start">
+              <Text className="font-sans text-light-text dark:text-dark-text tracking-wide">
+                Welcome 👋
               </Text>
-              <MaterialCommunityIcons name="hand-wave" size={16} color={iconColor} />
             </View>
             
-            <Text className="font-sans-semibold text-xl text-light-text dark:text-dark-text">
+            <Text className="font-sans-semibold text-xl text-light-text dark:text-dark-text tracking-wide">
               {auth?.username}
             </Text>
           </View>
@@ -44,7 +43,7 @@ const ProfileWelcomeHeader = ({ containerStyles }) => {
               backgroundColor: "#FFFFFF"
             }}
           >
-            <MaterialCommunityIcons name="bell-badge-outline" size={30} color={iconColor} />
+            <Feather name="bell" size={30} color={iconColor} />
           </View>
         </View>
     </View>
