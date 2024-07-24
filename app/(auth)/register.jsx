@@ -1,9 +1,8 @@
 import { View, Text, ScrollView, Keyboard } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "../../components/CustomForm/FormField";
-import { useState } from "react";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import tailwindConfig from "../../tailwind.config";
