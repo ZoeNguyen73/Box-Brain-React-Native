@@ -9,9 +9,9 @@ const ItemCard = ({ item }) => {
   const [showDefinition, setShowDefinition] = useState(false);
 
   return (
-    <ScrollView className="h-[90%]">
+    <ScrollView>
       <View 
-        className="h-[70vh] border border-4 rounded-3xl overflow-hidden border-dark-background dark:border-dark-primary"
+        className="h-[65vh] border border-4 rounded-3xl overflow-hidden border-dark-background dark:border-dark-primary"
       >
         <View
           className={`${backgroundColor} justify-center p-5 flex-1 justify-between`}

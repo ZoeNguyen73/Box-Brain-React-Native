@@ -2,12 +2,16 @@ import { View, Text, Image } from "react-native";
 import React, {useState, useEffect} from "react";
 import Swiper from "react-native-deck-swiper";
 import { router } from "expo-router";
+import Feather from "@expo/vector-icons/Feather";
 
 import sampleData from "./sampleData.json";
 import ItemCard from "../ItemCard/ItemCard";
 import ColorPairings from "./ColorPairings";
 import ProgressBar from "../ProgressBar";
 import CustomButton from "../CustomButton/CustomButton";
+import tailwindConfig from "../../tailwind.config";
+
+import { useThemeContext } from "../../context/ThemeProvider";
 
 import { illustrations } from "../../constants";
 
@@ -16,6 +20,11 @@ const ItemSwiper = () => {
   const [counter, setCounter] = useState(0);
   const [amount, setAmount] = useState("0%");
   const [swipedAllCards, setSwipedAllCards] = useState(false);
+
+  const { theme } = useThemeContext();
+  const iconColor = theme === "dark"
+    ? tailwindConfig.theme.extend.colors.dark.text
+    : tailwindConfig.theme.extend.colors.light.text
   
   useEffect(() => {
     // assign colors to each item
@@ -87,6 +96,35 @@ const ItemSwiper = () => {
               containerStyles="w-[60%]"
               hideProgressLabel={true}
             />
+
+            { !swipedAllCards && (
+              <View className="w-[80%] flex-row justify-between mt-8">
+                <View className="flex-row gap-2">
+                  <Feather name="corner-up-left" size={20} color={iconColor} />
+                  <View>
+                    <Text className="font-sans-light-italic text-xs text-light-text dark:text-dark-text">
+                      Swipe Left
+                    </Text>
+                    <Text className="font-sans-light-italic text-xs text-light-text dark:text-dark-text">
+                      if you get it wrong
+                    </Text>
+                  </View>
+                </View>
+
+                <View className="flex-row gap-2">
+                  <View className="flex-column items-end">
+                    <Text className="font-sans-light-italic text-xs text-light-text dark:text-dark-text">
+                      Swipe Right
+                    </Text>
+                    <Text className="font-sans-light-italic text-xs text-light-text dark:text-dark-text">
+                      if you get it right
+                    </Text>
+                  </View>
+                  <Feather name="corner-up-right" size={20} color={iconColor} />
+                </View>
+              </View>
+            )}
+            
           </View>
 
           <View>
@@ -108,10 +146,10 @@ const ItemSwiper = () => {
                 onSwipedLeft={() => swipeAction("left")}
                 onSwipedRight={() => swipeAction("right")}
                 verticalSwipe={false}
-                cardVerticalMargin={30}
+                cardVerticalMargin={20}
                 cardHorizontalMargin={30}
                 onSwipedAll={() => setSwipedAllCards(true)}
-              />
+              />    
             )}
 
             { swipedAllCards && (
