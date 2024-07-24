@@ -7,7 +7,7 @@ const ItemCard = ({ item }) => {
   const { keyword, definition, backgroundColor, textColor, subtextColor, tags, properties } = item;
 
   return (
-    <ScrollView className="h-[95%]">
+    <ScrollView className="h-[90%]">
       <View 
         className="h-[70vh] border border-4 rounded-3xl overflow-hidden border-dark-background dark:border-dark-primary"
       >

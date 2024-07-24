@@ -8,7 +8,6 @@ const DailyReview = () => {
   return (
     <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
       <View>
-        <Text>DailyReview</Text>
         <ItemSwiper />
       </View> 
     </SafeAreaView>
