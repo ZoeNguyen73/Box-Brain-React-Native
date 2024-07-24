@@ -10,6 +10,7 @@ import ColorPairings from "./ColorPairings";
 import ProgressBar from "../ProgressBar";
 import CustomButton from "../CustomButton/CustomButton";
 import tailwindConfig from "../../tailwind.config";
+import LoadingSpinner from "../LoadingSpinner";
 
 import { useThemeContext } from "../../context/ThemeProvider";
 
@@ -98,7 +99,7 @@ const ItemSwiper = () => {
             />
 
             { !swipedAllCards && (
-              <View className="w-[80%] flex-row justify-between mt-8">
+              <View className="w-[80%] flex-row justify-between mt-12">
                 <View className="flex-row gap-2">
                   <Feather name="corner-up-left" size={20} color={iconColor} />
                   <View>
@@ -186,7 +187,7 @@ const ItemSwiper = () => {
         </View>
         
       ) : (
-        <Text>Loading...</Text>
+        <LoadingSpinner />
       )}
       
     </View>
