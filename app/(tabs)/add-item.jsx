@@ -10,6 +10,7 @@ import GlobalErrorHandler from "../../utils/GlobalErrorHandler";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import NoAuth from "../../components/NoAuth";
 import Dropdown from "../../components/CustomForm/Dropdown";
+import CheckBox from "../../components/CustomForm/CheckBox";
 import tailwindConfig from "../../tailwind.config";
 
 import { useAuthContext } from "../../context/AuthProvider";
@@ -24,8 +25,7 @@ const AddItem = () => {
   const [form, setForm] = useState({
     keyword: "",
     definition: "",
-    is_active: true,
-    box: "",
+    itemActiveOption: "",
     stack: "",
     tags: [],
     properties: [], 
@@ -39,6 +39,21 @@ const AddItem = () => {
   const [currentBoxes, setCurrentBoxes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [stackOptions, setStackOptions] = useState([]);
+  
+  const itemActiveOptions = [
+    {
+      label: "Add to today's review queue",
+      disabled: false,
+    },
+    {
+      label: "Add to tomorrow's review queue",
+      disabled: false,
+    },
+    {
+      label: "Set Item inactive",
+      disabled: false,
+    },
+  ];
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -156,6 +171,17 @@ const AddItem = () => {
                   items={stackOptions}
                   containerStyles="mt-5"
                   placeholder="Select a Stack to add Item to"
+                />
+
+                <CheckBox 
+                  title="Item Active Options"
+                  items={itemActiveOptions}
+                  containerStyles="mt-5 pr-5"
+                  handleSelectionChange={(key, value) => {
+                    handleFormError(null, "itemActiveOption");
+                    setForm({ ...form, itemActiveOption: key });
+                  }}
+                  multiple={false}
                 />
 
               </View>
