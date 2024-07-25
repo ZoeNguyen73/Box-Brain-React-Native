@@ -53,7 +53,6 @@ const AddItem = () => {
 
       try {
         const stacksData = await axiosPrivate.get(`/users/${auth.username}/stacks`);
-        console.log("stacks loaded: " + stacksData.data.stacks.length);
         setCurrentStacks(stacksData.data.stacks);
 
         const stackOpts = [];
@@ -67,15 +66,12 @@ const AddItem = () => {
         setStackOptions(stackOpts);
 
         const boxesData = await axiosPrivate.get(`/users/${auth.username}/boxes`);
-        console.log("boxes loaded: " + boxesData.data.boxes.length);
         setCurrentBoxes(boxesData.data.boxes);
 
         const tagsData = await axiosPrivate.get(`/users/${auth.username}/tags`);
-        console.log("tags loaded: " + tagsData.data.tags.length);
         setCurrentTags(tagsData.data.tags);
 
         const propertiesData = await axiosPrivate.get(`/users/${auth.username}/properties`);
-        console.log("properties loaded: " + propertiesData.data.properties.length);
         setCurrentProperties(propertiesData.data.properties);
 
       } catch (error) {
@@ -95,7 +91,7 @@ const AddItem = () => {
   return (
     <>
       <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
-        <ScrollView>
+        {/* <ScrollView> */}
           <View className="w-full justify-center px-8 my-6 min-h-[85vh]">
             {!auth.username && (
               <NoAuth 
@@ -158,6 +154,8 @@ const AddItem = () => {
                     setForm({ ...form, stack: value });
                   }}
                   items={stackOptions}
+                  containerStyles="mt-5"
+                  placeholder="Select a Stack to add Item to"
                 />
 
               </View>
@@ -165,7 +163,7 @@ const AddItem = () => {
             )}
             
           </View>
-        </ScrollView>
+        {/* </ScrollView> */}
       </SafeAreaView>
       { isLoading && (
         <LoadingSpinner />
