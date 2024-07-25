@@ -9,13 +9,13 @@ import CustomButton from "../../components/CustomButton/CustomButton";
 import GlobalErrorHandler from "../../utils/GlobalErrorHandler";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import NoAuth from "../../components/NoAuth";
+import Dropdown from "../../components/CustomForm/Dropdown";
 import tailwindConfig from "../../tailwind.config";
 
 import { useAuthContext } from "../../context/AuthProvider";
 import { useThemeContext } from "../../context/ThemeProvider";
 
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-
 
 const AddItem = () => {
   // TO DO: add functions to check if there is box_id / stack_id already passed in
@@ -25,7 +25,8 @@ const AddItem = () => {
     keyword: "",
     definition: "",
     is_active: true,
-    box_id: "",
+    box: "",
+    stack: "",
     tags: [],
     properties: [], 
   });
@@ -37,13 +38,14 @@ const AddItem = () => {
   const [currentStacks, setCurrentStacks] = useState([]);
   const [currentBoxes, setCurrentBoxes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [stackOptions, setStackOptions] = useState([]);
 
   const axiosPrivate = useAxiosPrivate();
 
   const { theme } = useThemeContext();
   const iconColor = theme === "dark"
     ? tailwindConfig.theme.extend.colors.dark.text
-    : tailwindConfig.theme.extend.colors.light.text
+    : tailwindConfig.theme.extend.colors.light.text;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,6 +55,16 @@ const AddItem = () => {
         const stacksData = await axiosPrivate.get(`/users/${auth.username}/stacks`);
         console.log("stacks loaded: " + stacksData.data.stacks.length);
         setCurrentStacks(stacksData.data.stacks);
+
+        const stackOpts = [];
+        for (const stack of stacksData.data.stacks) {
+          const option = {
+            label: stack.name,
+            value: stack._id
+          };
+          stackOpts.push(option);
+        }
+        setStackOptions(stackOpts);
 
         const boxesData = await axiosPrivate.get(`/users/${auth.username}/boxes`);
         console.log("boxes loaded: " + boxesData.data.boxes.length);
@@ -136,6 +148,16 @@ const AddItem = () => {
                   numberOfLines={7}
                   maxLength={200}
                   charCount={true}
+                />
+
+                <Dropdown 
+                  title="Stack"
+                  value={form.stack}
+                  handleChangeValue={(value) => {
+                    handleFormError(null, "stack");
+                    setForm({ ...form, stack: value });
+                  }}
+                  items={stackOptions}
                 />
 
               </View>
