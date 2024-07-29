@@ -18,11 +18,14 @@ export const ErrorHandlerProvider = ({ children }) => {
         && error.response.data.name === "TokenExpiredError"
       ) {
         console.log("refresh token expired error triggered");
-        await clearSession();
+        // await clearSession();
         Alert.alert("Session expired", "Please log in again to continue", [
           {
             text: "Proceed to log in",
-            onPress: () => router.push("/sign-in")
+            onPress: () => {
+              router.push("/sign-in");
+              clearSession();
+            }
           }
         ]);
       } else {
