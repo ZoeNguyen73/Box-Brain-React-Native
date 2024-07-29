@@ -40,6 +40,17 @@ const AddItem = () => {
   const [currentBoxes, setCurrentBoxes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [stackOptions, setStackOptions] = useState([]);
+  const [tagOptions, setTagOptions] = useState([]);
+  const [stackDropdownOpen, setStackDropdownOpen] = useState(false);
+  const [tagDropdownOpen, setTagDropdownOpen] = useState(false);
+
+  const onStackDropdownOpen = () => {
+    setTagDropdownOpen(false);
+  };
+
+  const onTagDropdownOpen = () => {
+    setStackDropdownOpen(false);
+  };
   
   const itemActiveOptions = [
     {
@@ -86,6 +97,16 @@ const AddItem = () => {
 
         const tagsData = await axiosPrivate.get(`/users/${auth.username}/tags`);
         setCurrentTags(tagsData.data.tags);
+
+        const tagOpts = [];
+        for (const tag of tagsData.data.tags) {
+          const option = {
+            label: tag.name,
+            value: tag._id
+          };
+          tagOpts.push(option);
+        }
+        setTagOptions(tagOpts);
 
         const propertiesData = await axiosPrivate.get(`/users/${auth.username}/properties`);
         setCurrentProperties(propertiesData.data.properties);
@@ -173,6 +194,9 @@ const AddItem = () => {
                   items={stackOptions}
                   containerStyles="mt-5"
                   placeholder="Select a Stack to add Item to"
+                  open={stackDropdownOpen}
+                  setOpen={setStackDropdownOpen}
+                  onOpen={onStackDropdownOpen}
                 />
 
                 <CheckBox 
@@ -184,6 +208,25 @@ const AddItem = () => {
                     setForm({ ...form, itemActiveOption: key });
                   }}
                   multiple={false}
+                />
+
+                <Dropdown 
+                  title="Tag"
+                  value={form.tags}
+                  handleChangeValue={(value) => {
+                    handleFormError(null, "tags");
+                    setForm({ ...form, tags: value });
+                  }}
+                  items={tagOptions}
+                  containerStyles="mt-5"
+                  placeholder="Select Tags to apply to item"
+                  open={tagDropdownOpen}
+                  setOpen={setTagDropdownOpen}
+                  onOpen={onTagDropdownOpen}
+                  multiple={true}
+                  min={0}
+                  max={tagOptions.length}
+                  mode="BADGE"
                 />
 
               </View>
