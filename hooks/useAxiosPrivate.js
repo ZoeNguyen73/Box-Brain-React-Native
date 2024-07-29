@@ -1,8 +1,7 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 
 import { axiosPrivate } from "../api/axios";
-import AuthContext, { useAuthContext } from "../context/AuthProvider";
+import { useAuthContext } from "../context/AuthProvider";
 import useRefreshToken from "./useRefreshToken";
 
 const useAxiosPrivate = () => {

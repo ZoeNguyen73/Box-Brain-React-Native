@@ -6,7 +6,6 @@ import { router } from "expo-router";
 
 import FormField from "../../components/CustomForm/FormField";
 import CustomButton from "../../components/CustomButton/CustomButton";
-import GlobalErrorHandler from "../../utils/GlobalErrorHandler";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import NoAuth from "../../components/NoAuth";
 import Dropdown from "../../components/CustomForm/Dropdown";
@@ -15,6 +14,7 @@ import tailwindConfig from "../../tailwind.config";
 
 import { useAuthContext } from "../../context/AuthProvider";
 import { useThemeContext } from "../../context/ThemeProvider";
+import { useErrorHandler } from "../../context/ErrorHandlerProvider";
 
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
@@ -22,6 +22,7 @@ const AddItem = () => {
   // TO DO: add functions to check if there is box_id / stack_id already passed in
 
   const { auth } = useAuthContext();
+  const { handleError } = useErrorHandler();
   const [form, setForm] = useState({
     keyword: "",
     definition: "",
@@ -90,7 +91,8 @@ const AddItem = () => {
         setCurrentProperties(propertiesData.data.properties);
 
       } catch (error) {
-        GlobalErrorHandler(error);
+        await handleError(error);
+
       } finally {
         setIsLoading(false);
       }

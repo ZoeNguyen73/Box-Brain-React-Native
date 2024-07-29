@@ -1,6 +1,6 @@
 import { Alert } from "react-native";
 
-const GlobalErrorHandler = (error, handleFormError) => {
+const handleGlobalError = (error, handleFormError) => {
   if (error.response) {
     const errorMessage = error.response.data.message || "An error occurred";
     const errorDetails = error.response.data.details || "Please try again.";
@@ -30,4 +30,4 @@ const GlobalErrorHandler = (error, handleFormError) => {
   }
 };
 
-export default GlobalErrorHandler;
+export default handleGlobalError;
