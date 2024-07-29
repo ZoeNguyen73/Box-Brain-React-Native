@@ -6,14 +6,15 @@ import { router } from "expo-router";
 
 import FormField from "../../components/CustomForm/FormField";
 import CustomButton from "../../components/CustomButton/CustomButton";
-import GlobalErrorHandler from "../../utils/GlobalErrorHandler";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import NoAuth from "../../components/NoAuth";
 import Dropdown from "../../components/CustomForm/Dropdown";
+import CheckBox from "../../components/CustomForm/CheckBox";
 import tailwindConfig from "../../tailwind.config";
 
 import { useAuthContext } from "../../context/AuthProvider";
 import { useThemeContext } from "../../context/ThemeProvider";
+import { useErrorHandler } from "../../context/ErrorHandlerProvider";
 
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
@@ -21,11 +22,11 @@ const AddItem = () => {
   // TO DO: add functions to check if there is box_id / stack_id already passed in
 
   const { auth } = useAuthContext();
+  const { handleError } = useErrorHandler();
   const [form, setForm] = useState({
     keyword: "",
     definition: "",
-    is_active: true,
-    box: "",
+    itemActiveOption: "",
     stack: "",
     tags: [],
     properties: [], 
@@ -39,6 +40,21 @@ const AddItem = () => {
   const [currentBoxes, setCurrentBoxes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [stackOptions, setStackOptions] = useState([]);
+  
+  const itemActiveOptions = [
+    {
+      label: "Add to today's review queue",
+      disabled: false,
+    },
+    {
+      label: "Add to tomorrow's review queue",
+      disabled: false,
+    },
+    {
+      label: "Set Item inactive",
+      disabled: false,
+    },
+  ];
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -53,7 +69,6 @@ const AddItem = () => {
 
       try {
         const stacksData = await axiosPrivate.get(`/users/${auth.username}/stacks`);
-        console.log("stacks loaded: " + stacksData.data.stacks.length);
         setCurrentStacks(stacksData.data.stacks);
 
         const stackOpts = [];
@@ -67,19 +82,17 @@ const AddItem = () => {
         setStackOptions(stackOpts);
 
         const boxesData = await axiosPrivate.get(`/users/${auth.username}/boxes`);
-        console.log("boxes loaded: " + boxesData.data.boxes.length);
         setCurrentBoxes(boxesData.data.boxes);
 
         const tagsData = await axiosPrivate.get(`/users/${auth.username}/tags`);
-        console.log("tags loaded: " + tagsData.data.tags.length);
         setCurrentTags(tagsData.data.tags);
 
         const propertiesData = await axiosPrivate.get(`/users/${auth.username}/properties`);
-        console.log("properties loaded: " + propertiesData.data.properties.length);
         setCurrentProperties(propertiesData.data.properties);
 
       } catch (error) {
-        GlobalErrorHandler(error);
+        await handleError(error);
+
       } finally {
         setIsLoading(false);
       }
@@ -95,7 +108,7 @@ const AddItem = () => {
   return (
     <>
       <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
-        <ScrollView>
+        {/* <ScrollView> */}
           <View className="w-full justify-center px-8 my-6 min-h-[85vh]">
             {!auth.username && (
               <NoAuth 
@@ -158,6 +171,19 @@ const AddItem = () => {
                     setForm({ ...form, stack: value });
                   }}
                   items={stackOptions}
+                  containerStyles="mt-5"
+                  placeholder="Select a Stack to add Item to"
+                />
+
+                <CheckBox 
+                  title="Item Active Options"
+                  items={itemActiveOptions}
+                  containerStyles="mt-5 pr-5"
+                  handleSelectionChange={(key, value) => {
+                    handleFormError(null, "itemActiveOption");
+                    setForm({ ...form, itemActiveOption: key });
+                  }}
+                  multiple={false}
                 />
 
               </View>
@@ -165,7 +191,7 @@ const AddItem = () => {
             )}
             
           </View>
-        </ScrollView>
+        {/* </ScrollView> */}
       </SafeAreaView>
       { isLoading && (
         <LoadingSpinner />

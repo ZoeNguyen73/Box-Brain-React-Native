@@ -1,4 +1,4 @@
-import GlobalErrorHandler from "./GlobalErrorHandler";
+import handleGlobalError from "./ErrorHandler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const updateAvatar = async (axiosPrivate, username, newAvatar, setAuth) => {
@@ -13,6 +13,6 @@ export const updateAvatar = async (axiosPrivate, username, newAvatar, setAuth) =
     });
     return response.data;
   } catch (error) {
-    GlobalErrorHandler(error);
+    handleGlobalError(error);
   }
 };

@@ -4,8 +4,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Redirect} from "expo-router";
 
 import { useAuthContext } from "../../context/AuthProvider";
+import { useErrorHandler } from "../../context/ErrorHandlerProvider";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import GlobalErrorHandler from "../../utils/GlobalErrorHandler";
 
 import ProfileWelcomeHeader from "../../components/ProfileWelcomeHeader";
 import StackList from "../../components/StackList/StackList";
@@ -14,6 +14,7 @@ import sampleData from "../../components/StackList/sampleData.json";
 
 const Profile = () => {
   const { auth, isLoggedIn, isLoading } = useAuthContext();
+  const { handleError } = useErrorHandler();
   const [stacks, setStacks] = useState([]);
   const [pending, setPending] = useState(false);
 
@@ -29,7 +30,7 @@ const Profile = () => {
     //     )
     //     setStacks(response.data.stacks);
     //   } catch (error) {
-    //     GlobalErrorHandler(error);
+    //     await handleError(error);
     //   } finally {
     //     setPending(false);
     //   }

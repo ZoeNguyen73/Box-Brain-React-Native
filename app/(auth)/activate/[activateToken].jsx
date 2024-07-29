@@ -5,10 +5,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import axios from "../../../api/axios";
-import GlobalErrorHandler from "../../../utils/GlobalErrorHandler";
 import CustomButton from "../../../components/CustomButton/CustomButton";
 import MessageBox from "../../../components/MessageBox";
 import { useAuthContext } from "../../../context/AuthProvider";
+import { useErrorHandler } from "../../../context/ErrorHandlerProvider";
 import { updateAvatar } from "../../../utils/AvatarService";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
@@ -18,6 +18,7 @@ import LoadingSpinner from "../../../components/LoadingSpinner";
 const Activate = () => {
   const { activateToken } = useLocalSearchParams();
   const { setAuth, setIsLoggedIn } = useAuthContext();
+  const { handleError } = useErrorHandler();
   const [showSuccessMessage, setshowSuccessMessage] = useState(false);
   const [showAvatarChangeMessage, setShowAvatarChangeMessage] = useState(false);
   const [selectedAvatar, setSelectedAvatar] = useState("");
@@ -42,7 +43,7 @@ const Activate = () => {
         setIsLoggedIn(true);
         setshowSuccessMessage(true);
       } catch (error) {
-        GlobalErrorHandler(error);
+        await handleError(error);
       }
     }
 
@@ -57,7 +58,7 @@ const Activate = () => {
       setShowAvatarChangeMessage(true);
       setTimeout( () => router.push("/home"), 2000);
     } catch (error) {
-      GlobalErrorHandler(error);
+      await handleError(error);
     } finally {
       setIsSubmitting(false);
     }

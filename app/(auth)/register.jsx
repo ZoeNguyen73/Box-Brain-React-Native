@@ -2,22 +2,23 @@ import { View, Text, ScrollView, Keyboard } from "react-native";
 import React, { useState } from "react";
 import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+
+import { useThemeContext } from "../../context/ThemeProvider";
+import { useAuthContext } from "../../context/AuthProvider";
+import { useErrorHandler } from "../../context/ErrorHandlerProvider";
+
 import FormField from "../../components/CustomForm/FormField";
 import CustomButton from "../../components/CustomButton/CustomButton";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import tailwindConfig from "../../tailwind.config";
-import { useThemeContext } from "../../context/ThemeProvider";
 import axios from "../../api/axios";
-import GlobalErrorHandler from "../../utils/GlobalErrorHandler";
 import MessageBox from "../../components/MessageBox";
 import LoadingSpinner from "../../components/LoadingSpinner";
-import { useAuthContext } from "../../context/AuthProvider";
 import Avatar from "../../components/Avatar/Avatar";
 
 const Register = () => {
   const { theme } = useThemeContext();
-  const lightYellow = tailwindConfig.theme.extend.colors.light.yellow;
-  const darkYellow = tailwindConfig.theme.extend.colors.dark.yellow;
+  const { handleError } = useErrorHandler();
   const lightMauve = tailwindConfig.theme.extend.colors.light.mauve;
   const darkMauve = tailwindConfig.theme.extend.colors.dark.mauve;
 
@@ -48,7 +49,8 @@ const Register = () => {
       setShowSuccessMessage(true);
 
     } catch (error) {
-      GlobalErrorHandler(error, handleFormError);
+      await handleError(error, handleFormError);
+
     } finally {
       setIsSubmitting(false);
     }
@@ -100,7 +102,7 @@ const Register = () => {
       await signOut();
       router.replace("/");
     } catch (error) {
-      GlobalErrorHandler(error);
+      await handleError(error);
     }
   }
 

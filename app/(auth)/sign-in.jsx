@@ -6,9 +6,10 @@ import Feather from '@expo/vector-icons/Feather';
 
 import { useAuthContext } from "../../context/AuthProvider";
 import { useThemeContext } from "../../context/ThemeProvider";
+import { useErrorHandler } from "../../context/ErrorHandlerProvider";
+
 import CustomButton from "../../components/CustomButton/CustomButton";
 import FormField from "../../components/CustomForm/FormField";
-import GlobalErrorHandler from "../../utils/GlobalErrorHandler";
 import Avatar from "../../components/Avatar/Avatar";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import tailwindConfig from "../../tailwind.config";
@@ -16,6 +17,7 @@ import { illustrations } from "../../constants";
 
 const SignIn = () => {
   const { auth, signIn, isLoggedIn, isLoading, signOut } = useAuthContext();
+  const { handleError } = useErrorHandler();
   const { theme } = useThemeContext();
   const { width } = Dimensions.get("window");
   const circleDiameter = width * 0.5;
@@ -64,7 +66,7 @@ const SignIn = () => {
       setShowSuccessMessage(true);
       router.replace("/home");
     } catch (error) {
-      GlobalErrorHandler(error, handleFormError);
+      await handleError(error, handleFormError);
     } finally {
       setIsSubmitting(false);
     }
@@ -75,7 +77,7 @@ const SignIn = () => {
       await signOut();
       router.replace("/");
     } catch (error) {
-      GlobalErrorHandler(error);
+      await handleError(error);
     }
   }
 

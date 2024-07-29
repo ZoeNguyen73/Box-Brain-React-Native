@@ -62,7 +62,7 @@ const FormField = ({
           onChangeText={handleChangeText}
           secureTextEntry={(title === "Password" || title === "Confirm Password") && !showPassword}
           textContentType={`${ title === "Email" ? "emailAddress" : ""}`}
-          multiline={true}
+          multiline={ numberOfLines && numberOfLines > 1 ? true : false }
           numberOfLines={Platform.OS === "ios" ? null : numberOfLines}
           minHeight={(Platform.OS === "ios" && numberOfLines) ? (12 * numberOfLines) : null}
           maxLength={ maxLength ? maxLength : 2000}

@@ -2,7 +2,7 @@ import { createContext, useState, useEffect, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import axios from "../api/axios";
-import GlobalErrorHandler from "../utils/GlobalErrorHandler";
+import handleGlobalError from "../utils/ErrorHandler";
 
 const AuthContext = createContext({});
 
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(false);
 
     } catch (error) {
-      GlobalErrorHandler(error);
+      handleGlobalError(error);
 
     } finally {
       setIsLoading(false);
@@ -98,7 +98,7 @@ export const AuthProvider = ({ children }) => {
 
     } catch (error) {
       setIsLoggedIn(false);
-      GlobalErrorHandler(error);
+      handleGlobalError(error);
 
     } finally {
       setIsLoading(false);
