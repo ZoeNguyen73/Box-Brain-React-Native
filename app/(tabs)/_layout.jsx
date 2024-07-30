@@ -34,8 +34,6 @@ const TabsLayout = () => {
   const backgroundColor = theme === "dark" 
     ? tailwindConfig.theme.extend.colors.dark.surface
     : tailwindConfig.theme.extend.colors.dark.background;
-  const borderTopColor = tailwindConfig.theme.extend.colors.dark.grey1;
-  const borderTopWidth = theme === "dark" ? 1 : 0;
   const activeTintColor = tailwindConfig.theme.extend.colors.dark.yellow;
   const inactiveTintColor = tailwindConfig.theme.extend.colors.dark.grey1;
   
@@ -83,7 +81,7 @@ const TabsLayout = () => {
           }}
         />
         <Tabs.Screen 
-          name="add-item"
+          name="add-item/step-1"
           options={{
             title: "Add Item",
             headerShown: false,

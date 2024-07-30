@@ -4,21 +4,21 @@ import React, { useState, useEffect } from "react";
 import Feather from "@expo/vector-icons/Feather";
 import { router } from "expo-router";
 
-import FormField from "../../components/CustomForm/FormField";
-import CustomButton from "../../components/CustomButton/CustomButton";
-import LoadingSpinner from "../../components/LoadingSpinner";
-import NoAuth from "../../components/NoAuth";
-import Dropdown from "../../components/CustomForm/Dropdown";
-import CheckBox from "../../components/CustomForm/CheckBox";
-import tailwindConfig from "../../tailwind.config";
+import FormField from "../../../components/CustomForm/FormField";
+import CustomButton from "../../../components/CustomButton/CustomButton";
+import LoadingSpinner from "../../../components/LoadingSpinner";
+import NoAuth from "../../../components/NoAuth";
+import Dropdown from "../../../components/CustomForm/Dropdown";
+import CheckBox from "../../../components/CustomForm/CheckBox";
+import tailwindConfig from "../../../tailwind.config";
 
-import { useAuthContext } from "../../context/AuthProvider";
-import { useThemeContext } from "../../context/ThemeProvider";
-import { useErrorHandler } from "../../context/ErrorHandlerProvider";
+import { useAuthContext } from "../../../context/AuthProvider";
+import { useThemeContext } from "../../../context/ThemeProvider";
+import { useErrorHandler } from "../../../context/ErrorHandlerProvider";
 
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
-const AddItem = () => {
+const Step1 = () => {
   // TO DO: add functions to check if there is box_id / stack_id already passed in
 
   const { auth } = useAuthContext();
@@ -244,4 +244,4 @@ const AddItem = () => {
   )
 };
 
-export default AddItem;
+export default Step1;
