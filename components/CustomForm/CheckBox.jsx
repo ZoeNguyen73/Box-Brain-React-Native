@@ -5,7 +5,7 @@ import Checkbox from "expo-checkbox";
 import tailwindConfig from "../../tailwind.config";
 import { useThemeContext } from "../../context/ThemeProvider";
 
-const CheckBox = ({ title, multiple, max, min, items, handleSelectionChange, containerStyles }) => {
+const CheckBox = ({ title, multiple, max, min, items, handleSelectionChange, containerStyles, error }) => {
   const [checkedOptions, setCheckedOptions] = useState({});
 
   const { theme } = useThemeContext();
@@ -67,6 +67,11 @@ const CheckBox = ({ title, multiple, max, min, items, handleSelectionChange, con
           </View>
         )
       })}
+      { error && (
+        <Text className="text-light-error dark:text-dark-error font-xs font-sans-light">
+          {error}
+        </Text>
+      )}
     </View>
   )
 };

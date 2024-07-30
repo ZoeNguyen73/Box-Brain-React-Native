@@ -20,7 +20,8 @@ const Dropdown = ({
   open,
   setOpen,
   onOpen,
-  mode, 
+  mode,
+  error, 
 }) => {
   const [selectedValue, setSelectedValue] = useState(value);
   const { theme } = useThemeContext();
@@ -33,10 +34,13 @@ const Dropdown = ({
     : tailwindConfig.theme.extend.colors.light.text;
   const textFont = tailwindConfig.theme.fontFamily.sans[0];
   const textFontBold = tailwindConfig.theme.fontFamily["sans-bold"][0];
+  const errorBorderColor = theme === "dark"
+    ? tailwindConfig.theme.extend.colors.dark.error
+    : tailwindConfig.theme.extend.colors.light.error;
 
   return (
     <View className={containerStyles}>
-      <Text className="font-sans-semibold text-sm text-light-text dark:text-dark-text tracking-wide">
+      <Text className="font-sans-semibold text-sm text-light-text dark:text-dark-text tracking-wide mb-1">
         {title}
       </Text>
       { helpText && (
@@ -55,16 +59,20 @@ const Dropdown = ({
         onChangeValue={(value) => {
           handleChangeValue(value);
         }}
+        listMode="SCROLLVIEW"
         multiple={multiple}
         min={ min || null }
         max={ max || null }
         style={{ 
           backgroundColor: bgColor, 
           minHeight: 40, 
-          borderWidth: open ? 1 : 0,
-          borderColor: highlightBorderColor,
+          borderWidth: (open || error) ? 1 : 0,
+          borderColor: error ? errorBorderColor : highlightBorderColor,
         }}
-        dropDownContainerStyle={{ backgroundColor: bgColor, borderColor: highlightBorderColor }}
+        dropDownContainerStyle={{ 
+          backgroundColor: bgColor, 
+          borderColor: highlightBorderColor 
+        }}
         textStyle={{
           color: textColor,
           fontFamily: textFont,
@@ -87,6 +95,11 @@ const Dropdown = ({
         }}
         badgeDotColors={["#e76f51", "#00b4d8", "#e9c46a", "#e76f51", "#8ac926", "#00b4d8", "#e9c46a"]}
       />
+      { error && (
+        <Text className="text-light-error dark:text-dark-error font-xs font-sans-light">
+          {error}
+        </Text>
+      )}
     </View>
   )
 };

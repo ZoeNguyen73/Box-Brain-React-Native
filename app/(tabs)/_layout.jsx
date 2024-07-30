@@ -40,6 +40,7 @@ const TabsLayout = () => {
   return (
     <>
       <Tabs
+        backBehavior="history"
         screenOptions={{ 
           tabBarShowLabel: false,
           tabBarActiveTintColor: activeTintColor,
@@ -135,6 +136,7 @@ const TabsLayout = () => {
           name="add-item/step-2"
           options={{
             href:null,
+            headerShown: false,
           }}
         />
 

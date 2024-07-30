@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, Keyboard } from "react-native";
+import { View, Text, ScrollView, Keyboard, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useState, useEffect } from "react";
 import Feather from "@expo/vector-icons/Feather";
@@ -19,7 +19,7 @@ import { useErrorHandler } from "../../../context/ErrorHandlerProvider";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const Step1 = () => {
-  // TO DO: add functions to check if there is box_id / stack_id already passed in
+  // TO DO: add functions to check if there is stack_id already passed in
 
   const { auth } = useAuthContext();
   const { handleError } = useErrorHandler();
@@ -75,7 +75,7 @@ const Step1 = () => {
           };
           stackOpts.push(option);
         }
-        setStackOptions(stackOpts);;
+        setStackOptions(stackOpts);
 
       } catch (error) {
         await handleError(error);
@@ -122,7 +122,7 @@ const Step1 = () => {
     }
 
     if (!itemActiveOption) {
-      handleFormError("Please select an option", "itemActiveOption");
+      handleFormError("Please select an Item Active option", "itemActiveOption");
       isValid = false;
     }
 
@@ -148,7 +148,7 @@ const Step1 = () => {
   return (
     <>
       <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
-        <ScrollView>
+        <ScrollView nestedScrollEnabled={true}>
           <View className="w-full justify-center px-8 my-6 min-h-[85vh]">
             {!auth.username && (
               <NoAuth 
@@ -215,7 +215,7 @@ const Step1 = () => {
                   placeholder="Select a Stack to add Item to"
                   open={stackDropdownOpen}
                   setOpen={setStackDropdownOpen}
-                  // onOpen={onStackDropdownOpen}
+                  error={formErrors.stack}
                 />
 
                 <CheckBox 
@@ -227,6 +227,7 @@ const Step1 = () => {
                     setForm({ ...form, itemActiveOption: key });
                   }}
                   multiple={false}
+                  error={formErrors.itemActiveOption}
                 />
 
                 <View>
