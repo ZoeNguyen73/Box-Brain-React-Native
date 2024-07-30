@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Keyboard } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useState, useEffect } from "react";
 import Feather from "@expo/vector-icons/Feather";
@@ -28,29 +28,14 @@ const Step1 = () => {
     definition: "",
     itemActiveOption: "",
     stack: "",
-    tags: [],
-    properties: [], 
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  // const [currentTags, setCurrentTags] = useState([]);
-  // const [currentProperties, setCurrentProperties] = useState([]);
   const [currentStacks, setCurrentStacks] = useState([]);
-  // const [currentBoxes, setCurrentBoxes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [stackOptions, setStackOptions] = useState([]);
-  // const [tagOptions, setTagOptions] = useState([]);
   const [stackDropdownOpen, setStackDropdownOpen] = useState(false);
-  // const [tagDropdownOpen, setTagDropdownOpen] = useState(false);
-
-  // const onStackDropdownOpen = () => {
-  //   setTagDropdownOpen(false);
-  // };
-
-  // const onTagDropdownOpen = () => {
-  //   setStackDropdownOpen(false);
-  // };
   
   const itemActiveOptions = [
     {
@@ -90,26 +75,7 @@ const Step1 = () => {
           };
           stackOpts.push(option);
         }
-        setStackOptions(stackOpts);
-
-        // const boxesData = await axiosPrivate.get(`/users/${auth.username}/boxes`);
-        // setCurrentBoxes(boxesData.data.boxes);
-
-        // const tagsData = await axiosPrivate.get(`/users/${auth.username}/tags`);
-        // setCurrentTags(tagsData.data.tags);
-
-        // const tagOpts = [];
-        // for (const tag of tagsData.data.tags) {
-        //   const option = {
-        //     label: tag.name,
-        //     value: tag._id
-        //   };
-        //   tagOpts.push(option);
-        // }
-        // setTagOptions(tagOpts);
-
-        // const propertiesData = await axiosPrivate.get(`/users/${auth.username}/properties`);
-        // setCurrentProperties(propertiesData.data.properties);
+        setStackOptions(stackOpts);;
 
       } catch (error) {
         await handleError(error);
@@ -120,7 +86,60 @@ const Step1 = () => {
     };
 
     fetchData();
-  }, [])
+  }, []);
+
+  const handleNext = () => {
+    const { keyword, definition, itemActiveOption, stack } = form;
+    router.push({ 
+      pathname: "add-item/step-2", 
+      params: { keyword, definition, itemActiveOption, stack }
+    });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      console.log("submitting...");
+    } catch (error) {
+      await handleError(error);
+    }
+  };
+
+  const validate = async ({isQuickCreate}) => {
+    Keyboard.dismiss();
+    let isValid = true;
+
+    const { keyword, definition, itemActiveOption, stack } = form;
+    console.log("form: " + JSON.stringify(form));
+
+    if (!keyword) {
+      handleFormError("Please input a keyword", "keyword");
+      isValid = false;
+    }
+
+    if (!definition) {
+      handleFormError("Please input definition", "definition");
+      isValid = false;
+    }
+
+    if (!itemActiveOption) {
+      handleFormError("Please select an option", "itemActiveOption");
+      isValid = false;
+    }
+
+    if (!stack) {
+      handleFormError("Please select a stack", "stack");
+      isValid = false;
+    }
+
+    if (isValid) {
+      if (!isQuickCreate) {
+        handleNext();
+      } else {
+        await handleSubmit();
+      }
+    }
+
+  };
 
   const handleFormError = ( errorMessage, input ) => {
     setFormErrors(prev => ({...prev, [input]: errorMessage}));
@@ -129,7 +148,7 @@ const Step1 = () => {
   return (
     <>
       <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
-        {/* <ScrollView> */}
+        <ScrollView>
           <View className="w-full justify-center px-8 my-6 min-h-[85vh]">
             {!auth.username && (
               <NoAuth 
@@ -210,31 +229,36 @@ const Step1 = () => {
                   multiple={false}
                 />
 
-                {/* <Dropdown 
-                  title="Tag"
-                  value={form.tags}
-                  handleChangeValue={(value) => {
-                    handleFormError(null, "tags");
-                    setForm({ ...form, tags: value });
-                  }}
-                  items={tagOptions}
-                  containerStyles="mt-5"
-                  placeholder="Select Tags to apply to item"
-                  open={tagDropdownOpen}
-                  setOpen={setTagDropdownOpen}
-                  onOpen={onTagDropdownOpen}
-                  multiple={true}
-                  min={0}
-                  max={tagOptions.length}
-                  mode="BADGE"
-                /> */}
+                <View>
+                  <CustomButton 
+                    title="Add Tags & Properties"
+                    handlePress={() => {validate({isQuickCreate: false})}}
+                    containerStyles="mt-3 py-2"
+                  />
+                  <TouchableOpacity
+                    className="mt-3 justify-center items-center"
+                    onPress={() => {validate({isQuickCreate: true})}}
+                  >
+                    <Text
+                      className="font-sans-bold text-lg underline tracking-wide text-light-links dark:text-dark-links"
+                    >
+                      Quick create Item
+                    </Text>
+                    <Text
+                      className="font-sans tracking-wide text-xs text-light-text dark:text-dark-text"
+                    >
+                      (skip tags & properties)
+                    </Text>
+                  </TouchableOpacity>
+
+                </View>
 
               </View>
               
             )}
             
           </View>
-        {/* </ScrollView> */}
+        </ScrollView>
       </SafeAreaView>
       { isLoading && (
         <LoadingSpinner />
