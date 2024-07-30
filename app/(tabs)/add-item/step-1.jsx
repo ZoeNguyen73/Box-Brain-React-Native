@@ -34,23 +34,23 @@ const Step1 = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [currentTags, setCurrentTags] = useState([]);
-  const [currentProperties, setCurrentProperties] = useState([]);
+  // const [currentTags, setCurrentTags] = useState([]);
+  // const [currentProperties, setCurrentProperties] = useState([]);
   const [currentStacks, setCurrentStacks] = useState([]);
-  const [currentBoxes, setCurrentBoxes] = useState([]);
+  // const [currentBoxes, setCurrentBoxes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [stackOptions, setStackOptions] = useState([]);
-  const [tagOptions, setTagOptions] = useState([]);
+  // const [tagOptions, setTagOptions] = useState([]);
   const [stackDropdownOpen, setStackDropdownOpen] = useState(false);
-  const [tagDropdownOpen, setTagDropdownOpen] = useState(false);
+  // const [tagDropdownOpen, setTagDropdownOpen] = useState(false);
 
-  const onStackDropdownOpen = () => {
-    setTagDropdownOpen(false);
-  };
+  // const onStackDropdownOpen = () => {
+  //   setTagDropdownOpen(false);
+  // };
 
-  const onTagDropdownOpen = () => {
-    setStackDropdownOpen(false);
-  };
+  // const onTagDropdownOpen = () => {
+  //   setStackDropdownOpen(false);
+  // };
   
   const itemActiveOptions = [
     {
@@ -92,24 +92,24 @@ const Step1 = () => {
         }
         setStackOptions(stackOpts);
 
-        const boxesData = await axiosPrivate.get(`/users/${auth.username}/boxes`);
-        setCurrentBoxes(boxesData.data.boxes);
+        // const boxesData = await axiosPrivate.get(`/users/${auth.username}/boxes`);
+        // setCurrentBoxes(boxesData.data.boxes);
 
-        const tagsData = await axiosPrivate.get(`/users/${auth.username}/tags`);
-        setCurrentTags(tagsData.data.tags);
+        // const tagsData = await axiosPrivate.get(`/users/${auth.username}/tags`);
+        // setCurrentTags(tagsData.data.tags);
 
-        const tagOpts = [];
-        for (const tag of tagsData.data.tags) {
-          const option = {
-            label: tag.name,
-            value: tag._id
-          };
-          tagOpts.push(option);
-        }
-        setTagOptions(tagOpts);
+        // const tagOpts = [];
+        // for (const tag of tagsData.data.tags) {
+        //   const option = {
+        //     label: tag.name,
+        //     value: tag._id
+        //   };
+        //   tagOpts.push(option);
+        // }
+        // setTagOptions(tagOpts);
 
-        const propertiesData = await axiosPrivate.get(`/users/${auth.username}/properties`);
-        setCurrentProperties(propertiesData.data.properties);
+        // const propertiesData = await axiosPrivate.get(`/users/${auth.username}/properties`);
+        // setCurrentProperties(propertiesData.data.properties);
 
       } catch (error) {
         await handleError(error);
@@ -196,7 +196,7 @@ const Step1 = () => {
                   placeholder="Select a Stack to add Item to"
                   open={stackDropdownOpen}
                   setOpen={setStackDropdownOpen}
-                  onOpen={onStackDropdownOpen}
+                  // onOpen={onStackDropdownOpen}
                 />
 
                 <CheckBox 
@@ -210,7 +210,7 @@ const Step1 = () => {
                   multiple={false}
                 />
 
-                <Dropdown 
+                {/* <Dropdown 
                   title="Tag"
                   value={form.tags}
                   handleChangeValue={(value) => {
@@ -227,7 +227,7 @@ const Step1 = () => {
                   min={0}
                   max={tagOptions.length}
                   mode="BADGE"
-                />
+                /> */}
 
               </View>
               

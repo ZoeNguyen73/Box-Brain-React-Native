@@ -65,6 +65,7 @@ const TabsLayout = () => {
             ),
           }}
         />
+
         <Tabs.Screen 
           name="progress"
           options={{
@@ -80,11 +81,13 @@ const TabsLayout = () => {
             ),
           }}
         />
+
         <Tabs.Screen 
           name="add-item/step-1"
           options={{
             title: "Add Item",
             headerShown: false,
+            href:"/add-item/step-1",
             tabBarIcon: ({ color, focused }) => (
               <TabIcon 
                 name="Add Item"
@@ -95,6 +98,7 @@ const TabsLayout = () => {
             ),
           }}
         />
+
         <Tabs.Screen 
           name="settings"
           options={{
@@ -110,6 +114,7 @@ const TabsLayout = () => {
             ),
           }}
         />
+
         <Tabs.Screen 
           name="profile"
           options={{
@@ -125,6 +130,14 @@ const TabsLayout = () => {
             ),
           }}
         />
+
+        <Tabs.Screen 
+          name="add-item/step-2"
+          options={{
+            href:null,
+          }}
+        />
+
       </Tabs>
       <StatusBar 
         backgroundColor={`${ theme === "dark" ? darkBackgroundColor : lightBackgroundColor }`} 

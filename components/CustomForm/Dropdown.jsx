@@ -22,7 +22,6 @@ const Dropdown = ({
   onOpen,
   mode, 
 }) => {
-  // const [open, setOpen] = useState(open);
   const [selectedValue, setSelectedValue] = useState(value);
   const { theme } = useThemeContext();
   const bgColor = theme === "dark"
