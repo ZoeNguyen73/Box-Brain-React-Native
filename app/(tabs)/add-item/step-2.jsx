@@ -8,7 +8,6 @@ import CustomButton from "../../../components/CustomButton/CustomButton";
 import Dropdown from "../../../components/CustomForm/Dropdown";
 import NoAuth from "../../../components/NoAuth";
 import LoadingSpinner from "../../../components/LoadingSpinner";
-import FormField from "../../../components/CustomForm/FormField";
 import EditableText from "../../../components/CustomForm/EditableText";
 import SelectionModal from "../../../components/CustomForm/SelectionModal";
 
@@ -113,7 +112,7 @@ const Step2 = () => {
 
   return (
     <>
-      <SafeAreaView className="bg-light-background dark:bg-dark-background h-full border border-light-green">
+      <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
         {!auth.username && (
           <NoAuth 
             containerStyles="h-full"
@@ -123,11 +122,11 @@ const Step2 = () => {
         {auth.username && (
           <>
             <View>
-              <View className="flex-row px-3 items-center mt-5">
+              <View className="flex-row px-5 items-center mt-5">
                 <TouchableOpacity
                   onPress={() => router.back()}
                 >
-                  <Feather name="arrow-left-circle" size={24} color={iconColor} />
+                  <Feather name="arrow-left" size={24} color={iconColor} />
                 </TouchableOpacity>
                 
                 <View className="flex-1 mx-2">
@@ -148,7 +147,7 @@ const Step2 = () => {
             </View>
             <ScrollView nestedScrollEnabled={true}>
               <View className="w-full h-full justify-center px-8">
-                <View className="h-full flex-column">
+                <View className="min-h-[65vh] flex-column">
                   
                   <View className="flex-column nowrap">
                     <Text className="font-sans-bold text-3xl mt-10 tracking-wide text-light-teal dark:text-dark-teal">
