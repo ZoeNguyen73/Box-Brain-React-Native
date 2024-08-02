@@ -32,13 +32,11 @@ const Step2 = () => {
 
   const [tags, setTags] = useState([]);
   const [properties, setProperties] = useState([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [tagOptions, setTagOptions] = useState([]);
   const [propertyOptions, setPropertyOptions] = useState([]);
   const [propertyInputErrors, setPropertyInputErrors] = useState({});
   const [tagDropdownOpen, setTagDropdownOpen] = useState(false);
-  const [propertyDropdownOpen, setPropertyDropdownOpen] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {

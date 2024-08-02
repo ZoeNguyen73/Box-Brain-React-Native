@@ -29,9 +29,7 @@ const Step1 = () => {
     itemActiveOption: "",
     stack: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formErrors, setFormErrors] = useState({});
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [currentStacks, setCurrentStacks] = useState([]);
   const [currentBoxes, setCurrentBoxes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
