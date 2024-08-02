@@ -7,7 +7,6 @@ import tailwindConfig from "../../tailwind.config";
 
 const CustomButton = ({ title, handlePress, containerStyles, iconName, isDisabled, variant }) => {
   const { theme } = useThemeContext();
-  const lightTextColor = tailwindConfig.theme.extend.colors.light.text;
   let backgroundColor = "bg-light-yellow ";
   let textColor = "text-dark-background";
   let size = "min-h-[45px] min-w-[200px] px-6 py-4"

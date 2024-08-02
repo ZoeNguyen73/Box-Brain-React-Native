@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import React from "react";
 import Modal from "react-native-modal";
+import { Feather } from "@expo/vector-icons";
 
 import tailwindConfig from "../../tailwind.config";
 import { useThemeContext } from "../../context/ThemeProvider";
@@ -10,6 +11,9 @@ const SelectionModal = ({ modalTitle, options, isVisible, onClose, onSelect }) =
   const backgroundColor = theme === "dark"
     ? tailwindConfig.theme.extend.colors.dark.background
     : tailwindConfig.theme.extend.colors.light.background;
+  const iconColor = theme === "dark"
+    ? tailwindConfig.theme.extend.colors.dark.text
+    : tailwindConfig.theme.extend.colors.light.text;
 
   return (
     <View>
@@ -38,20 +42,24 @@ const SelectionModal = ({ modalTitle, options, isVisible, onClose, onSelect }) =
             renderItem={({ item }) => {
               if (item.disabled) {
                 return (
-                  <Text
-                    className="font-sans-italic text-dark-text dark:text-light-text tracking-wide mt-2"
-                  >
-                    {item.label}
-                  </Text>
+                  <View>
+                    <Text
+                      className="font-sans-italic text-dark-text dark:text-light-text tracking-wide mt-2"
+                    >
+                      {item.label}
+                    </Text>
+                  </View>
+                  
                 )
               } else {
                 return (
                   <TouchableOpacity 
                     onPress={() => onSelect(item.value)}
-                    className="mt-2"
+                    className="flex-row mt-3"
                   >
+                    <Feather name="plus-circle" size={20} color={iconColor} />
                     <Text
-                      className="font-sans text-light-text dark:text-dark-text tracking-wide"
+                      className="font-sans text-light-text dark:text-dark-text tracking-wide ml-2"
                     >
                       {item.label}
                     </Text>

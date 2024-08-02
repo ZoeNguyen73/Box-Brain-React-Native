@@ -130,7 +130,7 @@ const Step2 = () => {
                 </TouchableOpacity>
                 
                 <View className="flex-1 mx-2">
-                  <Text className="font-sans-semibold text-xl tracking-wide text-light-mauve dark:text-light-yellow">
+                  <Text className="font-sans-semibold text-xl tracking-wide text-light-primary dark:text-light-yellow">
                     Tags & Properties
                   </Text>
                 </View>
@@ -234,7 +234,7 @@ const Step2 = () => {
                       onPress={() => setModalVisible(true)}
                       className="mt-5"
                     >
-                      <Text className="font-sans-semibold tracking-wide text-light-mauve dark:text-light-yellow">
+                      <Text className="font-sans-semibold tracking-wide text-light-primary dark:text-light-yellow">
                         + Add a property
                       </Text>
                     </TouchableOpacity>

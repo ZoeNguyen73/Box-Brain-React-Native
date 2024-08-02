@@ -96,15 +96,7 @@ const Step1 = () => {
     });
   };
 
-  const handleSubmit = async () => {
-    try {
-      console.log("submitting...");
-    } catch (error) {
-      await handleError(error);
-    }
-  };
-
-  const validate = async ({isQuickCreate}) => {
+  const validate = async () => {
     Keyboard.dismiss();
     let isValid = true;
 
@@ -131,11 +123,7 @@ const Step1 = () => {
     }
 
     if (isValid) {
-      if (!isQuickCreate) {
-        handleNext();
-      } else {
-        await handleSubmit();
-      }
+      handleNext();
     }
 
   };
@@ -163,7 +151,7 @@ const Step1 = () => {
                 </TouchableOpacity>
                 
                 <View className="flex-1 mx-2">
-                  <Text className="font-sans-semibold text-xl tracking-wide text-light-mauve dark:text-light-yellow">
+                  <Text className="font-sans-semibold text-xl tracking-wide text-light-primary dark:text-light-yellow">
                     Add Item
                   </Text>
                 </View>
@@ -173,7 +161,7 @@ const Step1 = () => {
                     title="Continue"
                     variant="small-secondary"
                     iconName="chevron-right"
-                    handlePress={() => {validate({isQuickCreate: false})}}
+                    handlePress={() => validate()}
                   />
                 </View>
 
@@ -239,36 +227,11 @@ const Step1 = () => {
                     error={formErrors.itemActiveOption}
                   />
 
-                  {/* <View>
-                    <CustomButton 
-                      title="Add Tags & Properties"
-                      handlePress={() => {validate({isQuickCreate: false})}}
-                      containerStyles="mt-3 py-2"
-                    />
-                    <TouchableOpacity
-                      className="mt-3 justify-center items-center"
-                      onPress={() => {validate({isQuickCreate: true})}}
-                    >
-                      <Text
-                        className="font-sans-bold text-lg underline tracking-wide text-light-links dark:text-dark-links"
-                      >
-                        Quick create Item
-                      </Text>
-                      <Text
-                        className="font-sans tracking-wide text-xs text-light-text dark:text-dark-text"
-                      >
-                        (skip tags & properties)
-                      </Text>
-                    </TouchableOpacity>
-
-                  </View> */}
-
                 </View>
   
               </View>
             </ScrollView>
           </>
-
           
         )}
       </SafeAreaView>
