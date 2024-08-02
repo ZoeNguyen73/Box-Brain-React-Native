@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Keyboard } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useState, useEffect } from "react";
 import { router, useLocalSearchParams } from "expo-router";
@@ -20,7 +20,7 @@ import { useErrorHandler } from "../../../context/ErrorHandlerProvider";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 
 const Step2 = () => {
-  const { keyword, definition, itemActiveOption, stack } = useLocalSearchParams();
+  const { keyword, definition, box_id, is_active } = useLocalSearchParams();
   const axiosPrivate = useAxiosPrivate();
 
   const { theme } = useThemeContext();
@@ -36,7 +36,7 @@ const Step2 = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [tagOptions, setTagOptions] = useState([]);
   const [propertyOptions, setPropertyOptions] = useState([]);
-  const [formErrors, setFormErrors] = useState({});
+  const [propertyInputErrors, setPropertyInputErrors] = useState({});
   const [tagDropdownOpen, setTagDropdownOpen] = useState(false);
   const [propertyDropdownOpen, setPropertyDropdownOpen] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -81,7 +81,7 @@ const Step2 = () => {
   }, []);
 
   const handleAddProperty = (newPropId) => {
-    setProperties([...properties, {id: newPropId, content: ""}]);
+    setProperties([...properties, {property_id: newPropId, content: ""}]);
   };
 
   const handleRemoveProperty = (index) => {
@@ -96,8 +96,8 @@ const Step2 = () => {
     setProperties(newProperties);
   }
 
-  const handleFormError = ( errorMessage, input ) => {
-    setFormErrors(prev => ({...prev, [input]: errorMessage}));
+  const handlePropertyInputError = ( errorMessage, propertyIndex ) => {
+    setPropertyInputErrors(prev => ({...prev, [propertyIndex]: errorMessage}));
   };
 
   const updatePropertyOptions = ({propId, isRemoval}) => {
@@ -107,6 +107,47 @@ const Step2 = () => {
       propertyOptions[index].disabled = true;
     } else {
       propertyOptions[index].disabled = false;
+    }
+  };
+
+  const validate = async () => {
+    Keyboard.dismiss();
+    let isValid = true;
+
+    properties.forEach((property, index) => {
+      if (property.content === "") {
+        isValid = false;
+        handlePropertyInputError("Please provide input for this property", index);
+      }
+    });
+
+    console.log("isValid: " + isValid);
+
+    if (isValid) {
+      await submit();
+    }
+  };
+
+  const submit = async () => {
+    setIsLoading(true);
+    try {
+      const newItem = await axiosPrivate.post(
+        "/items",
+        {
+          keyword,
+          definition,
+          box_id,
+          is_active,
+          tags,
+          properties
+        }
+      );
+
+      console.log("newItem created: " + JSON.stringify(newItem.data));
+    } catch (error) {
+      await handleError(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -140,6 +181,7 @@ const Step2 = () => {
                     title="Done"
                     variant="small-primary"
                     iconName="plus-circle"
+                    handlePress={() => validate()}
                   />
                 </View>
 
@@ -168,8 +210,12 @@ const Step2 = () => {
                       title="Tag"
                       value={tags}
                       handleChangeValue={(value) => {
-                        handleFormError(null, "tags");
-                        setTags(value);
+                        console.log("selected tags value: " + JSON.stringify(value));
+                        const tagIdArray = [];
+                        value.forEach(tag => {
+                          tagIdArray.push({ tag_id: tag});
+                        })
+                        setTags(tagIdArray);
                       }}
                       items={tagOptions}
                       containerStyles="mt-5"
@@ -192,41 +238,47 @@ const Step2 = () => {
                   </Text>
                   <View className="flex-1">
                     {properties.map((property, index) => {
-                      const prop = propertyOptions.find(propOption => propOption.value === property.id) || null;
+                      const prop = propertyOptions.find(propOption => propOption.value === property.property_id) || null;
                       const propName = prop ? prop.label : "Prop Name";
                       return (
-                        <View 
-                          key={index} 
-                          style={{zIndex: propertyDropdownOpen ? 1 : 0 }}
-                          className="flex-row items-start mt-4"
-                        >
-                          <View>
-                            <Text className="font-sans underline text-light-text dark:text-dark-text">
-                              {propName}
-                            </Text>
-                          </View>
-                          
-                          <EditableText 
-                            value={property.content}
-                            placeholder="empty"
-                            onSave={(currentText) => {
-                              handlePropertyChange(index, "content", currentText);
-                            }}
-                            containerStyles="ml-2 flex-1"
-                            maxLength={200}
-                          />
-                          <TouchableOpacity
-                            onPress={() => {
-                              handleRemoveProperty(index);
-                              updatePropertyOptions({ propId: property.id, isRemoval: false})
-                            }}
+                        <View key={index} >
+                          <View 
+                            className="flex-row items-start mt-4"
                           >
-                            <Feather 
-                              name="trash-2" 
-                              size={18} 
-                              color={`${ theme === "dark" ? "#6c7086" : tailwindConfig.theme.extend.colors.light.text}`} />
-                          </TouchableOpacity>
-                        </View>
+                            <View>
+                              <Text className="font-sans underline text-light-text dark:text-dark-text">
+                                {propName}
+                              </Text>
+                            </View>
+                            
+                            <EditableText 
+                              value={property.content}
+                              placeholder="empty"
+                              onSave={(currentText) => {
+                                handlePropertyChange(index, "content", currentText);
+                                handlePropertyInputError("", index);
+                              }}
+                              containerStyles="ml-2 flex-1"
+                              maxLength={200}
+                            />
+                            <TouchableOpacity
+                              onPress={() => {
+                                handleRemoveProperty(index);
+                                updatePropertyOptions({ propId: property.property_id, isRemoval: false})
+                              }}
+                            >
+                              <Feather 
+                                name="trash-2" 
+                                size={18} 
+                                color={`${ theme === "dark" ? "#6c7086" : tailwindConfig.theme.extend.colors.light.text}`} />
+                            </TouchableOpacity>
+                          </View>
+                          { propertyInputErrors[index] && (
+                            <Text className="text-light-error dark:text-dark-error font-xs font-sans-light">
+                              {propertyInputErrors[index]}
+                            </Text>
+                          )}
+                        </View> 
                       )
                     })}
 

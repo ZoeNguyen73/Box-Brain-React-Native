@@ -33,17 +33,18 @@ const Step1 = () => {
   const [formErrors, setFormErrors] = useState({});
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [currentStacks, setCurrentStacks] = useState([]);
+  const [currentBoxes, setCurrentBoxes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [stackOptions, setStackOptions] = useState([]);
   const [stackDropdownOpen, setStackDropdownOpen] = useState(false);
   
   const itemActiveOptions = [
     {
-      label: "Add to today's review queue",
+      label: "Add to next review queue including today",
       disabled: false,
     },
     {
-      label: "Add to tomorrow's review queue",
+      label: "Add to next review queue after today - not working",
       disabled: false,
     },
     {
@@ -77,6 +78,9 @@ const Step1 = () => {
         }
         setStackOptions(stackOpts);
 
+        const boxesData = await axiosPrivate.get(`/users/${auth.username}/boxes`);
+        setCurrentBoxes(boxesData.data.boxes);
+
       } catch (error) {
         await handleError(error);
 
@@ -90,9 +94,38 @@ const Step1 = () => {
 
   const handleNext = () => {
     const { keyword, definition, itemActiveOption, stack } = form;
+    const boxesInStack = currentBoxes.filter((box) => box.stack_id._id === stack);
+    let box_id = "";
+    let is_active = true;
+
+    if (itemActiveOption === "Add to next review queue including today") {
+      // find the box in the current stack that is not default & has the lowest lapse_days
+      let selectedBoxId = "";
+      let lowestLapseDay = null;
+      for (box in boxesInStack) {
+        if (lowestLapseDay === null || box.lapse_days < lowestLapseDay) {
+          selectedBoxId = box._id;
+          lowestLapseDay = box.lapse_days;
+        }
+      }
+      box_id = selectedBoxId;
+    } else if (itemActiveOption === "Add to next review queue after today - not working") {
+      let selectedBoxId = "";
+      let lowestLapseDay = null;
+      for (box in boxesInStack) {
+        if (lowestLapseDay === null || box.lapse_days < lowestLapseDay) {
+          selectedBoxId = box._id;
+          lowestLapseDay = box.lapse_days;
+        }
+      }
+      box_id = selectedBoxId;
+    } else if (itemActiveOption === "Set Item inactive") {
+      is_active = false;
+    }
+
     router.push({ 
       pathname: "add-item/step-2", 
-      params: { keyword, definition, itemActiveOption, stack }
+      params: { keyword, definition, box_id, is_active }
     });
   };
 
