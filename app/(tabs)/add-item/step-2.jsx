@@ -10,6 +10,7 @@ import NoAuth from "../../../components/NoAuth";
 import LoadingSpinner from "../../../components/LoadingSpinner";
 import FormField from "../../../components/CustomForm/FormField";
 import EditableText from "../../../components/CustomForm/EditableText";
+import SelectionModal from "../../../components/CustomForm/SelectionModal";
 
 import tailwindConfig from "../../../tailwind.config";
 
@@ -35,7 +36,7 @@ const Step2 = () => {
   // });
 
   const [tags, setTags] = useState([]);
-  const [properties, setProperties] = useState([{id: "", content: ""}]);
+  const [properties, setProperties] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentTags, setCurrentTags] = useState([]);
@@ -44,6 +45,7 @@ const Step2 = () => {
   const [formErrors, setFormErrors] = useState({});
   const [tagDropdownOpen, setTagDropdownOpen] = useState(false);
   const [propertyDropdownOpen, setPropertyDropdownOpen] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,8 +86,8 @@ const Step2 = () => {
 
   }, []);
 
-  const handleAddProperty = () => {
-    setProperties([...properties, {id: "", content: ""}]);
+  const handleAddProperty = (newPropId) => {
+    setProperties([...properties, {id: newPropId, content: ""}]);
   };
 
   const handlePropertyChange = (index, key, value) => {
@@ -99,7 +101,8 @@ const Step2 = () => {
   };
 
   const onTagDropdownOpen = () => setPropertyDropdownOpen(false);
-  const onPropertyDropdownOpen = () => setTagDropdownOpen(false);
+  // const onPropertyDropdownOpen = () => setTagDropdownOpen(false);
+ 
 
   const updatePropertyOptions = (propertyId) => {
     // to remove already selected property from the option list
@@ -171,62 +174,66 @@ const Step2 = () => {
                   {tags.length} tags selected
                 </Text>
 
-                {properties.map((property, index) => (
-                  <View 
-                    key={index} 
-                    style={{zIndex: propertyDropdownOpen ? 1 : 0 }}
-                    className="flex-row items-start mt-2"
-                  >
-                    <View>
-                      <Text className="font-sans-semibold text-light-text dark:text-dark-text">
-                        Prop name
-                      </Text>
+                {properties.map((property, index) => {
+                  const prop = propertyOptions.find(propOption => propOption.value === property.id) || null;
+                  const propName = prop ? prop.label : "Prop Name";
+                  return (
+                    <View 
+                      key={index} 
+                      style={{zIndex: propertyDropdownOpen ? 1 : 0 }}
+                      className="flex-row items-start mt-2"
+                    >
+                      <View>
+                        <Text className="font-sans-semibold text-light-text dark:text-dark-text">
+                          {propName}
+                        </Text>
+                      </View>
+                      
+                      <EditableText 
+                        value={property.content}
+                        placeholder="empty"
+                        onSave={(currentText) => {
+                          handlePropertyChange(index, "content", currentText);
+                        }}
+                        containerStyles="ml-2 flex-1"
+                        maxLength={200}
+                      />
+                      {/* <Dropdown 
+                        title={`Property ${index + 1}`}
+                        value={property.id}
+                        handleChangeValue={(value) => {
+                          // handleFormError(null, "properties");
+                          console.log("selected value: " + value);
+                          // setProperties(value);
+                          handlePropertyChange(index, "id", value);
+                          updatePropertyOptions(value);
+                        }}
+                        items={propertyOptions}
+                        containerStyles="mt-5"
+                        placeholder="Select Property to add"
+                        open={propertyDropdownOpen}
+                        setOpen={setPropertyDropdownOpen}
+                        onOpen={onPropertyDropdownOpen}
+                        multiple={false}
+                        mode="BADGE"
+                      />
+                      <FormField 
+                        title={`Property ${index + 1} input`}
+                        value={property.content}
+                        handleChangeText={(e) => {
+                          // handleFormError(null, "definition");
+                          handlePropertyChange(index, "content", e)
+                        }}
+                        otherStyles="mt-5"
+                        // error={formErrors.keyword}
+                        helpText="max 200 characters"
+                        numberOfLines={5}
+                        maxLength={200}
+                        charCount={true}
+                      /> */}
                     </View>
-                    
-                    <EditableText 
-                      value={property.content}
-                      placeholder="empty"
-                      onSave={(currentText) => {
-                        handlePropertyChange(index, "content", currentText);
-                      }}
-                      containerStyles="ml-2 flex-1"
-                      maxLength={200}
-                    />
-                    {/* <Dropdown 
-                      title={`Property ${index + 1}`}
-                      value={property.id}
-                      handleChangeValue={(value) => {
-                        // handleFormError(null, "properties");
-                        console.log("selected value: " + value);
-                        // setProperties(value);
-                        handlePropertyChange(index, "id", value);
-                        updatePropertyOptions(value);
-                      }}
-                      items={propertyOptions}
-                      containerStyles="mt-5"
-                      placeholder="Select Property to add"
-                      open={propertyDropdownOpen}
-                      setOpen={setPropertyDropdownOpen}
-                      onOpen={onPropertyDropdownOpen}
-                      multiple={false}
-                      mode="BADGE"
-                    />
-                    <FormField 
-                      title={`Property ${index + 1} input`}
-                      value={property.content}
-                      handleChangeText={(e) => {
-                        // handleFormError(null, "definition");
-                        handlePropertyChange(index, "content", e)
-                      }}
-                      otherStyles="mt-5"
-                      // error={formErrors.keyword}
-                      helpText="max 200 characters"
-                      numberOfLines={5}
-                      maxLength={200}
-                      charCount={true}
-                    /> */}
-                  </View>
-                ))}
+                  )
+                })}
 
                 {/* <CustomButton 
                   title="Add another Property"
@@ -235,13 +242,25 @@ const Step2 = () => {
                 /> */}
 
                 <TouchableOpacity
-                  onPress={() => handleAddProperty()}
+                  // onPress={() => handleAddProperty()}
+                  onPress={() => setModalVisible(true)}
                   className="mt-3"
                 >
                   <Text className="font-sans-semibold underline tracking-wide text-light-mauve dark:text-light-yellow">
                     + Add a property
                   </Text>
                 </TouchableOpacity>
+
+                <SelectionModal
+                  modalTitle="Select a Property to add"
+                  options={propertyOptions} 
+                  isVisible={modalVisible}
+                  onClose={() => setModalVisible(false)}
+                  onSelect={(propId) => {
+                    handleAddProperty(propId);
+                    setModalVisible(false);
+                  }}
+                />
                 
               </View>
               
