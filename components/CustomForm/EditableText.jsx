@@ -11,9 +11,11 @@ const EditableText = ({
   placeholder,
   error,
   containerStyles,
+  maxLength,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentText, setCurrentText] = useState(value);
+  const [notEdited, setNotEdited] = useState(true);
 
   const { theme } = useThemeContext();
   const lightTextColor = tailwindConfig.theme.extend.colors.light.text;
@@ -29,32 +31,27 @@ const EditableText = ({
   return (
     <View className={containerStyles}>
       { isEditing ? (
-        // <View
-        //   className={`w-full px-4 border 
-        //   ${ error ? "border-light-error dark:border-dark-error" : "border-light-surface dark:border-dark-surface"} 
-        //   rounded-xl focus:border-light-warning items-center flex-row`}
-        //   backgroundColor={`${ theme === "dark" ? darkSurface : lightSurface}`}
-        //   style={{ minHeight: 40 }}
-        // >
-           <TextInput
-            className="font-sans-light text-light-text dark:text-dark-text"
-            placeholder={placeholder}
-            placeholderTextColor={`${ theme === "dark" ? "#6c7086" : lightTextColor}`}
-            value={currentText}
-            onBlur={handleSave}
-            onChangeText={setCurrentText}
-            autoFocus
-          />
-        // </View>
-       
+        <TextInput
+          className="font-sans-light text-light-text dark:text-dark-text"
+          placeholder={placeholder}
+          placeholderTextColor={`${ theme === "dark" ? "#6c7086" : lightTextColor}`}
+          value={currentText}
+          onBlur={handleSave}
+          onChangeText={(value) => {
+            setNotEdited(false);
+            setCurrentText(value);
+          }}
+          autoFocus
+          maxLength={ maxLength ? maxLength : 2000}
+        />
       ) : (
         <TouchableOpacity
           onPress={() => setIsEditing(true)}
         >
           <Text
-            className="font-sans text-light-text dark:text-dark-text"
+            className={`${ notEdited ? "font-sans-italic text-light-grey1 dark:text-dark-grey1" : "font-sans text-light-text dark:text-dark-text" }`}
           >
-            {currentText}
+            {notEdited ? placeholder : currentText}
           </Text>
         </TouchableOpacity>
       )}

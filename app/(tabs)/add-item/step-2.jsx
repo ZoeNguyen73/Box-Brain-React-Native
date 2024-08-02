@@ -132,18 +132,16 @@ const Step2 = () => {
 
                   <View className="w-[24px]"></View> 
                 </View>
-
-                {/* <View className="flex-row justify-center items-end gap-2 mt-1">
-                  <Text className="font-sans-bold text-light-text dark:text-dark-text">
-                    Keyword:
-                  </Text>
-                  <Text className="font-sans-bold text-xl tracking-wide text-light-mauve dark:text-light-yellow">
-                    {keyword}
-                  </Text>
-                </View> */}
-                <View>
+                <View className="flex-column nowrap">
                   <Text className="font-sans-bold text-3xl mt-10 tracking-wide text-light-teal dark:text-dark-teal">
                     {keyword}
+                  </Text>
+                  <Text 
+                    className="font-sans-italic mt-1 tracking-wider text-light-teal dark:text-dark-teal"
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                  >
+                    {definition}
                   </Text>
                 </View>
 
@@ -177,7 +175,7 @@ const Step2 = () => {
                   <View 
                     key={index} 
                     style={{zIndex: propertyDropdownOpen ? 1 : 0 }}
-                    className="flex-row items-end mt-2"
+                    className="flex-row items-start mt-2"
                   >
                     <View>
                       <Text className="font-sans-semibold text-light-text dark:text-dark-text">
@@ -185,9 +183,6 @@ const Step2 = () => {
                       </Text>
                     </View>
                     
-                    {/* <Text className="font-sans text-sm text-light-text dark:text-dark-text">
-                      Prop content
-                    </Text> */}
                     <EditableText 
                       value={property.content}
                       placeholder="empty"
@@ -195,6 +190,7 @@ const Step2 = () => {
                         handlePropertyChange(index, "content", currentText);
                       }}
                       containerStyles="ml-2 flex-1"
+                      maxLength={200}
                     />
                     {/* <Dropdown 
                       title={`Property ${index + 1}`}
