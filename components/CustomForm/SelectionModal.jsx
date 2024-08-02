@@ -36,18 +36,29 @@ const SelectionModal = ({ modalTitle, options, isVisible, onClose, onSelect }) =
             data={options}
             keyExtractor={(item) => item.value}
             renderItem={({ item }) => {
-              return (
-                <TouchableOpacity 
-                  onPress={() => onSelect(item.value)}
-                  className="mt-2"
-                >
+              if (item.disabled) {
+                return (
                   <Text
-                    className="font-sans text-light-text dark:text-dark-text tracking-wide"
+                    className="font-sans-italic text-dark-text dark:text-light-text tracking-wide mt-2"
                   >
                     {item.label}
                   </Text>
-                </TouchableOpacity>
-              )
+                )
+              } else {
+                return (
+                  <TouchableOpacity 
+                    onPress={() => onSelect(item.value)}
+                    className="mt-2"
+                  >
+                    <Text
+                      className="font-sans text-light-text dark:text-dark-text tracking-wide"
+                    >
+                      {item.label}
+                    </Text>
+                  </TouchableOpacity>
+                )
+              }
+              
             }}
           />
         </View>

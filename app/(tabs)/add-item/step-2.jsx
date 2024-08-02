@@ -70,7 +70,8 @@ const Step2 = () => {
         for (const prop of propertiesData.data.properties) {
           const option = {
             label: prop.name,
-            value: prop._id
+            value: prop._id,
+            disabled: false,
           };
           propertyOpts.push(option);
         }
@@ -90,6 +91,12 @@ const Step2 = () => {
     setProperties([...properties, {id: newPropId, content: ""}]);
   };
 
+  const handleRemoveProperty = (index) => {
+    const newProperties = [...properties];
+    newProperties.splice(index, 1);
+    setProperties(newProperties);
+  };
+
   const handlePropertyChange = (index, key, value) => {
     const newProperties = [...properties];
     newProperties[index][key] = value;
@@ -104,8 +111,14 @@ const Step2 = () => {
   // const onPropertyDropdownOpen = () => setTagDropdownOpen(false);
  
 
-  const updatePropertyOptions = (propertyId) => {
+  const updatePropertyOptions = ({propId, isRemoval}) => {
     // to remove already selected property from the option list
+    const index = propertyOptions.findIndex((prop) => prop.value === propId);
+    if (isRemoval) {
+      propertyOptions[index].disabled = true;
+    } else {
+      propertyOptions[index].disabled = false;
+    }
   };
 
   return (
@@ -174,6 +187,10 @@ const Step2 = () => {
                   {tags.length} tags selected
                 </Text>
 
+                <Text className="font-sans-bold text-light-text dark:text-dark-text mt-5 tracking-wide">
+                    Properties
+                </Text>
+
                 {properties.map((property, index) => {
                   const prop = propertyOptions.find(propOption => propOption.value === property.id) || null;
                   const propName = prop ? prop.label : "Prop Name";
@@ -181,10 +198,10 @@ const Step2 = () => {
                     <View 
                       key={index} 
                       style={{zIndex: propertyDropdownOpen ? 1 : 0 }}
-                      className="flex-row items-start mt-2"
+                      className="flex-row items-start mt-4"
                     >
                       <View>
-                        <Text className="font-sans-semibold text-light-text dark:text-dark-text">
+                        <Text className="font-sans underline text-light-text dark:text-dark-text">
                           {propName}
                         </Text>
                       </View>
@@ -198,58 +215,30 @@ const Step2 = () => {
                         containerStyles="ml-2 flex-1"
                         maxLength={200}
                       />
-                      {/* <Dropdown 
-                        title={`Property ${index + 1}`}
-                        value={property.id}
-                        handleChangeValue={(value) => {
-                          // handleFormError(null, "properties");
-                          console.log("selected value: " + value);
-                          // setProperties(value);
-                          handlePropertyChange(index, "id", value);
-                          updatePropertyOptions(value);
+                      <TouchableOpacity
+                        onPress={() => {
+                          handleRemoveProperty(index);
+                          updatePropertyOptions({ propId: property.id, isRemoval: false})
                         }}
-                        items={propertyOptions}
-                        containerStyles="mt-5"
-                        placeholder="Select Property to add"
-                        open={propertyDropdownOpen}
-                        setOpen={setPropertyDropdownOpen}
-                        onOpen={onPropertyDropdownOpen}
-                        multiple={false}
-                        mode="BADGE"
-                      />
-                      <FormField 
-                        title={`Property ${index + 1} input`}
-                        value={property.content}
-                        handleChangeText={(e) => {
-                          // handleFormError(null, "definition");
-                          handlePropertyChange(index, "content", e)
-                        }}
-                        otherStyles="mt-5"
-                        // error={formErrors.keyword}
-                        helpText="max 200 characters"
-                        numberOfLines={5}
-                        maxLength={200}
-                        charCount={true}
-                      /> */}
+                      >
+                        <Feather 
+                          name="trash-2" 
+                          size={18} 
+                          color={`${ theme === "dark" ? "#6c7086" : tailwindConfig.theme.extend.colors.light.text}`} />
+                      </TouchableOpacity>
                     </View>
                   )
                 })}
 
-                {/* <CustomButton 
-                  title="Add another Property"
-                  variant="secondary"
-                  handlePress={handleAddProperty}
-                /> */}
-
                 <TouchableOpacity
-                  // onPress={() => handleAddProperty()}
                   onPress={() => setModalVisible(true)}
-                  className="mt-3"
+                  className="mt-5"
                 >
                   <Text className="font-sans-semibold underline tracking-wide text-light-mauve dark:text-light-yellow">
                     + Add a property
                   </Text>
                 </TouchableOpacity>
+                {/* TO DO: allow users to quick add new property */}
 
                 <SelectionModal
                   modalTitle="Select a Property to add"
@@ -259,6 +248,7 @@ const Step2 = () => {
                   onSelect={(propId) => {
                     handleAddProperty(propId);
                     setModalVisible(false);
+                    updatePropertyOptions({propId: propId, isRemoval: true})
                   }}
                 />
                 
