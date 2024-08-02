@@ -30,16 +30,11 @@ const Step2 = () => {
   : tailwindConfig.theme.extend.colors.light.text;
   const { auth } = useAuthContext();
   const { handleError } = useErrorHandler();
-  // const [form, setForm] = useState({
-  //   tags: [],
-  //   properties: []
-  // });
 
   const [tags, setTags] = useState([]);
   const [properties, setProperties] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [currentTags, setCurrentTags] = useState([]);
   const [tagOptions, setTagOptions] = useState([]);
   const [propertyOptions, setPropertyOptions] = useState([]);
   const [formErrors, setFormErrors] = useState({});
@@ -52,7 +47,6 @@ const Step2 = () => {
       setIsLoading(true);
       try {
         const tagsData = await axiosPrivate.get(`/users/${auth.username}/tags`);
-        setCurrentTags(tagsData.data.tags);
 
         const tagOpts = [];
         for (const tag of tagsData.data.tags) {
@@ -107,10 +101,6 @@ const Step2 = () => {
     setFormErrors(prev => ({...prev, [input]: errorMessage}));
   };
 
-  const onTagDropdownOpen = () => setPropertyDropdownOpen(false);
-  // const onPropertyDropdownOpen = () => setTagDropdownOpen(false);
- 
-
   const updatePropertyOptions = ({propId, isRemoval}) => {
     // to remove already selected property from the option list
     const index = propertyOptions.findIndex((prop) => prop.value === propId);
@@ -123,142 +113,154 @@ const Step2 = () => {
 
   return (
     <>
-      <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
-        <ScrollView nestedScrollEnabled={true}>
-          <View className="w-full justify-center px-8 my-6 min-h-[85vh]">
-            {!auth.username && (
-              <NoAuth 
-                containerStyles="h-full"
-              />
-            )}
-            {auth.username && (
-              <View className="h-full">
-                <View className="flex-row">
-                  <TouchableOpacity
-                    onPress={() => router.back()}
-                  >
-                    <Feather name="arrow-left-circle" size={24} color={iconColor} />
-                  </TouchableOpacity>
+      <SafeAreaView className="bg-light-background dark:bg-dark-background h-full border border-light-green">
+        {!auth.username && (
+          <NoAuth 
+            containerStyles="h-full"
+          />
+        )}
+
+        {auth.username && (
+          <>
+            <View>
+              <View className="flex-row px-3 items-center mt-5">
+                <TouchableOpacity
+                  onPress={() => router.back()}
+                >
+                  <Feather name="arrow-left-circle" size={24} color={iconColor} />
+                </TouchableOpacity>
+                
+                <View className="flex-1 mx-2">
+                  <Text className="font-sans-semibold text-xl tracking-wide text-light-mauve dark:text-light-yellow">
+                    Tags & Properties
+                  </Text>
+                </View>
+
+                <View>
+                  <CustomButton 
+                    title="Done"
+                    variant="small-primary"
+                    iconName="plus-circle"
+                  />
+                </View>
+
+              </View>
+            </View>
+            <ScrollView nestedScrollEnabled={true}>
+              <View className="w-full h-full justify-center px-8">
+                <View className="h-full flex-column">
                   
-                  <View className="flex-1 items-center">
-                    <Text className="font-sans-bold text-2xl text-light-mauve dark:text-light-yellow">
-                      Tags & Properties
+                  <View className="flex-column nowrap">
+                    <Text className="font-sans-bold text-3xl mt-10 tracking-wide text-light-teal dark:text-dark-teal">
+                      {keyword}
+                    </Text>
+                    <Text 
+                      className="font-sans-italic mt-1 tracking-wider text-light-teal dark:text-dark-teal"
+                      numberOfLines={2}
+                      ellipsizeMode="tail"
+                    >
+                      {definition}
                     </Text>
                   </View>
 
-                  <View className="w-[24px]"></View> 
-                </View>
-                <View className="flex-column nowrap">
-                  <Text className="font-sans-bold text-3xl mt-10 tracking-wide text-light-teal dark:text-dark-teal">
-                    {keyword}
+                  {/* TO DO: allow users to quick add new tag */}
+                  <View style={{zIndex: tagDropdownOpen ? 1 : 0 }}>
+                    <Dropdown 
+                      title="Tag"
+                      value={tags}
+                      handleChangeValue={(value) => {
+                        handleFormError(null, "tags");
+                        setTags(value);
+                      }}
+                      items={tagOptions}
+                      containerStyles="mt-5"
+                      placeholder="Select Tags to apply to item"
+                      open={tagDropdownOpen}
+                      setOpen={setTagDropdownOpen}
+                      multiple={true}
+                      min={0}
+                      max={tagOptions.length}
+                      mode="BADGE"
+                    />
+                  </View>
+                  
+                  <Text className="text-light-text dark:text-dark-text text-xs mt-1 font-sans-italic tracking-wide mb-5">
+                    {tags.length} tags selected
                   </Text>
-                  <Text 
-                    className="font-sans-italic mt-1 tracking-wider text-light-teal dark:text-dark-teal"
-                    numberOfLines={2}
-                    ellipsizeMode="tail"
-                  >
-                    {definition}
+
+                  <Text className="font-sans-bold text-light-text dark:text-dark-text mt-5 tracking-wide">
+                      Properties
                   </Text>
-                </View>
+                  <View className="flex-1">
+                    {properties.map((property, index) => {
+                      const prop = propertyOptions.find(propOption => propOption.value === property.id) || null;
+                      const propName = prop ? prop.label : "Prop Name";
+                      return (
+                        <View 
+                          key={index} 
+                          style={{zIndex: propertyDropdownOpen ? 1 : 0 }}
+                          className="flex-row items-start mt-4"
+                        >
+                          <View>
+                            <Text className="font-sans underline text-light-text dark:text-dark-text">
+                              {propName}
+                            </Text>
+                          </View>
+                          
+                          <EditableText 
+                            value={property.content}
+                            placeholder="empty"
+                            onSave={(currentText) => {
+                              handlePropertyChange(index, "content", currentText);
+                            }}
+                            containerStyles="ml-2 flex-1"
+                            maxLength={200}
+                          />
+                          <TouchableOpacity
+                            onPress={() => {
+                              handleRemoveProperty(index);
+                              updatePropertyOptions({ propId: property.id, isRemoval: false})
+                            }}
+                          >
+                            <Feather 
+                              name="trash-2" 
+                              size={18} 
+                              color={`${ theme === "dark" ? "#6c7086" : tailwindConfig.theme.extend.colors.light.text}`} />
+                          </TouchableOpacity>
+                        </View>
+                      )
+                    })}
 
-                {/* TO DO: allow users to quick add new tag */}
-                <View style={{zIndex: tagDropdownOpen ? 1 : 0 }}>
-                  <Dropdown 
-                    title="Tag"
-                    value={tags}
-                    handleChangeValue={(value) => {
-                      handleFormError(null, "tags");
-                      setTags(value);
-                    }}
-                    items={tagOptions}
-                    containerStyles="mt-5"
-                    placeholder="Select Tags to apply to item"
-                    open={tagDropdownOpen}
-                    setOpen={setTagDropdownOpen}
-                    onOpen={onTagDropdownOpen}
-                    multiple={true}
-                    min={0}
-                    max={tagOptions.length}
-                    mode="BADGE"
-                  />
-                </View>
-                
-                <Text className="text-light-text dark:text-dark-text text-xs mt-1 font-sans-italic tracking-wide mb-5">
-                  {tags.length} tags selected
-                </Text>
-
-                <Text className="font-sans-bold text-light-text dark:text-dark-text mt-5 tracking-wide">
-                    Properties
-                </Text>
-
-                {properties.map((property, index) => {
-                  const prop = propertyOptions.find(propOption => propOption.value === property.id) || null;
-                  const propName = prop ? prop.label : "Prop Name";
-                  return (
-                    <View 
-                      key={index} 
-                      style={{zIndex: propertyDropdownOpen ? 1 : 0 }}
-                      className="flex-row items-start mt-4"
+                    <TouchableOpacity
+                      onPress={() => setModalVisible(true)}
+                      className="mt-5"
                     >
-                      <View>
-                        <Text className="font-sans underline text-light-text dark:text-dark-text">
-                          {propName}
-                        </Text>
-                      </View>
-                      
-                      <EditableText 
-                        value={property.content}
-                        placeholder="empty"
-                        onSave={(currentText) => {
-                          handlePropertyChange(index, "content", currentText);
-                        }}
-                        containerStyles="ml-2 flex-1"
-                        maxLength={200}
-                      />
-                      <TouchableOpacity
-                        onPress={() => {
-                          handleRemoveProperty(index);
-                          updatePropertyOptions({ propId: property.id, isRemoval: false})
-                        }}
-                      >
-                        <Feather 
-                          name="trash-2" 
-                          size={18} 
-                          color={`${ theme === "dark" ? "#6c7086" : tailwindConfig.theme.extend.colors.light.text}`} />
-                      </TouchableOpacity>
-                    </View>
-                  )
-                })}
+                      <Text className="font-sans-semibold tracking-wide text-light-mauve dark:text-light-yellow">
+                        + Add a property
+                      </Text>
+                    </TouchableOpacity>
+                    {/* TO DO: allow users to quick add new property */}
+                  </View>
+                  
 
-                <TouchableOpacity
-                  onPress={() => setModalVisible(true)}
-                  className="mt-5"
-                >
-                  <Text className="font-sans-semibold underline tracking-wide text-light-mauve dark:text-light-yellow">
-                    + Add a property
-                  </Text>
-                </TouchableOpacity>
-                {/* TO DO: allow users to quick add new property */}
-
-                <SelectionModal
-                  modalTitle="Select a Property to add"
-                  options={propertyOptions} 
-                  isVisible={modalVisible}
-                  onClose={() => setModalVisible(false)}
-                  onSelect={(propId) => {
-                    handleAddProperty(propId);
-                    setModalVisible(false);
-                    updatePropertyOptions({propId: propId, isRemoval: true})
-                  }}
-                />
-                
+                  <SelectionModal
+                    modalTitle="Select a Property to add"
+                    options={propertyOptions} 
+                    isVisible={modalVisible}
+                    onClose={() => setModalVisible(false)}
+                    onSelect={(propId) => {
+                      handleAddProperty(propId);
+                      setModalVisible(false);
+                      updatePropertyOptions({propId: propId, isRemoval: true})
+                    }}
+                  />
+                  
+                </View>
               </View>
-              
-            )}
-
-          </View>
-        
-        </ScrollView>
+            </ScrollView>
+          </>
+          
+        )}
       </SafeAreaView>
       { isLoading && (
         <LoadingSpinner />

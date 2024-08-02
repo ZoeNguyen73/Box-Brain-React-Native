@@ -149,7 +149,7 @@ const Step1 = () => {
     <>
       <SafeAreaView className="bg-light-background dark:bg-dark-background h-full">
         <ScrollView nestedScrollEnabled={true}>
-          <View className="w-full justify-center px-8 my-6 min-h-[85vh]">
+          <View className="w-full justify-center px-8 my-6">
             {!auth.username && (
               <NoAuth 
                 containerStyles="h-full"
