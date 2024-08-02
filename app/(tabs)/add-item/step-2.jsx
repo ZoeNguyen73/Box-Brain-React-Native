@@ -9,6 +9,7 @@ import Dropdown from "../../../components/CustomForm/Dropdown";
 import NoAuth from "../../../components/NoAuth";
 import LoadingSpinner from "../../../components/LoadingSpinner";
 import FormField from "../../../components/CustomForm/FormField";
+import EditableText from "../../../components/CustomForm/EditableText";
 
 import tailwindConfig from "../../../tailwind.config";
 
@@ -176,14 +177,25 @@ const Step2 = () => {
                   <View 
                     key={index} 
                     style={{zIndex: propertyDropdownOpen ? 1 : 0 }}
-                    className="flex-row gap-2 mt-1"
+                    className="flex-row items-end mt-2"
                   >
-                    <Text className="font-sans-semibold text-sm text-light-text dark:text-dark-text">
-                      Prop name
-                    </Text>
-                    <Text className="font-sans text-sm text-light-text dark:text-dark-text">
+                    <View>
+                      <Text className="font-sans-semibold text-light-text dark:text-dark-text">
+                        Prop name
+                      </Text>
+                    </View>
+                    
+                    {/* <Text className="font-sans text-sm text-light-text dark:text-dark-text">
                       Prop content
-                    </Text>
+                    </Text> */}
+                    <EditableText 
+                      value={property.content}
+                      placeholder="empty"
+                      onSave={(currentText) => {
+                        handlePropertyChange(index, "content", currentText);
+                      }}
+                      containerStyles="ml-2 flex-1"
+                    />
                     {/* <Dropdown 
                       title={`Property ${index + 1}`}
                       value={property.id}
