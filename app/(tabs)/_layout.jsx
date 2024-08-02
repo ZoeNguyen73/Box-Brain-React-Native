@@ -34,14 +34,13 @@ const TabsLayout = () => {
   const backgroundColor = theme === "dark" 
     ? tailwindConfig.theme.extend.colors.dark.surface
     : tailwindConfig.theme.extend.colors.dark.background;
-  const borderTopColor = tailwindConfig.theme.extend.colors.dark.grey1;
-  const borderTopWidth = theme === "dark" ? 1 : 0;
   const activeTintColor = tailwindConfig.theme.extend.colors.dark.yellow;
   const inactiveTintColor = tailwindConfig.theme.extend.colors.dark.grey1;
   
   return (
     <>
       <Tabs
+        backBehavior="history"
         screenOptions={{ 
           tabBarShowLabel: false,
           tabBarActiveTintColor: activeTintColor,
@@ -67,6 +66,7 @@ const TabsLayout = () => {
             ),
           }}
         />
+
         <Tabs.Screen 
           name="progress"
           options={{
@@ -82,11 +82,13 @@ const TabsLayout = () => {
             ),
           }}
         />
+
         <Tabs.Screen 
-          name="add-item"
+          name="add-item/step-1"
           options={{
             title: "Add Item",
             headerShown: false,
+            href:"/add-item/step-1",
             tabBarIcon: ({ color, focused }) => (
               <TabIcon 
                 name="Add Item"
@@ -97,6 +99,7 @@ const TabsLayout = () => {
             ),
           }}
         />
+
         <Tabs.Screen 
           name="settings"
           options={{
@@ -112,6 +115,7 @@ const TabsLayout = () => {
             ),
           }}
         />
+
         <Tabs.Screen 
           name="profile"
           options={{
@@ -127,6 +131,15 @@ const TabsLayout = () => {
             ),
           }}
         />
+
+        <Tabs.Screen 
+          name="add-item/step-2"
+          options={{
+            href:null,
+            headerShown: false,
+          }}
+        />
+
       </Tabs>
       <StatusBar 
         backgroundColor={`${ theme === "dark" ? darkBackgroundColor : lightBackgroundColor }`} 

@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef  } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { useAuthContext } from "../context/AuthProvider";
+import handleGlobalError from "../utils/ErrorHandler";
 import axios from "../api/axios";
-import GlobalErrorHandler from "../utils/GlobalErrorHandler";
 
 const useRefreshToken = () => {
   const { setAuth } = useAuthContext();
-  const [refreshToken, setRefreshToken] = useState("");
+  const refreshTokenRef = useRef("");
 
   useEffect(() => {
 
     const getRefreshToken = async () => {
       try {
         const token = await AsyncStorage.getItem("refreshToken");
-        setRefreshToken(token);
+        refreshTokenRef.current = token;
       } catch (error) {
-        GlobalErrorHandler(error);
+        handleGlobalError(error);
       }
     };
 
@@ -25,6 +25,7 @@ const useRefreshToken = () => {
   }, []);
 
   const refresh = async () => {
+    const refreshToken = refreshTokenRef.current;
     const response = await axios.post(
       "/auth/refresh",
       { refreshToken }

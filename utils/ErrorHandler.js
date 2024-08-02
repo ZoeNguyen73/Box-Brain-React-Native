@@ -1,9 +1,12 @@
 import { Alert } from "react-native";
 
-const GlobalErrorHandler = (error, handleFormError) => {
+const handleGlobalError = (error, handleFormError) => {
   if (error.response) {
     const errorMessage = error.response.data.message || "An error occurred";
-    const errorDetails = error.response.data.details || "Please try again.";
+    let errorDetails = error.response.data.details || "Please try again.";
+    if (typeof(errorDetails) !== "string") {
+      errorDetails = "Please try again.";
+    }
 
     if (handleFormError && (error.response.status === 400 || error.response.status === 401)) {
       if (errorDetails.includes("username")) {
@@ -30,4 +33,4 @@ const GlobalErrorHandler = (error, handleFormError) => {
   }
 };
 
-export default GlobalErrorHandler;
+export default handleGlobalError;

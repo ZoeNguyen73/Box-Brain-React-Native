@@ -6,10 +6,12 @@ import { useThemeContext } from "../../context/ThemeProvider";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import { useAuthContext } from "../../context/AuthProvider";
+import { useErrorHandler } from "../../context/ErrorHandlerProvider";
 
 const Settings = () => {
   const { theme, toggleTheme } = useThemeContext();
   const { signOut, auth, isLoggedIn, isLoading } = useAuthContext();
+  const { handleError } = useErrorHandler();
 
   if (!isLoading && !isLoggedIn) {
     return <Redirect href="/" />
@@ -20,7 +22,7 @@ const Settings = () => {
       await signOut();
       router.replace("/");
     } catch (error) {
-      GlobalErrorHandler(error);
+      await handleError(error);
     }
   }
 
